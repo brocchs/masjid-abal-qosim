@@ -24,7 +24,7 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->route('transactions.index');
+            return redirect()->route('cash-flow.index');
         }
 
         return back()->withErrors(['email' => 'Email atau password salah']);
