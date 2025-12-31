@@ -40,7 +40,8 @@ class CashFlowController extends Controller
         if ($request->hasFile('invoice_file')) {
             $file = $request->file('invoice_file');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $data['invoice_file'] = $file->storeAs('invoices', $filename, 'public');
+            $file->move(public_path('invoices'), $filename);
+            $data['invoice_file'] = 'invoices/' . $filename;
         }
 
         CashFlow::create($data);
@@ -76,11 +77,15 @@ class CashFlowController extends Controller
 
         if ($request->hasFile('invoice_file')) {
             if ($cashflow->invoice_file) {
-                Storage::disk('public')->delete($cashflow->invoice_file);
+                $oldFile = public_path($cashflow->invoice_file);
+                if (file_exists($oldFile)) {
+                    unlink($oldFile);
+                }
             }
             $file = $request->file('invoice_file');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $data['invoice_file'] = $file->storeAs('invoices', $filename, 'public');
+            $file->move(public_path('invoices'), $filename);
+            $data['invoice_file'] = 'invoices/' . $filename;
         }
 
         $cashflow->update($data);
@@ -93,7 +98,10 @@ class CashFlowController extends Controller
         $cashflow = CashFlow::findOrFail(decrypt($id));
         
         if ($cashflow->invoice_file) {
-            Storage::disk('public')->delete($cashflow->invoice_file);
+            $filePath = public_path($cashflow->invoice_file);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
         }
         
         $cashflow->delete();

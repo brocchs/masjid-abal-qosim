@@ -81,7 +81,7 @@
                             <td class="px-4 py-3 text-sm text-gray-500">{{ $cashflow->user->name ?? 'Unknown' }}</td>
                             <td class="px-4 py-3">
                                 @if($cashflow->invoice_file)
-                                    <a href="{{ Storage::url($cashflow->invoice_file) }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-sm">
+                                    <a href="{{ asset($cashflow->invoice_file) }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-sm">
                                         <i class="fas fa-file-alt"></i>
                                     </a>
                                 @else

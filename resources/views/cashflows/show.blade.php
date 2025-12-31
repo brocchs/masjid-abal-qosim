@@ -52,7 +52,7 @@
                         <label class="block text-sm font-bold text-gray-700 mb-2">Invoice</label>
                         <div>
                             @if($cashflow->invoice_file)
-                                <a href="{{ Storage::url($cashflow->invoice_file) }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded inline-block">
+                                <a href="{{ asset($cashflow->invoice_file) }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded inline-block">
                                     <i class="fas fa-file-alt mr-2"></i>
                                     Lihat Invoice
                                 </a>

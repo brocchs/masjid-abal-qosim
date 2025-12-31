@@ -69,7 +69,7 @@
                             @if($cashflow->invoice_file)
                                 <div class="mb-2">
                                     <small class="text-gray-500">File saat ini: </small>
-                                    <a href="{{ Storage::url($cashflow->invoice_file) }}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                                    <a href="{{ asset($cashflow->invoice_file) }}" target="_blank" class="text-blue-600 hover:text-blue-800">
                                         <i class="fas fa-file-alt"></i> Lihat Invoice
                                     </a>
                                 </div>
