@@ -43,7 +43,7 @@
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Keterangan</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Diinput Oleh</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
+                        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -55,20 +55,19 @@
                         <td class="px-4 py-4 text-sm text-gray-900">{{ $item->tanggal_shodaqoh->format('d/m/Y') }}</td>
                         <td class="px-4 py-4 text-sm text-gray-900">{{ $item->keterangan ?: '-' }}</td>
                         <td class="px-4 py-4 text-sm text-gray-600">{{ $item->user ? $item->user->name : '-' }}</td>
-                        <td class="px-4 py-4 text-sm space-x-2">
-                            <a href="{{ route('donasi.show', $item->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs">
-                                <i class="fas fa-eye"></i>
-                            </a>
-                            <a href="{{ route('donasi.edit', $item->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-xs">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <form method="POST" action="{{ route('donasi.destroy', $item->id) }}" class="inline" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
+                        <td class="px-4 py-4 text-center">
+                            <div class="flex justify-center space-x-2">
+                                <a href="{{ route('donasi.edit', $item) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form action="{{ route('donasi.destroy', $item) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @endforeach

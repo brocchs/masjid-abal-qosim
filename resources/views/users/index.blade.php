@@ -6,10 +6,10 @@
 @section('content')
 <div class="mb-6">
     @if(Auth::user()->role_id && Auth::user()->userRole && Auth::user()->userRole->name === 'Admin IT')
-    <div class="bg-white rounded-lg shadow p-4 md:p-6">
+    <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
         <div class="text-right">
             <a href="{{ route('users.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded inline-flex items-center">
-                <i class="fas fa-plus mr-2"></i>
+                <i class="fas fa-plus-circle mr-2"></i>
                 Tambah User
             </a>
         </div>

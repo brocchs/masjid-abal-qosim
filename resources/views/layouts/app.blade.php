@@ -14,13 +14,56 @@
                         'masjid-green': '#2c5530',
                         'masjid-green-light': '#4a7c59',
                         'masjid-green-dark': '#1e3a21'
+                    },
+                    animation: {
+                        'spin-slow': 'spin 2s linear infinite',
+                        'pulse-slow': 'pulse 3s ease-in-out infinite'
                     }
                 }
             }
         }
     </script>
+    <style>
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 85, 48, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
+    <!-- Loading Screen -->
+    <div id="loader" class="loader">
+        <div class="text-center">
+            <div class="relative">
+                <i class="fas fa-mosque text-white text-6xl animate-pulse-slow"></i>
+                <div class="absolute -top-2 -right-2">
+                    <div class="w-4 h-4 bg-white rounded-full animate-spin-slow"></div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h3 class="text-white text-xl font-semibold mb-2">Masjid Abal Qosim</h3>
+                <div class="flex justify-center space-x-1">
+                    <div class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+                    <div class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+                    <div class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+                </div>
+                <p class="text-green-100 text-sm mt-2">Memuat halaman...</p>
+            </div>
+        </div>
+    </div>
     <div class="flex flex-col md:flex-row">
         <!-- Sidebar -->
         <nav class="w-full md:w-64 min-h-screen bg-gradient-to-br from-masjid-green to-masjid-green-light shadow-lg fixed md:relative z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300" id="sidebarMenu">
@@ -201,6 +244,45 @@
             const sidebar = document.getElementById('sidebarMenu');
             sidebar.classList.toggle('-translate-x-full');
         }
+        
+        function showLoader() {
+            document.getElementById('loader').classList.remove('hidden');
+        }
+        
+        function hideLoader() {
+            document.getElementById('loader').classList.add('hidden');
+        }
+        
+        // Show loader on page navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loader when page is fully loaded
+            setTimeout(hideLoader, 300);
+            
+            // Show loader on link clicks
+            document.querySelectorAll('a:not([href^="#"]):not([href^="javascript:"])').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (!e.ctrlKey && !e.metaKey) {
+                        showLoader();
+                        // Auto hide after 3 seconds as fallback
+                        setTimeout(hideLoader, 3000);
+                    }
+                });
+            });
+            
+            // Show loader on form submissions
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function() {
+                    showLoader();
+                    // Auto hide after 5 seconds as fallback
+                    setTimeout(hideLoader, 5000);
+                });
+            });
+        });
+        
+        // Force hide loader on window load and page show events
+        window.addEventListener('load', hideLoader);
+        window.addEventListener('pageshow', hideLoader);
+        window.addEventListener('focus', hideLoader);
         
         // Close sidebar when clicking outside on mobile
         document.addEventListener('click', function(event) {

@@ -44,7 +44,7 @@
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Keterangan</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Diinput Oleh</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
+                        <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -59,18 +59,15 @@
                         <td class="px-4 py-4 text-sm text-gray-900">{{ $item->tanggal_wakaf->format('d/m/Y') }}</td>
                         <td class="px-4 py-4 text-sm text-gray-900">{{ $item->keterangan ?: '-' }}</td>
                         <td class="px-4 py-4 text-sm text-gray-600">{{ $item->user ? $item->user->name : '-' }}</td>
-                        <td class="px-4 py-4 text-sm">
-                            <div class="flex items-center space-x-1">
-                                <a href="{{ route('wakaf.show', $item->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs inline-flex items-center" title="Lihat Detail">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{{ route('wakaf.edit', $item->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-xs inline-flex items-center" title="Edit">
+                        <td class="px-4 py-4 text-center">
+                            <div class="flex justify-center space-x-2">
+                                <a href="{{ route('wakaf.edit', $item) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <form method="POST" action="{{ route('wakaf.destroy', $item->id) }}" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus data wakaf ini?')">
+                                <form action="{{ route('wakaf.destroy', $item) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs inline-flex items-center" title="Hapus">
+                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                 </form>
