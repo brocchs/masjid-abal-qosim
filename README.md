@@ -1,78 +1,86 @@
 # Admin Masjid Abal Qosim - Sistem Keuangan
 
-Sistem manajemen keuangan untuk Masjid Abal Qosim yang dibangun dengan Laravel dan Bootstrap.
+Sistem manajemen keuangan untuk Masjid Abal Qosim yang dibangun dengan Laravel dan Tailwind CSS.
+
+## Author
+
+**Moch. Alfarisyi**  
+- Email: moch.alfarisyi@gmail.com
+- GitHub: [@brocchs](https://github.com/brocchs)
+
+---
 
 ## Fitur Utama
 
-- ✅ **Manajemen Transaksi Keuangan**
-  - Pencatatan pemasukan (credit) dan pengeluaran (debit)
-  - Upload invoice/bukti transaksi (PDF, JPG, JPEG, PNG)
-  - Edit dan hapus transaksi
-  - Detail transaksi lengkap
+- ✅ **Manajemen Keuangan**
+  - Cash Flow (Pemasukan & Pengeluaran)
+  - Laporan keuangan bulanan
+  - Dashboard dengan statistik real-time
 
-- ✅ **Dashboard Keuangan**
-  - Ringkasan total pemasukan
-  - Ringkasan total pengeluaran
-  - Saldo keuangan real-time
-  - Daftar transaksi dengan pagination
+- ✅ **Manajemen Zakat & Donasi**
+  - Zakat Fitrah
+  - Zakat Maal
+  - Shodaqoh
+  - Donasi Umum
+  - Wakaf
 
-- ✅ **Interface Admin**
-  - Tema khusus masjid dengan warna hijau
-  - Responsive design dengan Bootstrap 5
-  - Icon Font Awesome
-  - Sidebar navigasi
+- ✅ **Sistem Admin**
+  - Master User dengan role-based access
+  - Master Role management
+  - Authentication & Authorization
+  - Laporan donatur
+
+- ✅ **UI/UX Modern**
+  - Responsive design dengan Tailwind CSS
+  - Loading animation yang cantik
+  - Tema khusus masjid (hijau)
+  - Font Awesome icons
+  - Sidebar navigation
 
 ## Teknologi yang Digunakan
 
 - **Backend**: Laravel 9
-- **Frontend**: Bootstrap 5, Font Awesome
-- **Database**: SQLite (mudah untuk development)
-- **File Storage**: Laravel Storage dengan symbolic link
+- **Frontend**: Tailwind CSS, Font Awesome
+- **Database**: SQLite (development) / MySQL (production)
+- **Authentication**: Laravel Sanctum
+- **File Storage**: Laravel Storage
 
 ## Instalasi
 
-1. Clone atau download project ini
-2. Masuk ke direktori project:
+1. Clone repository:
    ```bash
-   cd masjid-admin
+   git clone https://github.com/brocchs/masjid-abal-qosim.git
+   cd masjid-abal-qosim
    ```
 
-3. Install dependencies:
+2. Install dependencies:
    ```bash
    composer install
+   npm install
    ```
 
-4. Copy file environment:
+3. Setup environment:
    ```bash
-   copy .env.example .env
-   ```
-
-5. Generate application key:
-   ```bash
+   cp .env.example .env
    php artisan key:generate
    ```
 
-6. Jalankan migration:
+4. Setup database:
    ```bash
-   php artisan migrate
+   php artisan migrate:fresh --seed
    ```
 
-7. Buat symbolic link untuk storage:
-   ```bash
-   php artisan storage:link
-   ```
-
-8. (Opsional) Seed data sample:
-   ```bash
-   php artisan db:seed --class=TransactionSeeder
-   ```
-
-9. Jalankan development server:
+5. Jalankan aplikasi:
    ```bash
    php artisan serve
    ```
 
-10. Buka browser dan akses: `http://localhost:8000`
+6. Akses aplikasi di: `http://localhost:8000`
+
+### Login Default
+- **Email**: moch.alfarisyi@gmail.com
+- **Password**: Broki123
+- **Role**: Admin IT
 
 ## Struktur Database
 
@@ -135,4 +143,12 @@ Project ini dibuat untuk keperluan manajemen keuangan Masjid Abal Qosim. Silakan
 
 ## Lisensi
 
-Open source - silakan digunakan dan dimodifikasi sesuai kebutuhan.
+Project ini dilindungi hak cipta. Jika Anda ingin menggunakan, memodifikasi, atau mendistribusikan kode ini, silakan hubungi author terlebih dahulu untuk meminta izin.
+
+**Kontak untuk izin penggunaan:**
+- Email: moch.alfarisyi@gmail.com
+- GitHub: [@brocchs](https://github.com/brocchs)
+
+---
+
+**© 2025 Moch. Alfarisyi. All rights reserved.**
