@@ -271,7 +271,11 @@
             
             // Show loader on form submissions
             document.querySelectorAll('form').forEach(form => {
-                form.addEventListener('submit', function() {
+                form.addEventListener('submit', function(e) {
+                    // Don't show loader for delete confirmation forms
+                    if (e.target.onsubmit && e.target.onsubmit.toString().includes('showDeleteModal')) {
+                        return;
+                    }
                     showLoader();
                     // Auto hide after 5 seconds as fallback
                     setTimeout(hideLoader, 5000);
@@ -295,5 +299,58 @@
         });
     </script>
     @yield('scripts')
+
+    <!-- Custom Delete Confirmation Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 transform transition-all">
+            <div class="p-6">
+                <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full mb-4">
+                    <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">Konfirmasi Hapus</h3>
+                <p class="text-sm text-gray-500 text-center mb-6">Apakah Anda yakin ingin menghapus data cash flow ini? Tindakan ini tidak dapat dibatalkan.</p>
+                <div class="flex space-x-3">
+                    <button onclick="closeDeleteModal()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded transition-colors">
+                        Batal
+                    </button>
+                    <button onclick="confirmDelete()" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded transition-colors">
+                        Hapus
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let deleteForm = null;
+        
+        function showDeleteModal(form) {
+            deleteForm = form;
+            
+            // Get menu name from current page title
+            const pageTitle = document.querySelector('h1').textContent.trim();
+            const menuName = pageTitle.toLowerCase();
+            
+            // Update modal text
+            const modalText = document.querySelector('#deleteModal p');
+            modalText.textContent = `Apakah Anda yakin ingin menghapus data ${menuName} ini? Tindakan ini tidak dapat dibatalkan.`;
+            
+            document.getElementById('deleteModal').classList.remove('hidden');
+            document.getElementById('deleteModal').classList.add('flex');
+        }
+        
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+            document.getElementById('deleteModal').classList.remove('flex');
+            deleteForm = null;
+        }
+        
+        function confirmDelete() {
+            if (deleteForm) {
+                showLoader();
+                deleteForm.submit();
+            }
+        }
+    </script>
 </body>
 </html>

@@ -58,7 +58,7 @@
                                     <a href="{{ route('shodaqoh.edit', $shodaqoh) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('shodaqoh.destroy', $shodaqoh) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                    <form action="{{ route('shodaqoh.destroy', $shodaqoh) }}" method="POST" class="inline" onsubmit="event.preventDefault(); showDeleteModal(this);">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm">

@@ -64,12 +64,12 @@
             <i class="fas fa-wallet text-2xl"></i>
         </div>
     </div>
-    <div class="bg-white rounded-lg shadow p-4">
-        <div class="text-center">
-            <button onclick="window.print()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded w-full">
+    <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
+        <div class="flex items-center justify-center h-full">
+            <a href="#" onclick="window.print(); return false;" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded w-full inline-block">
                 <i class="fas fa-print mr-2"></i>
                 Cetak Laporan
-            </button>
+            </a>
         </div>
     </div>
 </div>

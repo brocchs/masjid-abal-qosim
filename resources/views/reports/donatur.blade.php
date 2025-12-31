@@ -5,71 +5,75 @@
 
 @section('content')
 <!-- Filter Form -->
-<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
-    <form method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Cari Nama</label>
-            <input type="text" name="search" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-masjid-green focus:border-transparent" value="{{ $search }}" placeholder="Nama donatur...">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
-            <input type="date" name="start_date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-masjid-green focus:border-transparent" value="{{ $startDate }}">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Akhir</label>
-            <input type="date" name="end_date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-masjid-green focus:border-transparent" value="{{ $endDate }}">
-        </div>
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Jenis</label>
-            <select name="type" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-masjid-green focus:border-transparent">
-                <option value="all" {{ $type == 'all' ? 'selected' : '' }}>Semua</option>
-                <option value="donasi" {{ $type == 'donasi' ? 'selected' : '' }}>Donasi</option>
-                <option value="wakaf" {{ $type == 'wakaf' ? 'selected' : '' }}>Wakaf</option>
-            </select>
-        </div>
-        <div class="flex items-end space-x-2">
-            <button type="submit" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg transition-colors">
-                <i class="fas fa-search mr-2"></i>Cari
-            </button>
-            <a href="{{ route('reports.donatur') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors">
-                <i class="fas fa-refresh mr-2"></i>Reset
-            </a>
-        </div>
-    </form>
+<div class="mb-6">
+    <div class="bg-white rounded-lg shadow p-6">
+        <form method="GET" class="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Cari Nama</label>
+                <input type="text" name="search" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" value="{{ $search }}" placeholder="Nama donatur...">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
+                <input type="date" name="start_date" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" value="{{ $startDate }}">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Akhir</label>
+                <input type="date" name="end_date" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" value="{{ $endDate }}">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Jenis</label>
+                <select name="type" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green">
+                    <option value="all" {{ $type == 'all' ? 'selected' : '' }}>Semua</option>
+                    <option value="donasi" {{ $type == 'donasi' ? 'selected' : '' }}>Donasi</option>
+                    <option value="wakaf" {{ $type == 'wakaf' ? 'selected' : '' }}>Wakaf</option>
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="w-full bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
+                    <i class="fas fa-search mr-2"></i>Tampilkan
+                </button>
+            </div>
+            <div>
+                <a href="{{ route('reports.donatur') }}" class="w-full bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded inline-block text-center">
+                    <i class="fas fa-refresh mr-2"></i>Reset
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
 
 <!-- Statistik -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-    <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-sm p-6 text-white">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow p-4 text-white">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-blue-100 text-sm">Total Donatur</p>
-                <p class="text-3xl font-bold">{{ number_format($totalDonatur) }}</p>
+                <p class="text-blue-100 text-xs">Total Donatur</p>
+                <p class="text-xl font-bold">{{ number_format($totalDonatur) }}</p>
             </div>
-            <div class="bg-white bg-opacity-20 p-3 rounded-lg">
-                <i class="fas fa-users text-2xl"></i>
+            <div class="bg-white bg-opacity-20 p-2 rounded">
+                <i class="fas fa-users text-lg"></i>
             </div>
         </div>
     </div>
-    <div class="bg-gradient-to-r from-masjid-green to-masjid-green-light rounded-xl shadow-sm p-6 text-white">
+    <div class="bg-gradient-to-r from-masjid-green to-masjid-green-light rounded-lg shadow p-4 text-white">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-green-100 text-sm">Total Donasi & Wakaf</p>
-                <p class="text-3xl font-bold">Rp {{ number_format($totalAmount, 0, ',', '.') }}</p>
+                <p class="text-green-100 text-xs">Total Donasi & Wakaf</p>
+                <p class="text-xl font-bold">Rp {{ number_format($totalAmount, 0, ',', '.') }}</p>
             </div>
-            <div class="bg-white bg-opacity-20 p-3 rounded-lg">
-                <i class="fas fa-money-bill-wave text-2xl"></i>
+            <div class="bg-white bg-opacity-20 p-2 rounded">
+                <i class="fas fa-money-bill-wave text-lg"></i>
             </div>
         </div>
     </div>
-    <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl shadow-sm p-6 text-white">
+    <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg shadow p-4 text-white">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-purple-100 text-sm">Total Transaksi</p>
-                <p class="text-3xl font-bold">{{ number_format($totalTransactions) }}</p>
+                <p class="text-purple-100 text-xs">Total Transaksi</p>
+                <p class="text-xl font-bold">{{ number_format($totalTransactions) }}</p>
             </div>
-            <div class="bg-white bg-opacity-20 p-3 rounded-lg">
-                <i class="fas fa-exchange-alt text-2xl"></i>
+            <div class="bg-white bg-opacity-20 p-2 rounded">
+                <i class="fas fa-exchange-alt text-lg"></i>
             </div>
         </div>
     </div>
