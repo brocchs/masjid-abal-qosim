@@ -14,7 +14,7 @@
                 </h5>
             </div>
             <div class="p-6">
-                <form action="{{ route('transactions.update', $transaction) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('cash-flow.update', encrypt($cashflow->id)) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     
@@ -23,8 +23,8 @@
                             <label for="type" class="block text-sm font-medium text-gray-700 mb-2">Jenis Cash Flow</label>
                             <select class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green @error('type') border-red-500 @enderror" id="type" name="type" required>
                                 <option value="">Pilih Jenis</option>
-                                <option value="credit" {{ old('type', $transaction->type) == 'credit' ? 'selected' : '' }}>Pemasukan</option>
-                                <option value="debit" {{ old('type', $transaction->type) == 'debit' ? 'selected' : '' }}>Pengeluaran</option>
+                                <option value="credit" {{ old('type', $cashflow->type) == 'credit' ? 'selected' : '' }}>Pemasukan</option>
+                                <option value="debit" {{ old('type', $cashflow->type) == 'debit' ? 'selected' : '' }}>Pengeluaran</option>
                             </select>
                             @error('type')
                                 <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -36,7 +36,7 @@
                             <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green @error('amount') border-red-500 @enderror" 
                                    id="amount_display" placeholder="0" 
                                    oninput="formatCurrency(this)">
-                            <input type="hidden" id="amount" name="amount" value="{{ old('amount', $transaction->amount) }}" required>
+                            <input type="hidden" id="amount" name="amount" value="{{ old('amount', $cashflow->amount) }}" required>
                             @error('amount')
                                 <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                             @enderror
@@ -47,7 +47,7 @@
                         <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Deskripsi</label>
                         <textarea class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green @error('description') border-red-500 @enderror" 
                                   id="description" name="description" rows="3" 
-                                  placeholder="Masukkan deskripsi cash flow..." required>{{ old('description', $transaction->description) }}</textarea>
+                                  placeholder="Masukkan deskripsi cash flow..." required>{{ old('description', $cashflow->description) }}</textarea>
                         @error('description')
                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                         @enderror
@@ -58,7 +58,7 @@
                             <label for="transaction_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Cash Flow</label>
                             <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green @error('transaction_date') border-red-500 @enderror" 
                                    id="transaction_date" name="transaction_date" 
-                                   value="{{ old('transaction_date', $transaction->transaction_date->format('Y-m-d')) }}" required>
+                                   value="{{ old('transaction_date', $cashflow->transaction_date->format('Y-m-d')) }}" required>
                             @error('transaction_date')
                                 <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                             @enderror
@@ -66,10 +66,10 @@
                         
                         <div class="mb-6">
                             <label for="invoice_file" class="block text-sm font-medium text-gray-700 mb-2">Upload Invoice (Opsional)</label>
-                            @if($transaction->invoice_file)
+                            @if($cashflow->invoice_file)
                                 <div class="mb-2">
                                     <small class="text-gray-500">File saat ini: </small>
-                                    <a href="{{ Storage::url($transaction->invoice_file) }}" target="_blank" class="text-blue-600 hover:text-blue-800">
+                                    <a href="{{ Storage::url($cashflow->invoice_file) }}" target="_blank" class="text-blue-600 hover:text-blue-800">
                                         <i class="fas fa-file-alt"></i> Lihat Invoice
                                     </a>
                                 </div>
@@ -85,7 +85,7 @@
                     </div>
 
                     <div class="flex justify-between">
-                        <a href="{{ route('transactions.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
+                        <a href="{{ route('cash-flow.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
                             <i class="fas fa-arrow-left mr-2"></i>
                             Kembali
                         </a>
@@ -112,7 +112,7 @@ function formatCurrency(input) {
 
 // Set initial value for editing
 window.onload = function() {
-    let initialValue = '{{ old('amount', $transaction->amount) }}';
+    let initialValue = '{{ old('amount', $cashflow->amount) }}';
     if (initialValue) {
         document.getElementById('amount_display').value = new Intl.NumberFormat('id-ID').format(initialValue);
     }

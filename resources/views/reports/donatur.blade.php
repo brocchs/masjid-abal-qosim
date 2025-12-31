@@ -1,133 +1,116 @@
 @extends('layouts.app')
 
-@section('title', 'Laporan Donatur')
+@section('title', 'Laporan Donatur - Masjid Abal Qosim')
 @section('page-title', 'Laporan Donatur')
 
 @section('content')
-<!-- Filter Form -->
 <div class="mb-6">
     <div class="bg-white rounded-lg shadow p-6">
-        <form method="GET" class="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Cari Nama</label>
-                <input type="text" name="search" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" value="{{ $search }}" placeholder="Nama donatur...">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
-                <input type="date" name="start_date" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" value="{{ $startDate }}">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Akhir</label>
-                <input type="date" name="end_date" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" value="{{ $endDate }}">
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Jenis</label>
-                <select name="type" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green">
-                    <option value="all" {{ $type == 'all' ? 'selected' : '' }}>Semua</option>
-                    <option value="donasi" {{ $type == 'donasi' ? 'selected' : '' }}>Donasi</option>
-                    <option value="wakaf" {{ $type == 'wakaf' ? 'selected' : '' }}>Wakaf</option>
-                </select>
-            </div>
-            <div>
-                <button type="submit" class="w-full bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
-                    <i class="fas fa-search mr-2"></i>Tampilkan
-                </button>
-            </div>
-            <div>
-                <a href="{{ route('reports.donatur') }}" class="w-full bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded inline-block text-center">
-                    <i class="fas fa-refresh mr-2"></i>Reset
-                </a>
+        <form method="GET" action="{{ route('reports.donatur') }}">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+                <div>
+                    <label for="start_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Mulai</label>
+                    <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" id="start_date" name="start_date" value="{{ $startDate }}">
+                </div>
+                <div>
+                    <label for="end_date" class="block text-sm font-medium text-gray-700 mb-2">Tanggal Akhir</label>
+                    <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" id="end_date" name="end_date" value="{{ $endDate }}">
+                </div>
+                <div>
+                    <label for="type" class="block text-sm font-medium text-gray-700 mb-2">Jenis</label>
+                    <select class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" id="type" name="type">
+                        <option value="all" {{ $type == 'all' ? 'selected' : '' }}>Semua</option>
+                        <option value="donasi" {{ $type == 'donasi' ? 'selected' : '' }}>Donasi</option>
+                        <option value="wakaf" {{ $type == 'wakaf' ? 'selected' : '' }}>Wakaf</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="search" class="block text-sm font-medium text-gray-700 mb-2">Cari Nama</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" id="search" name="search" value="{{ $search }}" placeholder="Nama donatur...">
+                </div>
+                <div>
+                    <button type="submit" class="w-full bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
+                        <i class="fas fa-search mr-2"></i>Filter
+                    </button>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<!-- Statistik -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-    <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow p-4 text-white">
-        <div class="flex items-center justify-between">
+    <div class="bg-blue-500 text-white rounded-lg shadow p-4">
+        <div class="flex justify-between items-center">
             <div>
-                <p class="text-blue-100 text-xs">Total Donatur</p>
-                <p class="text-xl font-bold">{{ number_format($totalDonatur) }}</p>
+                <h6 class="text-sm font-medium">Total Donatur</h6>
+                <h4 class="text-xl font-bold">{{ $totalDonatur }}</h4>
             </div>
-            <div class="bg-white bg-opacity-20 p-2 rounded">
-                <i class="fas fa-users text-lg"></i>
-            </div>
+            <i class="fas fa-users text-2xl"></i>
         </div>
     </div>
-    <div class="bg-gradient-to-r from-masjid-green to-masjid-green-light rounded-lg shadow p-4 text-white">
-        <div class="flex items-center justify-between">
+    <div class="bg-green-500 text-white rounded-lg shadow p-4">
+        <div class="flex justify-between items-center">
             <div>
-                <p class="text-green-100 text-xs">Total Donasi & Wakaf</p>
-                <p class="text-xl font-bold">Rp {{ number_format($totalAmount, 0, ',', '.') }}</p>
+                <h6 class="text-sm font-medium">Total Donasi</h6>
+                <h4 class="text-xl font-bold">Rp {{ number_format($totalAmount, 0, ',', '.') }}</h4>
             </div>
-            <div class="bg-white bg-opacity-20 p-2 rounded">
-                <i class="fas fa-money-bill-wave text-lg"></i>
-            </div>
+            <i class="fas fa-hand-holding-heart text-2xl"></i>
         </div>
     </div>
-    <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg shadow p-4 text-white">
-        <div class="flex items-center justify-between">
+    <div class="bg-purple-500 text-white rounded-lg shadow p-4">
+        <div class="flex justify-between items-center">
             <div>
-                <p class="text-purple-100 text-xs">Total Transaksi</p>
-                <p class="text-xl font-bold">{{ number_format($totalTransactions) }}</p>
+                <h6 class="text-sm font-medium">Total Transaksi</h6>
+                <h4 class="text-xl font-bold">{{ $totalTransactions }}</h4>
             </div>
-            <div class="bg-white bg-opacity-20 p-2 rounded">
-                <i class="fas fa-exchange-alt text-lg"></i>
-            </div>
+            <i class="fas fa-exchange-alt text-2xl"></i>
         </div>
     </div>
 </div>
 
-<!-- Tabel Donatur -->
-<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="w-full">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Donatur</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Donasi</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah Transaksi</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                @forelse($donatur as $index => $item)
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $index + 1 }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">{{ $item->nama_pemberi }}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">{{ $item->type }}</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-bold text-masjid-green">Rp {{ number_format($item->total_amount, 0, ',', '.') }}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">{{ $item->total_transactions }}x</span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="{{ route('reports.donatur.detail', ['nama' => $item->nama_pemberi, 'start_date' => $startDate, 'end_date' => $endDate]) }}" 
-                           class="bg-masjid-green hover:bg-masjid-green-dark text-white px-3 py-1 rounded-lg text-xs transition-colors">
-                            <i class="fas fa-eye mr-1"></i>Detail
-                        </a>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="6" class="px-6 py-12 text-center">
-                        <div class="flex flex-col items-center">
-                            <i class="fas fa-inbox text-4xl text-gray-300 mb-4"></i>
-                            <p class="text-gray-500">Tidak ada data donatur</p>
-                        </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+<div class="bg-white rounded-lg shadow">
+    <div class="bg-gray-50 px-6 py-4 border-b-2 border-masjid-green rounded-t-lg">
+        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
+            <i class="fas fa-list mr-2"></i>
+            Daftar Donatur
+        </h5>
+    </div>
+    <div class="p-6">
+        @if($donatur->count() > 0)
+            <div class="overflow-x-auto">
+                <table class="min-w-full table-auto">
+                    <thead>
+                        <tr class="bg-gray-50">
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Nama Donatur</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Jenis</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Total Donasi</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Total Transaksi</th>
+                            <th class="px-4 py-3 text-center text-sm font-medium text-gray-700">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @foreach($donatur as $item)
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-3 text-sm font-medium text-gray-900">{{ $item->nama_pemberi }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-600">{{ $item->type }}</td>
+                            <td class="px-4 py-3 text-sm text-green-600 font-semibold">Rp {{ number_format($item->total_amount, 0, ',', '.') }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-600">{{ $item->total_transactions }} kali</td>
+                            <td class="px-4 py-3 text-center">
+                                <a href="{{ route('reports.donatur.detail', $item->nama_pemberi) }}?start_date={{ $startDate }}&end_date={{ $endDate }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                                    <i class="fas fa-eye mr-1"></i>Detail
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <div class="text-center py-8">
+                <i class="fas fa-inbox text-4xl text-gray-400 mb-4"></i>
+                <p class="text-gray-500">Tidak ada data donatur</p>
+            </div>
+        @endif
     </div>
 </div>
 @endsection

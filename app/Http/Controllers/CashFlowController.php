@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Transaction;
+use App\Models\CashFlow;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
-class TransactionController extends Controller
+class CashFlowController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::orderBy('transaction_date', 'desc')->paginate(10);
-        $totalDebit = Transaction::where('type', 'debit')->sum('amount');
-        $totalCredit = Transaction::where('type', 'credit')->sum('amount');
+        $cashflows = CashFlow::orderBy('transaction_date', 'desc')->paginate(10);
+        $totalDebit = CashFlow::where('type', 'debit')->sum('amount');
+        $totalCredit = CashFlow::where('type', 'credit')->sum('amount');
         $balance = $totalCredit - $totalDebit;
         
-        return view('transactions.index', compact('transactions', 'totalDebit', 'totalCredit', 'balance'));
+        return view('cashflows.index', compact('cashflows', 'totalDebit', 'totalCredit', 'balance'));
     }
 
     public function create()
     {
-        return view('transactions.create');
+        return view('cashflows.create');
     }
 
     public function store(Request $request)
@@ -43,23 +43,27 @@ class TransactionController extends Controller
             $data['invoice_file'] = $file->storeAs('invoices', $filename, 'public');
         }
 
-        Transaction::create($data);
+        CashFlow::create($data);
 
-        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil ditambahkan');
+        return redirect()->route('cash-flow.index')->with('success', 'Cash Flow berhasil ditambahkan');
     }
 
-    public function show(Transaction $transaction)
+    public function show($id)
     {
-        return view('transactions.show', compact('transaction'));
+        $cashflow = CashFlow::findOrFail(decrypt($id));
+        return view('cashflows.show', compact('cashflow'));
     }
 
-    public function edit(Transaction $transaction)
+    public function edit($id)
     {
-        return view('transactions.edit', compact('transaction'));
+        $cashflow = CashFlow::findOrFail(decrypt($id));
+        return view('cashflows.edit', compact('cashflow'));
     }
 
-    public function update(Request $request, Transaction $transaction)
+    public function update(Request $request, $id)
     {
+        $cashflow = CashFlow::findOrFail(decrypt($id));
+        
         $request->validate([
             'type' => 'required|in:debit,credit',
             'amount' => 'required|numeric|min:0',
@@ -71,27 +75,29 @@ class TransactionController extends Controller
         $data = $request->only(['type', 'amount', 'description', 'transaction_date']);
 
         if ($request->hasFile('invoice_file')) {
-            if ($transaction->invoice_file) {
-                Storage::disk('public')->delete($transaction->invoice_file);
+            if ($cashflow->invoice_file) {
+                Storage::disk('public')->delete($cashflow->invoice_file);
             }
             $file = $request->file('invoice_file');
             $filename = time() . '_' . $file->getClientOriginalName();
             $data['invoice_file'] = $file->storeAs('invoices', $filename, 'public');
         }
 
-        $transaction->update($data);
+        $cashflow->update($data);
 
-        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil diperbarui');
+        return redirect()->route('cash-flow.index')->with('success', 'Cash Flow berhasil diperbarui');
     }
 
-    public function destroy(Transaction $transaction)
+    public function destroy($id)
     {
-        if ($transaction->invoice_file) {
-            Storage::disk('public')->delete($transaction->invoice_file);
+        $cashflow = CashFlow::findOrFail(decrypt($id));
+        
+        if ($cashflow->invoice_file) {
+            Storage::disk('public')->delete($cashflow->invoice_file);
         }
         
-        $transaction->delete();
+        $cashflow->delete();
 
-        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil dihapus');
+        return redirect()->route('cash-flow.index')->with('success', 'Cash Flow berhasil dihapus');
     }
 }

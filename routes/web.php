@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DonaturReportController;
+use App\Http\Controllers\CashFlowReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +29,11 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        return redirect()->route('transactions.index');
+        return redirect()->route('cash-flow.index');
     });
     
-    Route::resource('transactions', TransactionController::class);
-    Route::get('/reports/monthly', [App\Http\Controllers\ReportController::class, 'monthly'])->name('reports.monthly');
+    Route::resource('cash-flow', CashFlowController::class);
+    Route::resource('cashflow-reports', CashFlowReportController::class)->only(['index']);
     Route::resource('users', UserController::class);
     Route::resource('roles', App\Http\Controllers\RoleController::class);
     Route::resource('zakat', App\Http\Controllers\ZakatController::class);

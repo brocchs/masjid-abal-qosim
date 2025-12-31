@@ -19,7 +19,7 @@
 <div class="no-print">
 <div class="mb-6">
     <div class="bg-white rounded-lg shadow p-6">
-        <form method="GET" action="{{ route('reports.monthly') }}">
+        <form method="GET" action="{{ route('cashflow-reports.index') }}">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                 <div class="md:col-span-2">
                     <label for="month" class="block text-sm font-medium text-gray-700 mb-2">Pilih Bulan</label>
@@ -83,7 +83,7 @@
         </h5>
     </div>
     <div class="p-6">
-        @if($transactions->count() > 0)
+        @if($cashflows->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
                     <thead>
@@ -97,25 +97,25 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        @foreach($transactions as $transaction)
+                        @foreach($cashflows as $cashflow)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3 text-sm text-gray-900">{{ $transaction->transaction_date->format('d/m/Y') }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-900">{{ $cashflow->transaction_date->format('d/m/Y') }}</td>
                             <td class="px-4 py-3">
-                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded no-print {{ $transaction->type == 'credit' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                    {{ $transaction->type == 'credit' ? 'Pemasukan' : 'Pengeluaran' }}
+                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded no-print {{ $cashflow->type == 'credit' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                    {{ $cashflow->type == 'credit' ? 'Pemasukan' : 'Pengeluaran' }}
                                 </span>
                                 <span class="hidden print-inline">
-                                    {{ $transaction->type == 'credit' ? 'Pemasukan' : 'Pengeluaran' }}
+                                    {{ $cashflow->type == 'credit' ? 'Pemasukan' : 'Pengeluaran' }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 text-sm text-gray-900">{{ $transaction->description }}</td>
-                            <td class="px-4 py-3 text-sm {{ $transaction->type == 'credit' ? 'text-green-600' : 'text-red-600' }}">
-                                {{ $transaction->type == 'credit' ? '+' : '-' }} Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                            <td class="px-4 py-3 text-sm text-gray-900">{{ $cashflow->description }}</td>
+                            <td class="px-4 py-3 text-sm {{ $cashflow->type == 'credit' ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $cashflow->type == 'credit' ? '+' : '-' }} Rp {{ number_format($cashflow->amount, 0, ',', '.') }}
                             </td>
-                            <td class="px-4 py-3 text-sm text-gray-500">{{ $transaction->user->name ?? 'Unknown' }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-500">{{ $cashflow->user->name ?? 'Unknown' }}</td>
                             <td class="px-4 py-3 no-print">
-                                @if($transaction->invoice_file)
-                                    <a href="{{ Storage::url($transaction->invoice_file) }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-sm">
+                                @if($cashflow->invoice_file)
+                                    <a href="{{ Storage::url($cashflow->invoice_file) }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-sm">
                                         <i class="fas fa-file-alt"></i>
                                     </a>
                                 @else
@@ -129,7 +129,7 @@
             </div>
             
             <div class="flex justify-center mt-6">
-                {{ $transactions->appends(['month' => $month])->links() }}
+                <!-- Pagination removed for report view -->
             </div>
         @else
             <div class="text-center py-8">

@@ -35,7 +35,7 @@
     </div>
     <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
         <div class="text-center">
-            <a href="{{ route('transactions.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded w-full inline-block">
+            <a href="{{ route('cash-flow.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded w-full inline-block">
                 <i class="fas fa-plus-circle mr-2"></i>
                 Tambah Cash Flow
             </a>
@@ -51,7 +51,7 @@
         </h5>
     </div>
     <div class="p-6">
-        @if($transactions->count() > 0)
+        @if($cashflows->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
                     <thead>
@@ -66,22 +66,22 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        @foreach($transactions as $transaction)
+                        @foreach($cashflows as $cashflow)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3 text-sm text-gray-900">{{ $transaction->transaction_date->format('d/m/Y') }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-900">{{ $cashflow->transaction_date->format('d/m/Y') }}</td>
                             <td class="px-4 py-3">
-                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded {{ $transaction->type == 'credit' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
-                                    {{ $transaction->type == 'credit' ? 'Pemasukan' : 'Pengeluaran' }}
+                                <span class="inline-block px-2 py-1 text-xs font-semibold rounded {{ $cashflow->type == 'credit' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                    {{ $cashflow->type == 'credit' ? 'Pemasukan' : 'Pengeluaran' }}
                                 </span>
                             </td>
-                            <td class="px-4 py-3 text-sm text-gray-900">{{ $transaction->description }}</td>
-                            <td class="px-4 py-3 text-sm {{ $transaction->type == 'credit' ? 'text-green-600' : 'text-red-600' }}">
-                                {{ $transaction->type == 'credit' ? '+' : '-' }} Rp {{ number_format($transaction->amount, 0, ',', '.') }}
+                            <td class="px-4 py-3 text-sm text-gray-900">{{ $cashflow->description }}</td>
+                            <td class="px-4 py-3 text-sm {{ $cashflow->type == 'credit' ? 'text-green-600' : 'text-red-600' }}">
+                                {{ $cashflow->type == 'credit' ? '+' : '-' }} Rp {{ number_format($cashflow->amount, 0, ',', '.') }}
                             </td>
-                            <td class="px-4 py-3 text-sm text-gray-500">{{ $transaction->user->name ?? 'Unknown' }}</td>
+                            <td class="px-4 py-3 text-sm text-gray-500">{{ $cashflow->user->name ?? 'Unknown' }}</td>
                             <td class="px-4 py-3">
-                                @if($transaction->invoice_file)
-                                    <a href="{{ Storage::url($transaction->invoice_file) }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-sm">
+                                @if($cashflow->invoice_file)
+                                    <a href="{{ Storage::url($cashflow->invoice_file) }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-sm">
                                         <i class="fas fa-file-alt"></i>
                                     </a>
                                 @else
@@ -90,13 +90,13 @@
                             </td>
                             <td class="px-4 py-3 text-center">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('transactions.show', $transaction) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-sm">
+                                    <a href="{{ route('cash-flow.show', encrypt($cashflow->id)) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-sm">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('transactions.edit', $transaction) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-sm">
+                                    <a href="{{ route('cash-flow.edit', encrypt($cashflow->id)) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('transactions.destroy', $transaction) }}" method="POST" class="inline" onsubmit="event.preventDefault(); showDeleteModal(this);">
+                                    <form action="{{ route('cash-flow.destroy', encrypt($cashflow->id)) }}" method="POST" class="inline" onsubmit="event.preventDefault(); showDeleteModal(this);">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm">
@@ -112,13 +112,13 @@
             </div>
             
             <div class="flex justify-center mt-6">
-                {{ $transactions->links() }}
+                {{ $cashflows->links() }}
             </div>
         @else
             <div class="text-center py-8">
                 <i class="fas fa-inbox text-4xl text-gray-400 mb-4"></i>
                 <p class="text-gray-500 mb-4">Belum ada cash flow</p>
-                <a href="{{ route('transactions.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
+                <a href="{{ route('cash-flow.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
                     <i class="fas fa-plus mr-2"></i>
                     Tambah Cash Flow Pertama
                 </a>

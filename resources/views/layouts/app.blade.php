@@ -104,19 +104,19 @@
                         </div>
                     </li>
                     <li>
-                        <a class="flex items-center justify-between text-white hover:bg-white hover:bg-opacity-10 p-2 rounded {{ request()->routeIs('transactions.*') || (request()->routeIs('reports.*') && !request()->routeIs('reports.donatur*')) ? 'bg-green-600 bg-opacity-50 font-bold' : '' }}" href="#" onclick="toggleMenu('keuanganMenu')">
+                        <a class="flex items-center justify-between text-white hover:bg-white hover:bg-opacity-10 p-2 rounded {{ request()->routeIs('cash-flow.*') || request()->routeIs('cashflow-reports.*') ? 'bg-green-600 bg-opacity-50 font-bold' : '' }}" href="#" onclick="toggleMenu('keuanganMenu')">
                             <span class="flex items-center text-sm">
                                 <i class="fas fa-money-bill-wave mr-2"></i>
                                 Keuangan
                             </span>
                             <i class="fas fa-chevron-down"></i>
                         </a>
-                        <div class="ml-4 mt-2 space-y-1 {{ request()->routeIs('transactions.*') || (request()->routeIs('reports.*') && !request()->routeIs('reports.donatur*')) ? '' : 'hidden' }}" id="keuanganMenu">
-                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('transactions.*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('transactions.index') }}">
+                        <div class="ml-4 mt-2 space-y-1 {{ request()->routeIs('cash-flow.*') || request()->routeIs('cashflow-reports.*') ? '' : 'hidden' }}" id="keuanganMenu">
+                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('cash-flow.*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('cash-flow.index') }}">
                                 <i class="fas fa-exchange-alt mr-2"></i>
                                 Cash Flow
                             </a>
-                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ (request()->routeIs('reports.*') && !request()->routeIs('reports.donatur*')) ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('reports.monthly') }}">
+                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ (request()->routeIs('cashflow-reports.*')) ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('cashflow-reports.index') }}">
                                 <i class="fas fa-chart-bar mr-2"></i>
                                 Laporan
                             </a>

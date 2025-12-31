@@ -14,7 +14,7 @@
                 </h5>
             </div>
             <div class="p-6">
-                <form action="{{ route('transactions.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('cash-flow.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="flex justify-between">
-                        <a href="{{ route('transactions.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
+                        <a href="{{ route('cash-flow.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
                             <i class="fas fa-arrow-left mr-2"></i>
                             Kembali
                         </a>
