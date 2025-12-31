@@ -74,7 +74,9 @@
             </div>
             
             <div class="flex justify-center mt-6">
-                {{ $shodaqohs->links() }}
+                <div class="pagination-wrapper">
+                    {{ $shodaqohs->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         @else
             <div class="text-center py-8">

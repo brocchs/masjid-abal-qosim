@@ -3,14 +3,14 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Transaction;
+use App\Models\CashFlow;
 use Carbon\Carbon;
 
-class TransactionSeeder extends Seeder
+class CashFlowSeeder extends Seeder
 {
     public function run()
     {
-        $transactions = [
+        $cashflows = [
             [
                 'type' => 'credit',
                 'amount' => 5000000,
@@ -109,8 +109,8 @@ class TransactionSeeder extends Seeder
             ],
         ];
 
-        foreach ($transactions as $transaction) {
-            Transaction::create($transaction);
+        foreach ($cashflows as $cashflow) {
+            CashFlow::create($cashflow);
         }
     }
 }

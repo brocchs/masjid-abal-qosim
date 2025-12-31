@@ -78,8 +78,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="mt-4">
-            {{ $wakaf->links() }}
+        <div class="flex justify-center mt-6">
+            <div class="pagination-wrapper">
+                {{ $wakaf->links('pagination::bootstrap-4') }}
+            </div>
         </div>
         @else
         <div class="text-center py-8">

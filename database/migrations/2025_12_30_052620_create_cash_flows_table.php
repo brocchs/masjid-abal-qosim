@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('cash_flows', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['debit', 'credit']);
             $table->decimal('amount', 15, 2);
@@ -21,6 +21,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('cash_flows');
     }
 };

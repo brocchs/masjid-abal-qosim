@@ -61,7 +61,7 @@
         <div class="flex justify-between items-center">
             <div>
                 <h6 class="text-sm font-medium">Total Transaksi</h6>
-                <h4 class="text-xl font-bold">{{ $totalTransactions }}</h4>
+                <h4 class="text-xl font-bold">{{ number_format($totalTransactions, 0, ',', '.') }} Transaksi</h4>
             </div>
             <i class="fas fa-exchange-alt text-2xl"></i>
         </div>
@@ -91,10 +91,58 @@
                     <tbody class="divide-y divide-gray-200">
                         @foreach($donatur as $item)
                         <tr class="hover:bg-gray-50">
-                            <td class="px-4 py-3 text-sm font-medium text-gray-900">{{ $item->nama_pemberi }}</td>
-                            <td class="px-4 py-3 text-sm text-gray-600">{{ $item->type }}</td>
-                            <td class="px-4 py-3 text-sm text-green-600 font-semibold">Rp {{ number_format($item->total_amount, 0, ',', '.') }}</td>
-                            <td class="px-4 py-3 text-sm text-gray-600">{{ $item->total_transactions }} kali</td>
+                            <td class="px-4 py-3 text-sm">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                            <span class="text-white text-sm font-bold">{{ strtoupper(substr($item->nama_pemberi, 0, 1)) }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-semibold text-gray-900">{{ $item->nama_pemberi }}</p>
+                                        <p class="text-xs text-gray-500">Donatur</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                @php
+                                    $types = explode(', ', $item->type);
+                                @endphp
+                                <div class="flex flex-wrap gap-1">
+                                    @foreach($types as $type)
+                                        @if($type == 'Donasi')
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                <i class="fas fa-hand-holding-usd mr-1"></i>
+                                                {{ $type }}
+                                            </span>
+                                        @elseif($type == 'Wakaf')
+                                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                                <i class="fas fa-mosque mr-1"></i>
+                                                {{ $type }}
+                                            </span>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-coins text-green-600 text-sm"></i>
+                                        </div>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-sm font-semibold text-green-600">Rp {{ number_format($item->total_amount, 0, ',', '.') }}</p>
+                                        <p class="text-xs text-gray-500">Total kontribusi</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    <i class="fas fa-chart-line mr-1"></i>
+                                    {{ $item->total_transactions }} transaksi
+                                </span>
+                            </td>
                             <td class="px-4 py-3 text-center">
                                 <a href="{{ route('reports.donatur.detail', $item->nama_pemberi) }}?start_date={{ $startDate }}&end_date={{ $endDate }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
                                     <i class="fas fa-eye mr-1"></i>Detail

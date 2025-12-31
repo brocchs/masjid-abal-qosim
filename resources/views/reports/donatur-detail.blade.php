@@ -44,17 +44,42 @@
             <table class="min-w-full table-auto">
                 <thead>
                     <tr class="bg-gray-50">
-                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Tanggal</th>
-                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Jumlah</th>
-                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Keterangan</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700 w-1/4">Tanggal</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700 w-1/3">Jumlah</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700 w-5/12">Keterangan</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                     @foreach($donasi as $item)
                     <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-3 text-sm text-gray-900">{{ $item->tanggal_shodaqoh->format('d/m/Y') }}</td>
-                        <td class="px-4 py-3 text-sm text-green-600 font-semibold">Rp {{ number_format($item->jumlah_shodaqoh, 0, ',', '.') }}</td>
-                        <td class="px-4 py-3 text-sm text-gray-600">{{ $item->keterangan ?? '-' }}</td>
+                        <td class="px-4 py-3 text-sm">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                </div>
+                                <div class="ml-3">
+                                    <span class="text-gray-900 font-medium">{{ $item->tanggal_shodaqoh->format('d M Y') }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-hand-holding-usd text-green-600 text-xs"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-semibold text-green-600">Rp {{ number_format($item->jumlah_shodaqoh, 0, ',', '.') }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->keterangan ? 'bg-gray-100 text-gray-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                <i class="fas {{ $item->keterangan ? 'fa-info-circle' : 'fa-minus-circle' }} mr-1"></i>
+                                {{ $item->keterangan ?? 'Tidak ada keterangan' }}
+                            </span>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -77,17 +102,42 @@
             <table class="min-w-full table-auto">
                 <thead>
                     <tr class="bg-gray-50">
-                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Tanggal</th>
-                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Jumlah</th>
-                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Keterangan</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700 w-1/4">Tanggal</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700 w-1/3">Jumlah</th>
+                        <th class="px-4 py-3 text-left text-sm font-medium text-gray-700 w-5/12">Keterangan</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                     @foreach($wakaf as $item)
                     <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-3 text-sm text-gray-900">{{ $item->tanggal_wakaf->format('d/m/Y') }}</td>
-                        <td class="px-4 py-3 text-sm text-blue-600 font-semibold">Rp {{ number_format($item->jumlah_wakaf, 0, ',', '.') }}</td>
-                        <td class="px-4 py-3 text-sm text-gray-600">{{ $item->keterangan ?? '-' }}</td>
+                        <td class="px-4 py-3 text-sm">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                </div>
+                                <div class="ml-3">
+                                    <span class="text-gray-900 font-medium">{{ $item->tanggal_wakaf->format('d M Y') }}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                    <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-mosque text-blue-600 text-xs"></i>
+                                    </div>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm font-semibold text-blue-600">Rp {{ number_format($item->jumlah_wakaf, 0, ',', '.') }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $item->keterangan ? 'bg-gray-100 text-gray-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                <i class="fas {{ $item->keterangan ? 'fa-info-circle' : 'fa-minus-circle' }} mr-1"></i>
+                                {{ $item->keterangan ?? 'Tidak ada keterangan' }}
+                            </span>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

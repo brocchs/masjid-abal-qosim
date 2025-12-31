@@ -112,7 +112,9 @@
             </div>
             
             <div class="flex justify-center mt-6">
-                {{ $cashflows->links() }}
+                <div class="pagination-wrapper">
+                    {{ $cashflows->links('pagination::bootstrap-4') }}
+                </div>
             </div>
         @else
             <div class="text-center py-8">
