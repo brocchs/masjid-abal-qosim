@@ -11,17 +11,16 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        // Get or create administrator role
-        $adminRole = Role::firstOrCreate(
-            ['name' => 'administrator'],
-            ['description' => 'Administrator dengan akses penuh']
-        );
+        // Get existing Admin IT role
+        $adminRole = Role::where('name', 'Admin IT')->first();
         
-        User::create([
-            'name' => 'Admin Masjid',
-            'email' => 'admin@masjid.com',
-            'password' => Hash::make('password123'),
-            'role_id' => $adminRole->id
-        ]);
+        if ($adminRole) {
+            User::create([
+                'name' => 'Moch. Alfarisyi',
+                'email' => 'moch.alfarisyi@gmail.com',
+                'password' => Hash::make('Broki123'),
+                'role_id' => $adminRole->id
+            ]);
+        }
     }
 }

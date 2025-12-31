@@ -10,9 +10,9 @@ return new class extends Migration
     public function up()
     {
         // Insert default roles if not exists
-        if (!DB::table('roles')->where('name', 'administrator')->exists()) {
+        if (!DB::table('roles')->where('name', 'Admin IT')->exists()) {
             DB::table('roles')->insert([
-                ['name' => 'administrator', 'description' => 'Administrator dengan akses penuh', 'created_at' => now(), 'updated_at' => now()],
+                ['name' => 'Admin IT', 'description' => 'Administrator IT dengan akses teknis', 'created_at' => now(), 'updated_at' => now()],
                 ['name' => 'user', 'description' => 'User biasa dengan akses terbatas', 'created_at' => now(), 'updated_at' => now()]
             ]);
         }
@@ -25,11 +25,15 @@ return new class extends Migration
         }
 
         // Update existing users to use role_id
-        $adminRole = DB::table('roles')->where('name', 'administrator')->first();
+        $adminRole = DB::table('roles')->where('name', 'Admin IT')->first();
         $userRole = DB::table('roles')->where('name', 'user')->first();
 
-        DB::table('users')->where('role', 'administrator')->update(['role_id' => $adminRole->id]);
-        DB::table('users')->where('role', 'user')->update(['role_id' => $userRole->id]);
+        if ($adminRole) {
+            DB::table('users')->where('role', 'administrator')->update(['role_id' => $adminRole->id]);
+        }
+        if ($userRole) {
+            DB::table('users')->where('role', 'user')->update(['role_id' => $userRole->id]);
+        }
 
         // Don't drop the old role column for SQLite compatibility
         // Schema::table('users', function (Blueprint $table) {
