@@ -28,3 +28,11 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./
         server-dir: /
+        
+    - name: Deployment Success
+      if: success()
+      run: echo "✅ Deployment to FTP completed successfully!"
+      
+    - name: Deployment Failed
+      if: failure()
+      run: echo "❌ Deployment to FTP failed!"
