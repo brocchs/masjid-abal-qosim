@@ -189,14 +189,14 @@
                         </div>
                     </li>
                     <li>
-                        <a class="flex items-center justify-between text-white hover:bg-white hover:bg-opacity-10 p-2 rounded {{ request()->routeIs('donasi.*') || request()->routeIs('wakaf.*') || request()->routeIs('reports.donatur*') ? 'bg-green-600 bg-opacity-50 font-bold' : '' }}" href="#" onclick="toggleMenu('donasiMenu')">
+                        <a class="flex items-center justify-between text-white hover:bg-white hover:bg-opacity-10 p-2 rounded {{ request()->routeIs('donasi.*') || request()->routeIs('wakaf.*') || request()->routeIs('penerima-bantuan.*') || request()->routeIs('penyaluran.*') || request()->routeIs('reports.donatur*') || request()->routeIs('reports.penyaluran*') ? 'bg-green-600 bg-opacity-50 font-bold' : '' }}" href="#" onclick="toggleMenu('donasiMenu')">
                             <span class="flex items-center text-sm">
                                 <i class="fas fa-donate mr-2"></i>
                                 Donasi & Wakaf
                             </span>
                             <i class="fas fa-chevron-down"></i>
                         </a>
-                        <div class="ml-4 mt-2 space-y-1 {{ request()->routeIs('donasi.*') || request()->routeIs('wakaf.*') || request()->routeIs('reports.donatur*') ? '' : 'hidden' }}" id="donasiMenu">
+                        <div class="ml-4 mt-2 space-y-1 {{ request()->routeIs('donasi.*') || request()->routeIs('wakaf.*') || request()->routeIs('penerima-bantuan.*') || request()->routeIs('penyaluran.*') || request()->routeIs('reports.donatur*') || request()->routeIs('reports.penyaluran*') ? '' : 'hidden' }}" id="donasiMenu">
                             <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('donasi.*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('donasi.index') }}">
                                 <i class="fas fa-hand-holding-usd mr-2"></i>
                                 Donasi
@@ -205,9 +205,21 @@
                                 <i class="fas fa-mosque mr-2"></i>
                                 Wakaf
                             </a>
-                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('reports.donatur*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('reports.donatur') }}">
+                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('penerima-bantuan.*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('penerima-bantuan.index') }}">
                                 <i class="fas fa-users mr-2"></i>
+                                Penerima Bantuan
+                            </a>
+                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('penyaluran.*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('penyaluran.index') }}">
+                                <i class="fas fa-hand-holding mr-2"></i>
+                                Penyaluran
+                            </a>
+                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('reports.donatur*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('reports.donatur') }}">
+                                <i class="fas fa-chart-line mr-2"></i>
                                 Laporan Donatur
+                            </a>
+                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('reports.penyaluran*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('reports.penyaluran') }}">
+                                <i class="fas fa-chart-bar mr-2"></i>
+                                Laporan Penyaluran
                             </a>
                         </div>
                     </li>

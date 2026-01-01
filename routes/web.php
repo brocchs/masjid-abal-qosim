@@ -41,8 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('shodaqoh', App\Http\Controllers\ShodaqohController::class);
     Route::resource('donasi', App\Http\Controllers\DonasiController::class);
     Route::resource('wakaf', App\Http\Controllers\WakafController::class);
+    Route::resource('penerima-bantuan', App\Http\Controllers\PenerimaBantuanController::class);
+    Route::resource('penyaluran', App\Http\Controllers\PenyaluranController::class);
     
-    // Laporan Donatur
+    // Laporan
     Route::get('/reports/donatur', [DonaturReportController::class, 'index'])->name('reports.donatur');
     Route::get('/reports/donatur/{nama}', [DonaturReportController::class, 'detail'])->name('reports.donatur.detail');
+    Route::get('/reports/penyaluran', [App\Http\Controllers\PenyaluranReportController::class, 'index'])->name('reports.penyaluran');
 });
