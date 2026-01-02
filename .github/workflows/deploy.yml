@@ -20,14 +20,48 @@ jobs:
     - name: Install dependencies
       run: composer install --no-dev --optimize-autoloader
       
+    - name: Create deployment package
+      run: |
+        mkdir deploy-package
+        # Copy essential Laravel files
+        cp -r app deploy-package/
+        cp -r bootstrap deploy-package/
+        cp -r config deploy-package/
+        cp -r database deploy-package/
+        cp -r public deploy-package/
+        cp -r resources deploy-package/
+        cp -r routes deploy-package/
+        cp -r storage deploy-package/
+        cp -r vendor deploy-package/
+        # Copy root files
+        cp .env.example deploy-package/
+        cp artisan deploy-package/
+        cp composer.json deploy-package/
+        cp composer.lock deploy-package/
+        # Create necessary directories
+        mkdir -p deploy-package/storage/logs
+        mkdir -p deploy-package/storage/framework/cache
+        mkdir -p deploy-package/storage/framework/sessions
+        mkdir -p deploy-package/storage/framework/views
+        
     - name: Deploy to FTP
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./
+        local-dir: ./deploy-package/
         server-dir: /
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/tests/**
+          **/.env
+          **/README.md
+          **/.gitignore
+          **/.github/**
+          **/storage/logs/*
         
     - name: Deployment Success
       if: success()
