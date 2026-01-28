@@ -17,14 +17,14 @@
                         'masjid-green-dark': '#1e3a21'
                     },
                     screens: {
-                        'xs': '568px'
+                        'xs': '700px'
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50" style="scroll-behavior: smooth; scroll-padding-top: 80px;">
     <div class="h-16"></div>
     <!-- Header -->
     <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header" style="background: linear-gradient(to right, rgba(44, 85, 48, 0.85), rgba(0, 0, 0, 0.85)); backdrop-filter: blur(10px);">
@@ -37,8 +37,10 @@
                     </div>
                 </div>
                 <nav class="hidden xs:flex space-x-1 h-16 items-center absolute left-1/2 -translate-x-1/2">
-                    <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-white" style="border-bottom: 3px solid #4ade80;">Dashboard</a>
-                    <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-gray-300 hover:text-white transition-all" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''">Event</a>
+                    <a href="#event" class="menu-link px-3 h-full flex items-center text-sm font-medium text-gray-300" data-section="event" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'event')">Dokumentasi</a>
+                    <a href="#laporan" class="menu-link px-3 h-full flex items-center text-sm font-medium text-gray-300" data-section="laporan" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'laporan')">Laporan</a>
+                    <a href="#donasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-gray-300" data-section="donasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'donasi')">Donasi</a>
+                    <a href="#lokasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-gray-300" data-section="lokasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'lokasi')">Lokasi</a>
                 </nav>
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('login') }}" class="flex items-center justify-center bg-white hover:bg-gray-50 text-black px-6 py-2.5 rounded-full transition-all shadow-lg hover:shadow-2xl" style="box-shadow: 0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 0 30px rgba(255,255,255,0.8), 0 8px 16px rgba(0,0,0,0.2)'" onmouseout="this.style.boxShadow='0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1)'">
@@ -55,17 +57,19 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden fixed top-16 left-0 right-0 z-40 shadow-lg" style="background: linear-gradient(to right, rgba(44, 85, 48, 0.85), rgba(0, 0, 0, 0.85)); backdrop-filter: blur(10px);">
         <div class="container mx-auto px-4 py-4">
-            <a href="#" class="block px-4 py-3 text-white font-medium border-b border-white/10 text-center">Dashboard</a>
-            <a href="#" class="block px-4 py-3 text-gray-300 hover:text-white font-medium text-center">Event</a>
+            <a href="#event" class="block px-4 py-3 text-gray-300 hover:text-white font-medium text-center" onclick="smoothScroll(event, 'event'); toggleMenu();">Dokumentasi</a>
+            <a href="#laporan" class="block px-4 py-3 text-gray-300 hover:text-white font-medium text-center" onclick="smoothScroll(event, 'laporan'); toggleMenu();">Laporan</a>
+            <a href="#donasi" class="block px-4 py-3 text-gray-300 hover:text-white font-medium text-center" onclick="smoothScroll(event, 'donasi'); toggleMenu();">Donasi</a>
+            <a href="#lokasi" class="block px-4 py-3 text-gray-300 hover:text-white font-medium text-center" onclick="smoothScroll(event, 'lokasi'); toggleMenu();">Lokasi</a>
         </div>
     </div>
 
     <!-- Carousel Event -->
-    <section class="bg-gray-100 py-8">
+    <section id="event" class="bg-gray-100 py-8">
         <div class="container mx-auto px-4">
             <div class="relative overflow-hidden rounded-xl shadow-lg">
-                <div class="absolute top-6 left-6 z-10 bg-black/50 backdrop-blur-sm px-6 py-3 rounded-lg">
-                    <h2 class="text-2xl font-bold text-white">Dokumentasi</h2>
+                <div class="absolute top-6 left-6 z-10 bg-gradient-to-r from-masjid-green to-black/80 backdrop-blur-sm px-6 py-2.5 rounded-lg shadow-xl border border-white/20">
+                    <h2 class="text-xl font-bold text-white" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">Dokumentasi</h2>
                 </div>
                 <div id="carousel" class="flex transition-transform duration-500 ease-in-out">
                     @forelse($eventImages as $image)
@@ -100,42 +104,42 @@
     </section>
 
     <!-- Hero Section -->
-    <section class="bg-white py-16">
+    <section id="laporan" class="bg-white py-16">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold text-gray-800 mb-4">Laporan Keuangan Transparan</h2>
             <p class="text-xl text-gray-600 mb-8">Keterbukaan informasi keuangan masjid untuk kepercayaan jamaah</p>
             
             <!-- Statistics Cards -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
-                <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
+                <div class="bg-gradient-to-br from-blue-500 to-black text-white p-6 rounded-xl shadow-lg">
                     <div class="text-center">
-                        <i class="fas fa-hand-holding-heart text-3xl mb-3"></i>
-                        <h3 class="text-lg font-semibold mb-2">Total Donasi</h3>
-                        <p class="text-2xl font-bold">Rp {{ number_format($totalDonasi, 0, ',', '.') }}</p>
+                        <i class="fas fa-hand-holding-heart text-3xl mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></i>
+                        <h3 class="text-lg font-semibold mb-2" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Total Donasi</h3>
+                        <p class="text-2xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Rp {{ number_format($totalDonasi, 0, ',', '.') }}</p>
                     </div>
                 </div>
                 
-                <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-xl shadow-lg">
+                <div class="bg-gradient-to-br from-purple-500 to-black text-white p-6 rounded-xl shadow-lg">
                     <div class="text-center">
-                        <i class="fas fa-mosque text-3xl mb-3"></i>
-                        <h3 class="text-lg font-semibold mb-2">Total Wakaf</h3>
-                        <p class="text-2xl font-bold">Rp {{ number_format($totalWakaf, 0, ',', '.') }}</p>
+                        <i class="fas fa-mosque text-3xl mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></i>
+                        <h3 class="text-lg font-semibold mb-2" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Total Wakaf</h3>
+                        <p class="text-2xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Rp {{ number_format($totalWakaf, 0, ',', '.') }}</p>
                     </div>
                 </div>
                 
-                <div class="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-xl shadow-lg">
+                <div class="bg-gradient-to-br from-green-500 to-black text-white p-6 rounded-xl shadow-lg">
                     <div class="text-center">
-                        <i class="fas fa-arrow-up text-3xl mb-3"></i>
-                        <h3 class="text-lg font-semibold mb-2">Total Pemasukan</h3>
-                        <p class="text-2xl font-bold">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</p>
+                        <i class="fas fa-arrow-up text-3xl mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></i>
+                        <h3 class="text-lg font-semibold mb-2" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Total Pemasukan</h3>
+                        <p class="text-2xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</p>
                     </div>
                 </div>
                 
-                <div class="bg-gradient-to-br from-red-500 to-red-600 text-white p-6 rounded-xl shadow-lg">
+                <div class="bg-gradient-to-br from-red-500 to-black text-white p-6 rounded-xl shadow-lg">
                     <div class="text-center">
-                        <i class="fas fa-arrow-down text-3xl mb-3"></i>
-                        <h3 class="text-lg font-semibold mb-2">Total Pengeluaran</h3>
-                        <p class="text-2xl font-bold">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</p>
+                        <i class="fas fa-arrow-down text-3xl mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></i>
+                        <h3 class="text-lg font-semibold mb-2" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Total Pengeluaran</h3>
+                        <p class="text-2xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</p>
                     </div>
                 </div>
             </div>
@@ -147,14 +151,14 @@
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Donasi Terbaru -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="bg-gradient-to-br from-green-200 to-white rounded-xl shadow-sm p-6">
                     <div class="flex items-center mb-6">
                         <i class="fas fa-hand-holding-usd text-blue-600 text-2xl mr-3"></i>
                         <h3 class="text-xl font-bold text-gray-800">Donasi Terbaru</h3>
                     </div>
                     <div class="space-y-4">
                         @forelse($donasiTerbaru as $donasi)
-                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                        <div class="flex justify-between items-center p-3 bg-white/50 rounded-lg">
                             <div>
                                 <p class="font-medium text-gray-800">{{ $donasi->nama_pemberi }}</p>
                                 <p class="text-sm text-gray-600">{{ $donasi->tanggal_shodaqoh->format('d/m/Y') }}</p>
@@ -168,7 +172,7 @@
                 </div>
 
                 <!-- Wakaf Terbaru -->
-                <div class="bg-white rounded-xl shadow-sm p-6">
+                <div class="bg-gradient-to-br from-green-200 to-white rounded-xl shadow-sm p-6">
                     <div class="flex items-center mb-6">
                         <i class="fas fa-mosque text-purple-600 text-2xl mr-3"></i>
                         <h3 class="text-xl font-bold text-gray-800">Wakaf Terbaru</h3>
@@ -193,7 +197,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="py-16 bg-masjid-green text-white">
+    <section id="donasi" class="py-16 bg-masjid-green text-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h3 class="text-3xl font-bold mb-4">Ingin Berdonasi atau Berwakaf?</h3>
@@ -277,19 +281,26 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-masjid-green to-black text-white py-6">
+    <footer id="lokasi" class="bg-gradient-to-r from-masjid-green to-black text-white py-8">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center space-x-3">
-                    <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-10 h-10" style="filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));">
-                    <div>
-                        <h4 class="text-lg font-bold leading-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Masjid<br>Abal Qosim</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" style="filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8)); width: 120px; height: 120px;">
+                        <div>
+                            <h4 class="text-3xl font-bold leading-tight" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(74,222,128,0.5), 0 0 30px rgba(74,222,128,0.3);">Masjid<br>Abal Qosim</h4>
+                        </div>
                     </div>
+                    <p class="text-sm text-green-100 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>Jl. Manyar Kartika Barat, Sukolilo, Surabaya</p>
+                    <p class="text-sm text-green-100 mb-2"><i class="fas fa-phone mr-2"></i>08121645348</p>
+                    <p class="text-sm text-green-100"><i class="fas fa-envelope mr-2"></i>pakfa007@gmail.com</p>
                 </div>
-                <div class="text-center md:text-right">
-                    <p class="text-sm text-white"><i class="fas fa-map-marker-alt mr-1"></i>Jl. Manyar Kartika Barat, Sukolilo, Surabaya</p>
-                    <p class="text-[10px] text-gray-300 mt-1">© {{ date('Y') }} Moch.Alfarisyi. All rights reserved.</p>
+                <div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.54840985281!2d112.76171487404147!3d-7.292108171674097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fbd20c219739%3A0x16db492bed3b63cd!2sMasjid%20Abal%20Qosim!5e0!3m2!1sen!2sid!4v1769589419598!5m2!1sen!2sid" width="100%" height="200" style="border:0; border-radius: 12px; box-shadow: 0 0 20px rgba(74,222,128,0.4), 0 4px 6px rgba(0,0,0,0.3);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
+            </div>
+            <div class="border-t border-white/20 pt-4 text-center">
+                <p class="text-xs text-gray-300">© {{ date('Y') }} Moch.Alfarisyi. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -333,22 +344,67 @@ function toggleMenu() {
     menu.classList.toggle('hidden');
 }
 
+function smoothScroll(e, targetId) {
+    e.preventDefault();
+    const target = document.getElementById(targetId);
+    const headerOffset = 80;
+    const elementPosition = target.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    
+    window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+    });
+}
+
+window.addEventListener('load', function() {
+    updateActiveMenu();
+});
+
+function updateActiveMenu() {
+    const sections = ['lokasi', 'donasi', 'laporan', 'event'];
+    let current = 'event';
+    
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+        current = 'lokasi';
+    } else {
+        for (let section of sections) {
+            const element = document.getElementById(section);
+            if (element) {
+                const rect = element.getBoundingClientRect();
+                if (rect.top <= 100) {
+                    current = section;
+                    break;
+                }
+            }
+        }
+    }
+    
+    document.querySelectorAll('.menu-link').forEach(link => {
+        const section = link.getAttribute('data-section');
+        if (section === current) {
+            link.classList.remove('text-gray-300');
+            link.classList.add('text-white');
+            link.style.borderBottom = '3px solid #4ade80';
+        } else {
+            link.classList.remove('text-white');
+            link.classList.add('text-gray-300');
+            link.style.borderBottom = '';
+        }
+    });
+}
+
+window.addEventListener('scroll', updateActiveMenu);
+
 if (totalSlides > 1) {
     setInterval(nextSlide, 5000);
 }
 
-window.addEventListener('scroll', function() {
-    const header = document.getElementById('header');
-    if (window.scrollY > 50) {
-        header.classList.add('bg-opacity-90', 'backdrop-blur-md');
-    } else {
-        header.classList.remove('bg-opacity-90', 'backdrop-blur-md');
-    }
-});
+
 
 window.addEventListener('resize', function() {
     const menu = document.getElementById('mobile-menu');
-    if (window.innerWidth >= 568) {
+    if (window.innerWidth >= 700) {
         menu.classList.add('hidden');
     }
 });
