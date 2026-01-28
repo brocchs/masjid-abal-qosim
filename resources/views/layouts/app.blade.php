@@ -91,7 +91,7 @@
     <div id="loader" class="loader">
         <div class="text-center">
             <div class="relative">
-                <i class="fas fa-mosque text-white text-6xl animate-pulse-slow"></i>
+                <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-24 h-24 mx-auto animate-pulse-slow">
                 <div class="absolute -top-2 -right-2">
                     <div class="w-4 h-4 bg-white rounded-full animate-spin-slow"></div>
                 </div>
@@ -112,7 +112,7 @@
         <nav class="w-full md:w-64 min-h-screen bg-gradient-to-br from-masjid-green to-masjid-green-light shadow-lg fixed md:relative z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300" id="sidebarMenu">
             <div class="p-4">
                 <div class="text-center mb-6">
-                    <i class="fas fa-mosque text-white text-4xl mb-2"></i>
+                    <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-16 h-16 mx-auto mb-2">
                     <h5 class="text-white text-lg font-semibold">Masjid Abal Qosim</h5>
                     <small class="text-green-100">✨ Sistem Admin Masjid ✨</small>
                     <div class="mt-3 p-3 bg-white bg-opacity-10 rounded-lg border border-white border-opacity-25">

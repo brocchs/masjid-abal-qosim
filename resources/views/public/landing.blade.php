@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('pictures/logo-abal-qosim.png') }}">
     <title>Masjid Abal Qosim - Transparansi Keuangan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -22,22 +23,70 @@
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-masjid-green to-masjid-green-light text-white">
-        <div class="container mx-auto px-4 py-6">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-3">
-                    <i class="fas fa-mosque text-3xl"></i>
-                    <div>
-                        <h1 class="text-2xl font-bold">Masjid Abal Qosim</h1>
-                        <p class="text-green-100">Transparansi Keuangan Umat</p>
-                    </div>
+    <header class="bg-masjid-green-dark">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-14 h-14">
+                    <nav class="hidden md:flex space-x-1 h-16 items-center">
+                        <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-white" style="border-bottom: 3px solid #4ade80;">Dashboard</a>
+                        <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-gray-300 hover:text-white">Donasi</a>
+                        <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-gray-300 hover:text-white">Wakaf</a>
+                        <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-gray-300 hover:text-white">Laporan</a>
+                    </nav>
                 </div>
-                <a href="{{ route('login') }}" class="bg-white text-masjid-green px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors">
-                    <i class="fas fa-sign-in-alt mr-2"></i>Login Admin
-                </a>
+                <div class="flex items-center space-x-4">
+                    <a href="{{ route('login') }}" class="flex items-center space-x-2 bg-masjid-green hover:bg-masjid-green-light text-white px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span class="hidden md:inline text-sm font-medium">Login</span>
+                    </a>
+                    <button class="md:hidden text-gray-300 hover:text-white" onclick="toggleMenu()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </header>
+
+    <!-- Carousel Event -->
+    <section class="bg-gray-100 py-8">
+        <div class="container mx-auto px-4">
+            <div class="relative overflow-hidden rounded-xl shadow-lg">
+                <div id="carousel" class="flex transition-transform duration-500 ease-in-out">
+                    @forelse($eventImages as $image)
+                    <div class="min-w-full relative">
+                        <img src="{{ asset($image) }}" alt="Event" class="w-full h-96 object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-white text-2xl font-bold">Event Masjid</h3>
+                            <p class="text-gray-200">Kegiatan dan acara di Masjid Abal Qosim</p>
+                        </div>
+                    </div>
+                    @empty
+                    <div class="min-w-full relative">
+                        <img src="https://via.placeholder.com/1200x400/2c5530/ffffff?text=Tidak+Ada+Event" alt="No Event" class="w-full h-96 object-cover">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                            <h3 class="text-white text-2xl font-bold">Belum Ada Event</h3>
+                            <p class="text-gray-200">Nantikan event menarik dari masjid</p>
+                        </div>
+                    </div>
+                    @endforelse
+                </div>
+                @if(count($eventImages) > 1)
+                <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-masjid-green rounded-full p-3 shadow-lg">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-masjid-green rounded-full p-3 shadow-lg">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                    @foreach($eventImages as $index => $image)
+                    <button onclick="goToSlide({{ $index }})" class="w-3 h-3 rounded-full {{ $index === 0 ? 'bg-white' : 'bg-white/50' }} dot" id="dot-{{ $index }}"></button>
+                    @endforeach
+                </div>
+                @endif
+            </div>
+        </div>
+    </section>
 
     <!-- Hero Section -->
     <section class="bg-white py-16">
@@ -222,7 +271,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="text-center md:text-left">
                     <div class="flex justify-center md:justify-start items-center mb-4">
-                        <i class="fas fa-mosque text-2xl mr-3"></i>
+                        <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-14 h-14 mr-3">
                         <h4 class="text-xl font-bold">Masjid Abal Qosim</h4>
                     </div>
                     <p class="text-green-100 mb-4">Sistem Manajemen Keuangan Masjid</p>
@@ -244,4 +293,46 @@
         </div>
     </footer>
 </body>
+<script>
+let currentSlide = 0;
+const totalSlides = {{ count($eventImages) > 0 ? count($eventImages) : 1 }};
+
+function showSlide(n) {
+    const carousel = document.getElementById('carousel');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (n >= totalSlides) currentSlide = 0;
+    if (n < 0) currentSlide = totalSlides - 1;
+    
+    carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+    
+    dots.forEach((dot, index) => {
+        dot.classList.toggle('bg-white', index === currentSlide);
+        dot.classList.toggle('bg-white/50', index !== currentSlide);
+    });
+}
+
+function nextSlide() {
+    currentSlide++;
+    showSlide(currentSlide);
+}
+
+function prevSlide() {
+    currentSlide--;
+    showSlide(currentSlide);
+}
+
+function goToSlide(n) {
+    currentSlide = n;
+    showSlide(currentSlide);
+}
+
+function toggleMenu() {
+    alert('Mobile menu');
+}
+
+if (totalSlides > 1) {
+    setInterval(nextSlide, 5000);
+}
+</script>
 </html>

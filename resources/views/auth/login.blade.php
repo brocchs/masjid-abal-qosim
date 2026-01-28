@@ -23,7 +23,7 @@
                 <div class="card login-card">
                     <div class="card-body p-5">
                         <div class="text-center mb-4">
-                            <i class="fas fa-mosque text-success fa-3x mb-3"></i>
+                            <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="mx-auto mb-3" style="width: 80px; height: 80px;">
                             <h4 class="text-success">Masjid Abal Qosim</h4>
                             <p class="text-muted">Sistem Admin Keuangan</p>
                         </div>
