@@ -15,6 +15,9 @@
                         'masjid-green': '#2c5530',
                         'masjid-green-light': '#4a7c59',
                         'masjid-green-dark': '#1e3a21'
+                    },
+                    screens: {
+                        'xs': '568px'
                     }
                 }
             }
@@ -22,25 +25,26 @@
     </script>
 </head>
 <body class="bg-gray-50">
+    <div class="h-16"></div>
     <!-- Header -->
-    <header class="bg-masjid-green-dark">
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header" style="background: linear-gradient(to right, rgba(44, 85, 48, 0.85), rgba(0, 0, 0, 0.85)); backdrop-filter: blur(10px);">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-8">
-                    <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-14 h-14">
-                    <nav class="hidden md:flex space-x-1 h-16 items-center">
-                        <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-white" style="border-bottom: 3px solid #4ade80;">Dashboard</a>
-                        <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-gray-300 hover:text-white">Donasi</a>
-                        <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-gray-300 hover:text-white">Wakaf</a>
-                        <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-gray-300 hover:text-white">Laporan</a>
-                    </nav>
+                <div class="flex items-center space-x-3">
+                    <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-14 h-14" style="filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));">
+                    <div>
+                        <h1 class="text-white text-lg font-bold leading-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Masjid<br>Abal Qosim</h1>
+                    </div>
                 </div>
+                <nav class="hidden xs:flex space-x-1 h-16 items-center absolute left-1/2 -translate-x-1/2">
+                    <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-white" style="border-bottom: 3px solid #4ade80;">Dashboard</a>
+                    <a href="#" class="px-3 h-full flex items-center text-sm font-medium text-gray-300 hover:text-white transition-all" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''">Event</a>
+                </nav>
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('login') }}" class="flex items-center space-x-2 bg-masjid-green hover:bg-masjid-green-light text-white px-4 py-2 rounded-lg transition-colors">
-                        <i class="fas fa-sign-in-alt"></i>
-                        <span class="hidden md:inline text-sm font-medium">Login</span>
+                    <a href="{{ route('login') }}" class="flex items-center justify-center bg-white hover:bg-gray-50 text-black px-6 py-2.5 rounded-full transition-all shadow-lg hover:shadow-2xl" style="box-shadow: 0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 0 30px rgba(255,255,255,0.8), 0 8px 16px rgba(0,0,0,0.2)'" onmouseout="this.style.boxShadow='0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1)'">
+                        <i class="fas fa-sign-in-alt text-black"></i>
                     </a>
-                    <button class="md:hidden text-gray-300 hover:text-white" onclick="toggleMenu()">
+                    <button class="xs:hidden text-gray-300 hover:text-white" onclick="toggleMenu()">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -48,22 +52,29 @@
         </div>
     </header>
 
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden fixed top-16 left-0 right-0 z-40 shadow-lg" style="background: linear-gradient(to right, rgba(44, 85, 48, 0.85), rgba(0, 0, 0, 0.85)); backdrop-filter: blur(10px);">
+        <div class="container mx-auto px-4 py-4">
+            <a href="#" class="block px-4 py-3 text-white font-medium border-b border-white/10 text-center">Dashboard</a>
+            <a href="#" class="block px-4 py-3 text-gray-300 hover:text-white font-medium text-center">Event</a>
+        </div>
+    </div>
+
     <!-- Carousel Event -->
     <section class="bg-gray-100 py-8">
         <div class="container mx-auto px-4">
             <div class="relative overflow-hidden rounded-xl shadow-lg">
+                <div class="absolute top-6 left-6 z-10 bg-black/50 backdrop-blur-sm px-6 py-3 rounded-lg">
+                    <h2 class="text-2xl font-bold text-white">Dokumentasi</h2>
+                </div>
                 <div id="carousel" class="flex transition-transform duration-500 ease-in-out">
                     @forelse($eventImages as $image)
                     <div class="min-w-full relative">
-                        <img src="{{ asset($image) }}" alt="Event" class="w-full h-96 object-cover">
-                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                            <h3 class="text-white text-2xl font-bold">Event Masjid</h3>
-                            <p class="text-gray-200">Kegiatan dan acara di Masjid Abal Qosim</p>
-                        </div>
+                        <img src="{{ asset($image) }}" alt="Event" class="w-full h-[500px] object-cover">
                     </div>
                     @empty
                     <div class="min-w-full relative">
-                        <img src="https://via.placeholder.com/1200x400/2c5530/ffffff?text=Tidak+Ada+Event" alt="No Event" class="w-full h-96 object-cover">
+                        <img src="https://via.placeholder.com/1200x400/2c5530/ffffff?text=Tidak+Ada+Event" alt="No Event" class="w-full h-[500px] object-cover">
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
                             <h3 class="text-white text-2xl font-bold">Belum Ada Event</h3>
                             <p class="text-gray-200">Nantikan event menarik dari masjid</p>
@@ -266,28 +277,18 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-masjid-green text-white py-8">
+    <footer class="bg-gradient-to-r from-masjid-green to-black text-white py-6">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="text-center md:text-left">
-                    <div class="flex justify-center md:justify-start items-center mb-4">
-                        <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-14 h-14 mr-3">
-                        <h4 class="text-xl font-bold">Masjid Abal Qosim</h4>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center space-x-3">
+                    <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-10 h-10" style="filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));">
+                    <div>
+                        <h4 class="text-lg font-bold leading-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Masjid<br>Abal Qosim</h4>
                     </div>
-                    <p class="text-green-100 mb-4">Sistem Manajemen Keuangan Masjid</p>
-                    <p class="text-sm text-green-200">© {{ date('Y') }} Moch.Alfarisyi. All rights reserved.</p>
                 </div>
                 <div class="text-center md:text-right">
-                    <h5 class="text-lg font-semibold mb-3">Alamat Masjid</h5>
-                    <div class="text-green-100 space-y-2">
-                        <p><i class="fas fa-map-marker-alt mr-2"></i>Jl. Manyar Kartika Barat</p>
-                        <p>Menur Pumpungan, Kec. Sukolilo</p>
-                        <p>Surabaya, Jawa Timur 60118</p>
-                        <a href="https://maps.app.goo.gl/uyrsqeEqktpDcLUa8" target="_blank" 
-                           class="inline-block bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg mt-3 transition-colors">
-                            <i class="fas fa-map mr-2"></i>Lihat di Google Maps
-                        </a>
-                    </div>
+                    <p class="text-sm text-white"><i class="fas fa-map-marker-alt mr-1"></i>Jl. Manyar Kartika Barat, Sukolilo, Surabaya</p>
+                    <p class="text-[10px] text-gray-300 mt-1">© {{ date('Y') }} Moch.Alfarisyi. All rights reserved.</p>
                 </div>
             </div>
         </div>
@@ -328,11 +329,28 @@ function goToSlide(n) {
 }
 
 function toggleMenu() {
-    alert('Mobile menu');
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
 }
 
 if (totalSlides > 1) {
     setInterval(nextSlide, 5000);
 }
+
+window.addEventListener('scroll', function() {
+    const header = document.getElementById('header');
+    if (window.scrollY > 50) {
+        header.classList.add('bg-opacity-90', 'backdrop-blur-md');
+    } else {
+        header.classList.remove('bg-opacity-90', 'backdrop-blur-md');
+    }
+});
+
+window.addEventListener('resize', function() {
+    const menu = document.getElementById('mobile-menu');
+    if (window.innerWidth >= 568) {
+        menu.classList.add('hidden');
+    }
+});
 </script>
 </html>
