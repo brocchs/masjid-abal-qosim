@@ -24,10 +24,26 @@
         }
     </script>
 </head>
-<body class="bg-gray-50" style="scroll-behavior: smooth; scroll-padding-top: 80px;">
+<body class="bg-gray-50 relative" style="scroll-padding-top: 80px;">
+    <style>
+        html {
+            scroll-behavior: auto;
+        }
+        body {
+            overflow-x: hidden;
+        }
+        html.smooth-scroll {
+            overflow: hidden;
+        }
+        body.smooth-scroll {
+            overflow: hidden;
+        }
+    </style>
     <div class="h-16"></div>
+    <!-- Background Circle -->
+    <div id="bg-circle" class="absolute top-0 left-1/2 -translate-x-1/2 w-[180%] md:w-[1400px] h-[700px] md:h-[1000px] rounded-[50%]" style="transform: translate(-50%, -350px); z-index: 1; background: radial-gradient(ellipse at center, #ffffff 0%, #ffffff 25%, #4a7c59 45%, #2c5530 60%, #1a3320 72%, #000000 85%, transparent 100%); opacity: 0; transition: opacity 0.8s ease-out;"></div>
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="header" style="background: linear-gradient(to right, rgba(44, 85, 48, 0.85), rgba(0, 0, 0, 0.85)); backdrop-filter: blur(10px);">
+    <header class="fixed top-0 left-0 right-0 z-50" id="header" style="background: rgba(44, 85, 48, 0.4); backdrop-filter: blur(10px); transform: translateY(-100%); opacity: 0; transition: transform 0.6s ease-out, opacity 0.6s ease-out;">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-3">
@@ -37,10 +53,10 @@
                     </div>
                 </div>
                 <nav class="hidden xs:flex space-x-1 h-16 items-center absolute left-1/2 -translate-x-1/2">
-                    <a href="#event" class="menu-link px-3 h-full flex items-center text-sm font-medium text-gray-300" data-section="event" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'event')">Dokumentasi</a>
-                    <a href="#laporan" class="menu-link px-3 h-full flex items-center text-sm font-medium text-gray-300" data-section="laporan" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'laporan')">Laporan</a>
-                    <a href="#donasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-gray-300" data-section="donasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'donasi')">Donasi</a>
-                    <a href="#lokasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-gray-300" data-section="lokasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'lokasi')">Lokasi</a>
+                    <a href="#event" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="event" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'event')">Dokumentasi</a>
+                    <a href="#laporan" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="laporan" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'laporan')">Laporan</a>
+                    <a href="#donasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="donasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'donasi')">Donasi</a>
+                    <a href="#lokasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="lokasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'lokasi')">Lokasi</a>
                 </nav>
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('login') }}" class="flex items-center justify-center bg-white hover:bg-gray-50 text-black px-6 py-2.5 rounded-full transition-all shadow-lg hover:shadow-2xl" style="box-shadow: 0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 0 30px rgba(255,255,255,0.8), 0 8px 16px rgba(0,0,0,0.2)'" onmouseout="this.style.boxShadow='0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1)'">
@@ -65,9 +81,9 @@
     </div>
 
     <!-- Carousel Event -->
-    <section id="event" class="bg-gray-100 py-8">
-        <div class="container mx-auto px-4">
-            <div class="relative overflow-hidden rounded-xl shadow-lg">
+    <section id="event" class="bg-gray-100 py-8 relative">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="relative overflow-hidden rounded-xl shadow-lg" style="opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;" id="carousel-container">
                 <div class="absolute top-6 left-6 z-10 bg-gradient-to-r from-masjid-green to-black/80 backdrop-blur-sm px-6 py-2.5 rounded-lg shadow-xl border border-white/20">
                     <h2 class="text-xl font-bold text-white" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">Dokumentasi</h2>
                 </div>
@@ -104,7 +120,7 @@
     </section>
 
     <!-- Hero Section -->
-    <section id="laporan" class="bg-white py-16">
+    <section id="laporan" class="bg-white py-16" style="opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold text-gray-800 mb-4">Laporan Keuangan Transparan</h2>
             <p class="text-xl text-gray-600 mb-8">Keterbukaan informasi keuangan masjid untuk kepercayaan jamaah</p>
@@ -147,7 +163,7 @@
     </section>
 
     <!-- Recent Donations -->
-    <section class="py-16 bg-gray-100">
+    <section class="py-16 bg-gray-100" style="opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;" id="recent-section">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Donasi Terbaru -->
@@ -197,7 +213,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="donasi" class="py-16 bg-masjid-green text-white">
+    <section id="donasi" class="py-16 bg-masjid-green text-white" style="opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h3 class="text-3xl font-bold mb-4">Ingin Berdonasi atau Berwakaf?</h3>
@@ -257,7 +273,7 @@
     </section>
 
     <!-- About Section -->
-    <section class="py-16 bg-white">
+    <section class="py-16 bg-white" style="opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;" id="about-section">
         <div class="container mx-auto px-4 text-center">
             <h3 class="text-3xl font-bold text-gray-800 mb-8">Tentang Transparansi Keuangan</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -281,7 +297,7 @@
     </section>
 
     <!-- Footer -->
-    <footer id="lokasi" class="bg-gradient-to-r from-masjid-green to-black text-white py-8">
+    <footer id="lokasi" class="bg-gradient-to-r from-masjid-green to-black text-white py-8" style="opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
@@ -296,7 +312,7 @@
                     <p class="text-sm text-green-100"><i class="fas fa-envelope mr-2"></i>pakfa007@gmail.com</p>
                 </div>
                 <div>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.54840985281!2d112.76171487404147!3d-7.292108171674097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fbd20c219739%3A0x16db492bed3b63cd!2sMasjid%20Abal%20Qosim!5e0!3m2!1sen!2sid!4v1769589419598!5m2!1sen!2sid" width="100%" height="200" style="border:0; border-radius: 12px; box-shadow: 0 0 20px rgba(74,222,128,0.4), 0 4px 6px rgba(0,0,0,0.3);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.54840985281!2d112.76171487404147!3d-7.292108171674097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fbd20c219739%3A0x16db492bed3b63cd!2sMasjid%20Abal%20Qosim!5e0!3m2!1sen!2sid!4v1769589419598!5m2!1sen!2sid" width="100%" height="200" style="border:0; border-radius: 12px; box-shadow: 0 0 20px rgba(74,222,128,0.4), 0 4px 6px rgba(0,0,0,0.3); pointer-events: none;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
             <div class="border-t border-white/20 pt-4 text-center">
@@ -348,17 +364,65 @@ function smoothScroll(e, targetId) {
     e.preventDefault();
     const target = document.getElementById(targetId);
     const headerOffset = 80;
-    const elementPosition = target.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
     
-    window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-    });
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    const duration = 1000;
+    let startTime = null;
+
+    function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        const easeProgress = progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        
+        window.scrollTo(0, startPosition + distance * easeProgress);
+        
+        if (timeElapsed < duration) {
+            requestAnimationFrame(animation);
+        }
+    }
+
+    requestAnimationFrame(animation);
 }
 
 window.addEventListener('load', function() {
+    const header = document.getElementById('header');
+    const bgCircle = document.getElementById('bg-circle');
+    const carouselContainer = document.getElementById('carousel-container');
+    setTimeout(() => {
+        bgCircle.style.opacity = '1';
+    }, 100);
+    setTimeout(() => {
+        header.style.transform = 'translateY(0)';
+        header.style.opacity = '1';
+    }, 200);
+    setTimeout(() => {
+        carouselContainer.style.transform = 'translateY(0)';
+        carouselContainer.style.opacity = '1';
+    }, 400);
     updateActiveMenu();
+});
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, { threshold: 0.1 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    observer.observe(document.getElementById('laporan'));
+    observer.observe(document.getElementById('recent-section'));
+    observer.observe(document.getElementById('donasi'));
+    observer.observe(document.getElementById('about-section'));
+    observer.observe(document.getElementById('lokasi'));
 });
 
 function updateActiveMenu() {
@@ -383,12 +447,8 @@ function updateActiveMenu() {
     document.querySelectorAll('.menu-link').forEach(link => {
         const section = link.getAttribute('data-section');
         if (section === current) {
-            link.classList.remove('text-gray-300');
-            link.classList.add('text-white');
             link.style.borderBottom = '3px solid #4ade80';
         } else {
-            link.classList.remove('text-white');
-            link.classList.add('text-gray-300');
             link.style.borderBottom = '';
         }
     });
@@ -408,5 +468,35 @@ window.addEventListener('resize', function() {
         menu.classList.add('hidden');
     }
 });
+
+let scrollTarget = window.pageYOffset;
+let currentScroll = window.pageYOffset;
+let isAnimating = false;
+
+window.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    scrollTarget += e.deltaY;
+    scrollTarget = Math.max(0, Math.min(scrollTarget, document.body.scrollHeight - window.innerHeight));
+    
+    if (!isAnimating) {
+        isAnimating = true;
+        requestAnimationFrame(smoothScroll);
+    }
+}, { passive: false });
+
+function smoothScroll() {
+    const diff = scrollTarget - currentScroll;
+    const delta = diff * 0.1;
+    
+    if (Math.abs(delta) > 0.5) {
+        currentScroll += delta;
+        window.scrollTo(0, currentScroll);
+        requestAnimationFrame(smoothScroll);
+    } else {
+        currentScroll = scrollTarget;
+        window.scrollTo(0, currentScroll);
+        isAnimating = false;
+    }
+}
 </script>
 </html>
