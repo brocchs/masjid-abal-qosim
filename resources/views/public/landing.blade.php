@@ -88,17 +88,17 @@
     <section id="event" class="bg-gray-100 py-8 relative">
         <div class="container mx-auto px-4 relative z-10">
             <div class="relative overflow-hidden rounded-xl shadow-lg" style="opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;" id="carousel-container">
-                <div class="absolute top-6 left-6 z-10 bg-gradient-to-r from-masjid-green to-black/80 backdrop-blur-sm px-6 py-2.5 rounded-lg shadow-xl border border-white/20">
+                <div class="absolute top-6 left-6 z-10 backdrop-blur-sm px-6 py-2.5 rounded-lg shadow-xl border border-white/20" style="background: radial-gradient(circle, rgba(44, 85, 48, 0.7) 0%, rgba(30, 58, 33, 0.7) 50%, rgba(0, 0, 0, 0.7) 100%);">
                     <h2 class="text-xl font-bold text-white" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8);">Dokumentasi</h2>
                 </div>
-                <div id="carousel" class="flex transition-transform duration-500 ease-in-out">
+                <div id="carousel" class="flex transition-transform duration-500 ease-in-out" style="user-select: none; -webkit-user-select: none; -webkit-user-drag: none;">
                     @forelse($eventImages as $image)
                     <div class="min-w-full relative">
-                        <img src="{{ asset($image) }}" alt="Event" class="w-full h-[500px] object-cover">
+                        <img src="{{ asset($image) }}" alt="Event" class="w-full h-[500px] object-cover" draggable="false" style="pointer-events: none;">
                     </div>
                     @empty
                     <div class="min-w-full relative">
-                        <img src="https://via.placeholder.com/1200x400/2c5530/ffffff?text=Tidak+Ada+Event" alt="No Event" class="w-full h-[500px] object-cover">
+                        <img src="https://via.placeholder.com/1200x400/2c5530/ffffff?text=Tidak+Ada+Event" alt="No Event" class="w-full h-[500px] object-cover" draggable="false" style="pointer-events: none;">
                         <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
                             <h3 class="text-white text-2xl font-bold">Belum Ada Event</h3>
                             <p class="text-gray-200">Nantikan event menarik dari masjid</p>
@@ -328,6 +328,9 @@
 <script>
 let currentSlide = 0;
 const totalSlides = {{ count($eventImages) > 0 ? count($eventImages) : 1 }};
+let startX = 0;
+let isDragging = false;
+let autoSlideInterval;
 
 function showSlide(n) {
     const carousel = document.getElementById('carousel');
@@ -347,16 +350,87 @@ function showSlide(n) {
 function nextSlide() {
     currentSlide++;
     showSlide(currentSlide);
+    resetAutoSlide();
 }
 
 function prevSlide() {
     currentSlide--;
     showSlide(currentSlide);
+    resetAutoSlide();
 }
 
 function goToSlide(n) {
     currentSlide = n;
     showSlide(currentSlide);
+    resetAutoSlide();
+}
+
+function resetAutoSlide() {
+    if (totalSlides <= 1) return;
+    clearInterval(autoSlideInterval);
+    autoSlideInterval = setInterval(nextSlide, 5000);
+}
+
+function initCarouselSwipe() {
+    const carousel = document.getElementById('carousel');
+    if (!carousel) return;
+
+    carousel.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.pageX;
+        carousel.style.cursor = 'grabbing';
+    });
+
+    carousel.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+    });
+
+    carousel.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.style.cursor = 'grab';
+        const endX = e.pageX;
+        const diff = startX - endX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+            resetAutoSlide();
+        }
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+        isDragging = false;
+        carousel.style.cursor = 'grab';
+    });
+
+    carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].pageX;
+    }, { passive: true });
+
+    carousel.addEventListener('touchmove', (e) => {
+        if (!startX) return;
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', (e) => {
+        if (!startX) return;
+        const endX = e.changedTouches[0].pageX;
+        const diff = startX - endX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+            resetAutoSlide();
+        }
+        startX = 0;
+    }, { passive: true });
+
+    carousel.style.cursor = 'grab';
 }
 
 function toggleMenu() {
@@ -416,6 +490,7 @@ window.addEventListener('load', function() {
         carouselContainer.style.opacity = '1';
     }, 400);
     updateActiveMenu();
+    initCarouselSwipe();
 });
 
 const observer = new IntersectionObserver((entries) => {
@@ -482,7 +557,7 @@ function updateActiveMenu() {
 window.addEventListener('scroll', updateActiveMenu);
 
 if (totalSlides > 1) {
-    setInterval(nextSlide, 5000);
+    autoSlideInterval = setInterval(nextSlide, 5000);
 }
 
 
