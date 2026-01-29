@@ -24,6 +24,10 @@
         }
     </script>
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
         .loader {
             position: fixed;
             top: 0;

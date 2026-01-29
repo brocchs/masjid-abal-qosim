@@ -38,12 +38,16 @@
         body.smooth-scroll {
             overflow: hidden;
         }
+        #header {
+            clip-path: ellipse(100% 100% at 50% 0%);
+            padding-bottom: 20px;
+        }
     </style>
     <div class="h-16"></div>
-    <!-- Background Circle -->
-    <div id="bg-circle" class="absolute top-0 left-1/2 -translate-x-1/2 w-[180%] md:w-[1400px] h-[700px] md:h-[1000px] rounded-[50%]" style="transform: translate(-50%, -350px); z-index: 1; background: radial-gradient(ellipse at center, #ffffff 0%, #ffffff 25%, #4a7c59 45%, #2c5530 60%, #1a3320 72%, #000000 85%, transparent 100%); opacity: 0; transition: opacity 0.8s ease-out;"></div>
+    <!-- Background Image -->
+    <div id="bg-circle" class="absolute top-0 left-0 right-0 h-[700px] md:h-[1000px]" style="z-index: 1; opacity: 0; transition: opacity 0.8s ease-out; background-image: url('{{ asset('pictures/header2.png') }}'); background-size: cover; background-position: center;"></div>
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50" id="header" style="background: rgba(44, 85, 48, 0.4); backdrop-filter: blur(10px); transform: translateY(-100%); opacity: 0; transition: transform 0.6s ease-out, opacity 0.6s ease-out;">
+    <header class="fixed top-0 left-0 right-0 z-50" id="header" style="background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); transform: translateY(-100%); opacity: 0; transition: transform 0.6s ease-out, opacity 0.6s ease-out;">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center space-x-3">
@@ -53,10 +57,10 @@
                     </div>
                 </div>
                 <nav class="hidden xs:flex space-x-1 h-16 items-center absolute left-1/2 -translate-x-1/2">
-                    <a href="#event" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="event" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'event')">Dokumentasi</a>
-                    <a href="#laporan" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="laporan" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'laporan')">Laporan</a>
-                    <a href="#donasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="donasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'donasi')">Donasi</a>
-                    <a href="#lokasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="lokasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScroll(event, 'lokasi')">Lokasi</a>
+                    <a href="#event" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="event" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScrollToSection(event, 'event')">Dokumentasi</a>
+                    <a href="#laporan" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="laporan" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScrollToSection(event, 'laporan')">Laporan</a>
+                    <a href="#donasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="donasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScrollToSection(event, 'donasi')">Donasi</a>
+                    <a href="#lokasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="lokasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScrollToSection(event, 'lokasi')">Lokasi</a>
                 </nav>
                 <div class="flex items-center space-x-4">
                     <a href="{{ route('login') }}" class="flex items-center justify-center bg-white hover:bg-gray-50 text-black px-6 py-2.5 rounded-full transition-all shadow-lg hover:shadow-2xl" style="box-shadow: 0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 0 30px rgba(255,255,255,0.8), 0 8px 16px rgba(0,0,0,0.2)'" onmouseout="this.style.boxShadow='0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1)'">
@@ -71,12 +75,12 @@
     </header>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden fixed top-16 left-0 right-0 z-40 shadow-lg" style="background: linear-gradient(to right, rgba(44, 85, 48, 0.85), rgba(0, 0, 0, 0.85)); backdrop-filter: blur(10px);">
+    <div id="mobile-menu" class="hidden fixed left-0 right-0 z-40 shadow-lg" style="top: 64px; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px); clip-path: ellipse(100% 100% at 50% 0%); padding-bottom: 20px;">
         <div class="container mx-auto px-4 py-4">
-            <a href="#event" class="block px-4 py-3 text-gray-300 hover:text-white font-medium text-center" onclick="smoothScroll(event, 'event'); toggleMenu();">Dokumentasi</a>
-            <a href="#laporan" class="block px-4 py-3 text-gray-300 hover:text-white font-medium text-center" onclick="smoothScroll(event, 'laporan'); toggleMenu();">Laporan</a>
-            <a href="#donasi" class="block px-4 py-3 text-gray-300 hover:text-white font-medium text-center" onclick="smoothScroll(event, 'donasi'); toggleMenu();">Donasi</a>
-            <a href="#lokasi" class="block px-4 py-3 text-gray-300 hover:text-white font-medium text-center" onclick="smoothScroll(event, 'lokasi'); toggleMenu();">Lokasi</a>
+            <a href="#event" class="mobile-menu-link block px-4 py-3 text-gray-300 hover:text-white font-medium text-center transition-all" data-section="event" style="text-shadow: 2px 2px 8px rgba(0,0,0,1), -2px -2px 8px rgba(0,0,0,1), 2px -2px 8px rgba(0,0,0,1), -2px 2px 8px rgba(0,0,0,1);" onclick="smoothScrollToSection(event, 'event'); toggleMenu();">Dokumentasi</a>
+            <a href="#laporan" class="mobile-menu-link block px-4 py-3 text-gray-300 hover:text-white font-medium text-center transition-all" data-section="laporan" style="text-shadow: 2px 2px 8px rgba(0,0,0,1), -2px -2px 8px rgba(0,0,0,1), 2px -2px 8px rgba(0,0,0,1), -2px 2px 8px rgba(0,0,0,1);" onclick="smoothScrollToSection(event, 'laporan'); toggleMenu();">Laporan</a>
+            <a href="#donasi" class="mobile-menu-link block px-4 py-3 text-gray-300 hover:text-white font-medium text-center transition-all" data-section="donasi" style="text-shadow: 2px 2px 8px rgba(0,0,0,1), -2px -2px 8px rgba(0,0,0,1), 2px -2px 8px rgba(0,0,0,1), -2px 2px 8px rgba(0,0,0,1);" onclick="smoothScrollToSection(event, 'donasi'); toggleMenu();">Donasi</a>
+            <a href="#lokasi" class="mobile-menu-link block px-4 py-3 text-gray-300 hover:text-white font-medium text-center transition-all" data-section="lokasi" style="text-shadow: 2px 2px 8px rgba(0,0,0,1), -2px -2px 8px rgba(0,0,0,1), 2px -2px 8px rgba(0,0,0,1), -2px 2px 8px rgba(0,0,0,1);" onclick="smoothScrollToSection(event, 'lokasi'); toggleMenu();">Lokasi</a>
         </div>
     </div>
 
@@ -360,8 +364,10 @@ function toggleMenu() {
     menu.classList.toggle('hidden');
 }
 
-function smoothScroll(e, targetId) {
+function smoothScrollToSection(e, targetId) {
     e.preventDefault();
+    isMenuScrolling = true;
+    
     const target = document.getElementById(targetId);
     const headerOffset = 80;
     const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
@@ -384,6 +390,10 @@ function smoothScroll(e, targetId) {
         
         if (timeElapsed < duration) {
             requestAnimationFrame(animation);
+        } else {
+            scrollTarget = window.pageYOffset;
+            currentScroll = window.pageYOffset;
+            isMenuScrolling = false;
         }
     }
 
@@ -452,6 +462,21 @@ function updateActiveMenu() {
             link.style.borderBottom = '';
         }
     });
+    
+    document.querySelectorAll('.mobile-menu-link').forEach(link => {
+        const section = link.getAttribute('data-section');
+        if (section === current) {
+            link.style.backgroundColor = 'rgba(74, 222, 128, 0.5)';
+            link.style.color = '#ffffff';
+            link.style.textShadow = '0 0 20px #4ade80, 0 0 30px #4ade80, 2px 2px 8px rgba(0,0,0,1)';
+            link.style.borderRadius = '8px';
+        } else {
+            link.style.backgroundColor = '';
+            link.style.color = '';
+            link.style.textShadow = '2px 2px 8px rgba(0,0,0,1), -2px -2px 8px rgba(0,0,0,1), 2px -2px 8px rgba(0,0,0,1), -2px 2px 8px rgba(0,0,0,1)';
+            link.style.borderRadius = '';
+        }
+    });
 }
 
 window.addEventListener('scroll', updateActiveMenu);
@@ -472,8 +497,11 @@ window.addEventListener('resize', function() {
 let scrollTarget = window.pageYOffset;
 let currentScroll = window.pageYOffset;
 let isAnimating = false;
+let isMenuScrolling = false;
 
 window.addEventListener('wheel', function(e) {
+    if (isMenuScrolling) return;
+    
     e.preventDefault();
     scrollTarget += e.deltaY;
     scrollTarget = Math.max(0, Math.min(scrollTarget, document.body.scrollHeight - window.innerHeight));
