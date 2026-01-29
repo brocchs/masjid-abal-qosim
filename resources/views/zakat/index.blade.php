@@ -70,10 +70,12 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-3 text-sm text-gray-900">{{ $zakat->tanggal_bayar->format('d/m/Y') }}</td>
                             <td class="px-4 py-3 text-sm text-gray-900">
-                                {{ $zakat->nama_pembayar }}
-                                <button onclick="showMuzakki({{ $zakat->id }})" class="ml-2 text-blue-500 hover:text-blue-700">
-                                    <i class="fas fa-users"></i>
-                                </button>
+                                <div class="flex items-center gap-2">
+                                    <span class="flex-1 truncate">{{ $zakat->nama_pembayar }}</span>
+                                    <button onclick="showMuzakki({{ $zakat->id }})" class="flex-shrink-0 text-blue-500 hover:text-blue-700">
+                                        <i class="fas fa-users"></i>
+                                    </button>
+                                </div>
                             </td>
                             <td class="px-4 py-3 text-sm text-gray-900">{{ $zakat->jumlah_jiwa }} jiwa</td>
                             <td class="px-4 py-3 text-sm">
@@ -162,7 +164,8 @@ const zakatData = {!! json_encode($zakats->mapWithKeys(function($z) {
         'jumlah_beras' => $z->jumlah_beras,
         'harga_per_jiwa' => $z->harga_per_jiwa,
         'total_bayar' => $z->total_bayar,
-        'muzakkis' => $z->muzakkis
+        'muzakkis' => $z->muzakkis,
+        'user_name' => $z->user->name ?? 'Unknown'
     ]];
 })) !!};
 
@@ -240,7 +243,7 @@ function printReceipt(id) {
         content += '<p style="margin:0;height:20px">Surabaya, ' + new Date().toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'}) + '</p>';
         content += '<p style="margin:0;height:20px">Penerima,</p>';
         content += '<br><br><br>';
-        content += '<p style="margin:0">(__________________)</p>';
+        content += '<p style="margin:0">(' + data.user_name + ')</p>';
         content += '</div>';
         content += '</div>';
         content += '</body></html>';

@@ -113,8 +113,14 @@
     </div>
     <div class="flex flex-col md:flex-row">
         <!-- Sidebar -->
-        <nav class="w-full md:w-64 min-h-screen bg-gradient-to-br from-masjid-green to-masjid-green-light shadow-lg fixed md:relative z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300" id="sidebarMenu">
+        <nav class="w-full md:w-64 bg-gradient-to-br from-masjid-green to-masjid-green-light shadow-lg fixed md:relative z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 top-0 bottom-0 overflow-y-auto" id="sidebarMenu">
             <div class="p-4">
+                <div class="flex justify-between items-center mb-4 md:hidden">
+                    <h5 class="text-white text-lg font-semibold">Menu</h5>
+                    <button onclick="toggleSidebar()" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
                 <div class="text-center mb-6">
                     <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-16 h-16 mx-auto mb-2">
                     <h5 class="text-white text-lg font-semibold">Masjid Abal Qosim</h5>
