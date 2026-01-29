@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Masjid Abal Qosim Surabaya Menur - Transparansi keuangan masjid, donasi, wakaf, dan zakat. Jl. Manyar Kartika Barat, Sukolilo, Surabaya.">
+    <meta name="keywords" content="masjid abal qosim, masjid abal qosim surabaya, masjid abal qosim menur, masjid surabaya, masjid menur, donasi masjid, wakaf masjid, zakat fitrah, masjid sukolilo">
+    <meta name="author" content="Masjid Abal Qosim">
+    <meta property="og:title" content="Masjid Abal Qosim - Transparansi Keuangan">
+    <meta property="og:description" content="Masjid Abal Qosim Surabaya Menur - Transparansi keuangan masjid, donasi, wakaf, dan zakat">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ asset('pictures/logo-abal-qosim.png') }}">
+    <link rel="canonical" href="{{ url()->current() }}">
     <link rel="icon" type="image/png" href="{{ asset('pictures/logo-abal-qosim.png') }}">
-    <title>Masjid Abal Qosim - Transparansi Keuangan</title>
+    <title>Masjid Abal Qosim Surabaya Menur - Transparansi Keuangan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -63,9 +71,9 @@
                     <a href="#lokasi" class="menu-link px-3 h-full flex items-center text-sm font-medium text-white" data-section="lokasi" onmouseover="this.style.textShadow='0 0 20px #4ade80, 0 0 30px #4ade80'" onmouseout="this.style.textShadow=''" onclick="smoothScrollToSection(event, 'lokasi')">Lokasi</a>
                 </nav>
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('login') }}" class="flex items-center justify-center bg-white hover:bg-gray-50 text-black px-6 py-2.5 rounded-full transition-all shadow-lg hover:shadow-2xl" style="box-shadow: 0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 0 30px rgba(255,255,255,0.8), 0 8px 16px rgba(0,0,0,0.2)'" onmouseout="this.style.boxShadow='0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1)'">
+                    <button onclick="showLoginModal()" class="flex items-center justify-center bg-white hover:bg-gray-50 text-black px-6 py-2.5 rounded-full transition-all shadow-lg hover:shadow-2xl" style="box-shadow: 0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1);" onmouseover="this.style.boxShadow='0 0 30px rgba(255,255,255,0.8), 0 8px 16px rgba(0,0,0,0.2)'" onmouseout="this.style.boxShadow='0 0 20px rgba(255,255,255,0.5), 0 4px 6px rgba(0,0,0,0.1)'">
                         <i class="fas fa-sign-in-alt text-black"></i>
-                    </a>
+                    </button>
                     <button class="xs:hidden text-gray-300 hover:text-white" onclick="toggleMenu()">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
@@ -313,7 +321,8 @@
                     </div>
                     <p class="text-sm text-green-100 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>Jl. Manyar Kartika Barat, Sukolilo, Surabaya</p>
                     <p class="text-sm text-green-100 mb-2"><i class="fas fa-phone mr-2"></i>08121645348</p>
-                    <p class="text-sm text-green-100"><i class="fas fa-envelope mr-2"></i>pakfa007@gmail.com</p>
+                    <p class="text-sm text-green-100 mb-2"><i class="fas fa-envelope mr-2"></i>pakfa007@gmail.com</p>
+                    <p class="text-sm text-green-100"><a href="https://www.instagram.com/masjidabalqosim" target="_blank" class="hover:text-white transition-colors"><i class="fab fa-instagram mr-2"></i>@masjidabalqosim</a></p>
                 </div>
                 <div>
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.54840985281!2d112.76171487404147!3d-7.292108171674097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fbd20c219739%3A0x16db492bed3b63cd!2sMasjid%20Abal%20Qosim!5e0!3m2!1sen!2sid!4v1769589419598!5m2!1sen!2sid" width="100%" height="200" style="border:0; border-radius: 12px; box-shadow: 0 0 20px rgba(74,222,128,0.4), 0 4px 6px rgba(0,0,0,0.3); pointer-events: none;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -324,8 +333,47 @@
             </div>
         </div>
     </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300">
+        <div id="loginModalContent" class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6 transform transition-all duration-300 scale-95 opacity-0">
+            <div class="text-center mb-6">
+                <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-16 h-16 mx-auto mb-4" style="filter: drop-shadow(3px 3px 8px rgba(0,0,0,1)) drop-shadow(-3px -3px 8px rgba(0,0,0,1));">
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Konfirmasi Login</h3>
+                <p class="text-gray-600">Apakah Anda pengurus masjid?</p>
+            </div>
+            <div class="flex space-x-3">
+                <button onclick="closeLoginModal()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-lg transition-colors">
+                    Bukan
+                </button>
+                <a href="{{ route('login') }}" class="flex-1 bg-masjid-green hover:bg-masjid-green-dark text-white font-medium py-3 px-4 rounded-lg transition-colors text-center">
+                    Ya
+                </a>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
+function showLoginModal() {
+    const modal = document.getElementById('loginModal');
+    const content = document.getElementById('loginModalContent');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+    }, 10);
+}
+
+function closeLoginModal() {
+    const modal = document.getElementById('loginModal');
+    const content = document.getElementById('loginModalContent');
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
+}
+
 let currentSlide = 0;
 const totalSlides = {{ count($eventImages) > 0 ? count($eventImages) : 1 }};
 let startX = 0;
