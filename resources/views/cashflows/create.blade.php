@@ -75,8 +75,8 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-between">
-                        <a href="{{ route('cash-flow.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">
+                    <div class="flex flex-col sm:flex-row gap-3 sm:justify-between">
+                        <a href="{{ route('cash-flow.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded text-center">
                             <i class="fas fa-arrow-left mr-2"></i>
                             Kembali
                         </a>
