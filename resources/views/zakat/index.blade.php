@@ -33,11 +33,15 @@
         </div>
     </div>
     <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
-        <div class="text-center">
+        <div class="text-center space-y-2">
             <a href="{{ route('zakat.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded w-full inline-block">
                 <i class="fas fa-plus-circle mr-2"></i>
                 Tambah Data Zakat
             </a>
+            <button onclick="showDoaModal()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded w-full">
+                <i class="fas fa-book-open mr-2"></i>
+                Doa Zakat Fitrah
+            </button>
         </div>
     </div>
 </div>
@@ -185,6 +189,109 @@ function showMuzakki(id) {
     document.body.insertAdjacentHTML('beforeend', html);
 }
 
+function showDoaModal() {
+    let html = '<div class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4" onclick="this.remove()">';
+    html += '<div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl" onclick="event.stopPropagation()">';
+    html += '<div class="bg-gradient-to-r from-masjid-green to-masjid-green-light p-6">';
+    html += '<div class="flex justify-between items-center">';
+    html += '<div class="flex items-center space-x-3">';
+    html += '<div class="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">';
+    html += '<i class="fas fa-book-quran text-white text-xl"></i>';
+    html += '</div>';
+    html += '<h3 class="text-2xl font-bold text-white">Niat & Doa Zakat Fitrah</h3>';
+    html += '</div>';
+    html += '<button onclick="this.closest(\'.fixed\').remove()" class="text-white hover:bg-white hover:bg-opacity-20 w-10 h-10 rounded-full transition-all"><i class="fas fa-times text-xl"></i></button>';
+    html += '</div>';
+    html += '</div>';
+    html += '<div class="overflow-y-auto p-6 bg-gray-50">';
+    html += '<div class="space-y-5">';
+    
+    html += '<div class="bg-gradient-to-br from-green-50 to-emerald-50 p-5 rounded-xl border border-green-200 shadow-sm">';
+    html += '<div class="flex items-center mb-4">';
+    html += '<div class="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold mr-3">1</div>';
+    html += '<p class="font-bold text-lg text-green-700">Niat Zakat Fitrah untuk diri sendiri</p>';
+    html += '</div>';
+    html += '<div class="bg-white p-5 rounded-lg mb-3 shadow-md border-2 border-green-100">';
+    html += '<p class="text-2xl mb-3 text-center leading-loose text-green-800" style="direction:rtl">نَوَيْتُ أَنْ أُخْرِجَ زَكَاةَ الْفِطْرِ عَنْ نَفْسِي فَرْضًا لِلّٰهِ تَعَالَى</p>';
+    html += '</div>';
+    html += '<div class="bg-green-100 p-3 rounded-lg mb-2">';
+    html += '<p class="text-sm text-green-900"><i class="fas fa-language mr-2"></i><strong>Latin:</strong> Nawaitu an ukhrija zakātal-fiṭri \'an nafsī farḍan lillāhi ta\'ālā.</p>';
+    html += '</div>';
+    html += '<div class="bg-white p-3 rounded-lg border-l-4 border-green-500">';
+    html += '<p class="text-sm text-gray-700"><i class="fas fa-comment-dots mr-2 text-green-600"></i><strong>Artinya:</strong> Saya niat mengeluarkan zakat fitrah untuk diri saya sendiri, fardhu karena Allah Ta\'ala.</p>';
+    html += '</div>';
+    html += '</div>';
+    
+    html += '<div class="bg-gradient-to-br from-blue-50 to-cyan-50 p-5 rounded-xl border border-blue-200 shadow-sm">';
+    html += '<div class="flex items-center mb-4">';
+    html += '<div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold mr-3">2</div>';
+    html += '<p class="font-bold text-lg text-blue-700">Niat Zakat Fitrah untuk keluarga</p>';
+    html += '</div>';
+    html += '<div class="space-y-3">';
+    
+    html += '<div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-400">';
+    html += '<p class="font-semibold mb-3 text-blue-700 flex items-center"><i class="fas fa-female mr-2"></i>a) Untuk istri</p>';
+    html += '<div class="bg-blue-50 p-3 rounded-lg mb-2">';
+    html += '<p class="text-xl mb-2 text-center leading-loose text-blue-800" style="direction:rtl">نَوَيْتُ أَنْ أُخْرِجَ زَكَاةَ الْفِطْرِ عَنْ زَوْجَتِي فَرْضًا لِلّٰهِ تَعَالَى</p>';
+    html += '</div>';
+    html += '<div class="bg-blue-100 p-3 rounded-lg mb-2">';
+    html += '<p class="text-xs text-blue-900"><i class="fas fa-language mr-2"></i><strong>Latin:</strong> Nawaitu an ukhrija zakātal-fiṭri \'an zawjatī farḍan lillāhi ta\'ālā.</p>';
+    html += '</div>';
+    html += '<div class="bg-white p-3 rounded-lg border-l-4 border-blue-500">';
+    html += '<p class="text-xs text-gray-700"><i class="fas fa-comment-dots mr-2 text-blue-600"></i><strong>Artinya:</strong> Saya niat mengeluarkan zakat fitrah untuk istri saya, fardhu karena Allah Ta\'ala.</p>';
+    html += '</div>';
+    html += '</div>';
+    
+    html += '<div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-400">';
+    html += '<p class="font-semibold mb-3 text-blue-700 flex items-center"><i class="fas fa-child mr-2"></i>b) Untuk anak</p>';
+    html += '<div class="bg-blue-50 p-3 rounded-lg mb-2">';
+    html += '<p class="text-xl mb-2 text-center leading-loose text-blue-800" style="direction:rtl">نَوَيْتُ أَنْ أُخْرِجَ زَكَاةَ الْفِطْرِ عَنْ وَلَدِي فَرْضًا لِلّٰهِ تَعَالَى</p>';
+    html += '</div>';
+    html += '<div class="bg-blue-100 p-3 rounded-lg mb-2">';
+    html += '<p class="text-xs text-blue-900"><i class="fas fa-language mr-2"></i><strong>Latin:</strong> Nawaitu an ukhrija zakātal-fiṭri \'an waladī farḍan lillāhi ta\'ālā.</p>';
+    html += '</div>';
+    html += '<div class="bg-white p-3 rounded-lg border-l-4 border-blue-500">';
+    html += '<p class="text-xs text-gray-700"><i class="fas fa-comment-dots mr-2 text-blue-600"></i><strong>Artinya:</strong> Saya niat mengeluarkan zakat fitrah untuk anak saya, fardhu karena Allah Ta\'ala.</p>';
+    html += '</div>';
+    html += '</div>';
+    
+    html += '<div class="bg-white p-4 rounded-lg shadow-md border-l-4 border-blue-400">';
+    html += '<p class="font-semibold mb-3 text-blue-700 flex items-center"><i class="fas fa-users mr-2"></i>c) Untuk keluarga/tanggungan (umum)</p>';
+    html += '<div class="bg-blue-50 p-3 rounded-lg mb-2">';
+    html += '<p class="text-xl mb-2 text-center leading-loose text-blue-800" style="direction:rtl">نَوَيْتُ أَنْ أُخْرِجَ زَكَاةَ الْفِطْرِ عَمَّنْ تَلْزَمُنِي نَفَقَتُهُمْ فَرْضًا لِلّٰهِ تَعَالَى</p>';
+    html += '</div>';
+    html += '<div class="bg-blue-100 p-3 rounded-lg mb-2">';
+    html += '<p class="text-xs text-blue-900"><i class="fas fa-language mr-2"></i><strong>Latin:</strong> Nawaitu an ukhrija zakātal-fiṭri \'amman talzamunī nafaqatuhum farḍan lillāhi ta\'ālā.</p>';
+    html += '</div>';
+    html += '<div class="bg-white p-3 rounded-lg border-l-4 border-blue-500">';
+    html += '<p class="text-xs text-gray-700"><i class="fas fa-comment-dots mr-2 text-blue-600"></i><strong>Artinya:</strong> Saya niat mengeluarkan zakat fitrah untuk orang-orang yang menjadi tanggungan saya, fardhu karena Allah Ta\'ala.</p>';
+    html += '</div>';
+    html += '</div>';
+    
+    html += '</div>';
+    html += '</div>';
+    
+    html += '<div class="bg-gradient-to-br from-purple-50 to-pink-50 p-5 rounded-xl border border-purple-200 shadow-sm">';
+    html += '<div class="flex items-center mb-3">';
+    html += '<div class="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold mr-3">3</div>';
+    html += '<p class="font-bold text-lg text-purple-700">Doa setelah menyerahkan zakat</p>';
+    html += '</div>';
+    html += '<p class="text-xs text-purple-600 mb-3 italic bg-purple-100 p-2 rounded"><i class="fas fa-info-circle mr-1"></i>Sering dibaca oleh penerima/amil</p>';
+    html += '<div class="bg-white p-5 rounded-lg mb-3 shadow-md border-2 border-purple-100">';
+    html += '<p class="text-2xl mb-3 text-center leading-loose text-purple-800" style="direction:rtl">تَقَبَّلَ اللّٰهُ مِنَّا وَمِنْكُمْ، تَقَبَّلْ يَا كَرِيْمُ</p>';
+    html += '</div>';
+    html += '<div class="bg-purple-100 p-3 rounded-lg mb-2">';
+    html += '<p class="text-sm text-purple-900"><i class="fas fa-language mr-2"></i><strong>Latin:</strong> Taqabbalallāhu minnā wa minkum, taqabbal yā karīm.</p>';
+    html += '</div>';
+    html += '<div class="bg-white p-3 rounded-lg border-l-4 border-purple-500">';
+    html += '<p class="text-sm text-gray-700"><i class="fas fa-comment-dots mr-2 text-purple-600"></i><strong>Artinya:</strong> Semoga Allah menerima dari kami dan dari kalian. Terimalah (amal kami), wahai Yang Maha Mulia.</p>';
+    html += '</div>';
+    html += '</div>';
+    
+    html += '</div></div></div></div>';
+    document.body.insertAdjacentHTML('beforeend', html);
+}
+
 function printReceipt(id) {
     const data = zakatData[id];
     const logoUrl = window.location.origin + '/pictures/logo-abal-qosim.png';
@@ -193,13 +300,14 @@ function printReceipt(id) {
     const img = new Image();
     img.onload = function() {
         let content = '<html><head><title>Tanda Terima Zakat Fitrah</title>';
-        content += '<style>@page{size:A5;margin:10mm}body{font-family:Arial,sans-serif;padding:10px;font-size:12px}.header{display:flex;align-items:center;margin-bottom:15px}.logo{width:60px;height:60px;margin-right:15px}.header-text{flex:1;text-align:center}h2{margin:0;font-size:16px}h3{margin:10px 0 15px;font-size:14px;text-align:center}table{width:100%;margin-bottom:15px;font-size:11px}td{padding:3px}hr{margin:10px 0}.muzakki{margin-left:15px;font-size:11px}.footer{margin-top:30px;text-align:right;font-size:11px}</style>';;
+        content += '<style>@page{size:A5;margin:10mm}body{font-family:Arial,sans-serif;padding:10px;font-size:12px}.header{display:flex;align-items:center;margin-bottom:5px}.logo{width:60px;height:60px;margin-right:15px}.header-text{flex:1;text-align:center}h2{margin:0;font-size:22px;font-weight:bold}h3{margin:10px 0 15px;font-size:14px;text-align:center}table{width:100%;margin-bottom:15px;font-size:11px}td{padding:3px}hr{margin:2px 0;border:none;border-top:2px solid #000}.muzakki{margin-left:15px;font-size:11px}.footer{margin-top:30px;text-align:right;font-size:11px}</style>';;
         content += '</head><body>';
         content += '<div class="header">';
         content += `<img src="${logoUrl}" class="logo" alt="Logo Masjid">`;
         content += '<div class="header-text">';
         content += '<h2>MASJID ABAL QOSIM</h2>';
-        content += '<p style="margin:0;font-size:10px">Jl. Manyar Kartika Barat, Sukolilo, Surabaya</p>';
+        content += '<p style="margin:0;font-size:9px">JL. Menur Gg V No. 48 Surabaya</p>';
+        content += '<p style="margin:0;font-size:9px">Telp 085883112301 / 082245559338 / 081216303887</p>';
         content += '</div>';
         content += '</div>';
         content += '<hr>';

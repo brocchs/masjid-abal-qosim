@@ -367,19 +367,31 @@
     @yield('scripts')
 
     <!-- Custom Delete Confirmation Modal -->
-    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 transform transition-all">
-            <div class="p-6">
-                <div class="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full mb-4">
-                    <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all scale-95 hover:scale-100">
+            <!-- Header dengan gradient hijau -->
+            <div class="bg-gradient-to-r from-masjid-green to-masjid-green-light rounded-t-2xl p-4">
+                <div class="flex items-center justify-center w-16 h-16 mx-auto bg-white bg-opacity-20 backdrop-blur-sm rounded-full border-2 border-white border-opacity-30">
+                    <i class="fas fa-exclamation-triangle text-white text-2xl animate-pulse"></i>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 text-center mb-2">Konfirmasi Hapus</h3>
-                <p class="text-sm text-gray-500 text-center mb-6">Apakah Anda yakin ingin menghapus data cash flow ini? Tindakan ini tidak dapat dibatalkan.</p>
+            </div>
+            
+            <!-- Content -->
+            <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 text-center mb-2 flex items-center justify-center">
+                    <i class="fas fa-trash-alt text-red-500 mr-2"></i>
+                    Konfirmasi Hapus
+                </h3>
+                <p class="text-sm text-gray-600 text-center mb-6 leading-relaxed">Apakah Anda yakin ingin menghapus data ini? Tindakan ini tidak dapat dibatalkan.</p>
+                
+                <!-- Buttons -->
                 <div class="flex space-x-3">
-                    <button onclick="closeDeleteModal()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded transition-colors">
+                    <button onclick="closeDeleteModal()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-lg transition-all duration-200 border border-gray-300 hover:border-gray-400">
+                        <i class="fas fa-times mr-2"></i>
                         Batal
                     </button>
-                    <button onclick="confirmDelete()" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded transition-colors">
+                    <button onclick="confirmDelete()" class="flex-1 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-trash mr-2"></i>
                         Hapus
                     </button>
                 </div>

@@ -22,6 +22,11 @@ class CashFlowReportController extends Controller
         $totalDebit = $cashflows->where('type', 'debit')->sum('amount');
         $balance = $totalCredit - $totalDebit;
 
-        return view('cashflow-reports.index', compact('cashflows', 'totalCredit', 'totalDebit', 'balance', 'month'));
+        // Saldo keseluruhan (tanpa periode)
+        $allCredit = CashFlow::where('type', 'credit')->sum('amount');
+        $allDebit = CashFlow::where('type', 'debit')->sum('amount');
+        $totalBalance = $allCredit - $allDebit;
+
+        return view('cashflow-reports.index', compact('cashflows', 'totalCredit', 'totalDebit', 'balance', 'month', 'totalBalance'));
     }
 }

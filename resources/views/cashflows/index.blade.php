@@ -59,7 +59,7 @@
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Tanggal</th>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Jenis</th>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Deskripsi</th>
-                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Jumlah</th>
+                            <th class="px-4 py-3 text-right text-sm font-medium text-gray-700 whitespace-nowrap">Jumlah</th>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Diinput Oleh</th>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Invoice</th>
                             <th class="px-4 py-3 text-center text-sm font-medium text-gray-700">Aksi</th>
@@ -75,7 +75,7 @@
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-sm text-gray-900">{{ $cashflow->description }}</td>
-                            <td class="px-4 py-3 text-sm {{ $cashflow->type == 'credit' ? 'text-green-600' : 'text-red-600' }}">
+                            <td class="px-4 py-3 text-sm text-right whitespace-nowrap {{ $cashflow->type == 'credit' ? 'text-green-600' : 'text-red-600' }}">
                                 {{ $cashflow->type == 'credit' ? '+' : '-' }} Rp {{ number_format($cashflow->amount, 0, ',', '.') }}
                             </td>
                             <td class="px-4 py-3 text-sm text-gray-500">{{ $cashflow->user->name ?? 'Unknown' }}</td>
