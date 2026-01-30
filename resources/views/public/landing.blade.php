@@ -134,42 +134,163 @@
     <!-- Hero Section -->
     <section id="laporan" class="bg-white py-16" style="opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out;">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl font-bold text-gray-800 mb-4">Laporan Keuangan Transparan</h2>
-            <p class="text-xl text-gray-600 mb-8">Keterbukaan informasi keuangan masjid untuk kepercayaan jamaah</p>
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Laporan Keuangan Real Time</h2>
+            
+            <div class="max-w-4xl mx-auto mb-6">
+                <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 shadow-sm border border-blue-100">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center justify-center">
+                        <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                        Panduan Membaca Laporan
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-hand-holding-heart text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-sm mb-1">Total Donasi & Wakaf</h4>
+                                    <p class="text-xs text-gray-600">Kontribusi jamaah untuk kegiatan masjid</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-arrow-up text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-sm mb-1">Total Pemasukan</h4>
+                                    <p class="text-xs text-gray-600">Semua dana yang masuk ke kas masjid</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-arrow-down text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-sm mb-1">Total Pengeluaran</h4>
+                                    <p class="text-xs text-gray-600">Dana untuk operasional & kegiatan masjid</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-10 h-10 bg-cyan-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-wallet text-cyan-600"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-gray-800 text-sm mb-1">Saldo Akhir</h4>
+                                    <p class="text-xs text-gray-600">Akumulasi dana keseluruhan yang tersedia</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-blue-200">
+                        <div class="flex items-center justify-center space-x-6 text-sm">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                                    <i class="fas fa-arrow-up text-xs mr-1"></i>12%
+                                </span>
+                                <span class="text-gray-600 text-xs">Naik dari bulan lalu</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">
+                                    <i class="fas fa-arrow-down text-xs mr-1"></i>5%
+                                </span>
+                                <span class="text-gray-600 text-xs">Turun dari bulan lalu</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <!-- Statistics Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
-                <div class="bg-gradient-to-br from-blue-500 to-black text-white p-6 rounded-xl shadow-lg">
-                    <div class="text-center">
-                        <i class="fas fa-hand-holding-heart text-3xl mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></i>
-                        <h3 class="text-lg font-semibold mb-2" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Total Donasi</h3>
-                        <p class="text-2xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Rp {{ number_format($totalDonasi, 0, ',', '.') }}</p>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mt-12">
+                <div class="group relative bg-gradient-to-br from-blue-50 to-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-blue-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-md">
+                            <i class="fas fa-hand-holding-heart text-2xl text-white"></i>
+                        </div>
+                        @if($donasiPercent != 0)
+                        <span class="text-xs font-semibold px-3 py-1 bg-{{ $donasiPercent >= 0 ? 'green' : 'red' }}-100 text-{{ $donasiPercent >= 0 ? 'green' : 'red' }}-700 rounded-full">
+                            <i class="fas fa-arrow-{{ $donasiPercent >= 0 ? 'up' : 'down' }} text-xs mr-1"></i>{{ number_format(abs($donasiPercent), 0, ',', '.') }}%
+                        </span>
+                        @endif
                     </div>
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Donasi</h3>
+                    <p class="text-2xl font-bold text-blue-600 mb-2">Rp {{ number_format($totalDonasi, 0, ',', '.') }}</p>
+                    <p class="text-xs text-gray-500">{{ $monthName }}</p>
                 </div>
                 
-                <div class="bg-gradient-to-br from-purple-500 to-black text-white p-6 rounded-xl shadow-lg">
-                    <div class="text-center">
-                        <i class="fas fa-mosque text-3xl mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></i>
-                        <h3 class="text-lg font-semibold mb-2" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Total Wakaf</h3>
-                        <p class="text-2xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Rp {{ number_format($totalWakaf, 0, ',', '.') }}</p>
+                <div class="group relative bg-gradient-to-br from-purple-50 to-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-purple-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center shadow-md">
+                            <i class="fas fa-mosque text-2xl text-white"></i>
+                        </div>
+                        @if($wakafPercent != 0)
+                        <span class="text-xs font-semibold px-3 py-1 bg-{{ $wakafPercent >= 0 ? 'green' : 'red' }}-100 text-{{ $wakafPercent >= 0 ? 'green' : 'red' }}-700 rounded-full">
+                            <i class="fas fa-arrow-{{ $wakafPercent >= 0 ? 'up' : 'down' }} text-xs mr-1"></i>{{ number_format(abs($wakafPercent), 0, ',', '.') }}%
+                        </span>
+                        @endif
                     </div>
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Wakaf</h3>
+                    <p class="text-2xl font-bold text-purple-600 mb-2">Rp {{ number_format($totalWakaf, 0, ',', '.') }}</p>
+                    <p class="text-xs text-gray-500">{{ $monthName }}</p>
                 </div>
                 
-                <div class="bg-gradient-to-br from-green-500 to-black text-white p-6 rounded-xl shadow-lg">
-                    <div class="text-center">
-                        <i class="fas fa-arrow-up text-3xl mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></i>
-                        <h3 class="text-lg font-semibold mb-2" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Total Pemasukan</h3>
-                        <p class="text-2xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</p>
+                <div class="group relative bg-gradient-to-br from-green-50 to-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-green-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center shadow-md">
+                            <i class="fas fa-arrow-up text-2xl text-white"></i>
+                        </div>
+                        @if($pemasukanPercent != 0)
+                        <span class="text-xs font-semibold px-3 py-1 bg-{{ $pemasukanPercent >= 0 ? 'green' : 'red' }}-100 text-{{ $pemasukanPercent >= 0 ? 'green' : 'red' }}-700 rounded-full">
+                            <i class="fas fa-arrow-{{ $pemasukanPercent >= 0 ? 'up' : 'down' }} text-xs mr-1"></i>{{ number_format(abs($pemasukanPercent), 0, ',', '.') }}%
+                        </span>
+                        @endif
                     </div>
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Pemasukan</h3>
+                    <p class="text-2xl font-bold text-green-600 mb-2">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</p>
+                    <p class="text-xs text-gray-500">{{ $monthName }}</p>
                 </div>
                 
-                <div class="bg-gradient-to-br from-red-500 to-black text-white p-6 rounded-xl shadow-lg">
-                    <div class="text-center">
-                        <i class="fas fa-arrow-down text-3xl mb-3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);"></i>
-                        <h3 class="text-lg font-semibold mb-2" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Total Pengeluaran</h3>
-                        <p class="text-2xl font-bold" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</p>
+                <div class="group relative bg-gradient-to-br from-red-50 to-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-red-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-red-400 to-red-600 rounded-xl flex items-center justify-center shadow-md">
+                            <i class="fas fa-arrow-down text-2xl text-white"></i>
+                        </div>
+                        @if($pengeluaranPercent != 0)
+                        <span class="text-xs font-semibold px-3 py-1 bg-{{ $pengeluaranPercent >= 0 ? 'red' : 'green' }}-100 text-{{ $pengeluaranPercent >= 0 ? 'red' : 'green' }}-700 rounded-full">
+                            <i class="fas fa-arrow-{{ $pengeluaranPercent >= 0 ? 'up' : 'down' }} text-xs mr-1"></i>{{ number_format(abs($pengeluaranPercent), 0, ',', '.') }}%
+                        </span>
+                        @endif
                     </div>
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Pengeluaran</h3>
+                    <p class="text-2xl font-bold text-red-600 mb-2">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</p>
+                    <p class="text-xs text-gray-500">{{ $monthName }}</p>
                 </div>
+                
+                <div class="group relative bg-gradient-to-br from-{{ $totalSaldo >= 0 ? 'cyan' : 'orange' }}-50 to-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-{{ $totalSaldo >= 0 ? 'cyan' : 'orange' }}-100">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-14 h-14 bg-gradient-to-br from-{{ $totalSaldo >= 0 ? 'cyan' : 'orange' }}-400 to-{{ $totalSaldo >= 0 ? 'cyan' : 'orange' }}-600 rounded-xl flex items-center justify-center shadow-md">
+                            <i class="fas fa-wallet text-2xl text-white"></i>
+                        </div>
+                        <span class="text-xs font-semibold px-3 py-1 bg-{{ $totalSaldo >= 0 ? 'cyan' : 'orange' }}-100 text-{{ $totalSaldo >= 0 ? 'cyan' : 'orange' }}-700 rounded-full">
+                            <i class="fas fa-{{ $totalSaldo >= 0 ? 'check' : 'exclamation' }} text-xs"></i>
+                        </span>
+                    </div>
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Saldo Akhir</h3>
+                    <p class="text-2xl font-bold text-{{ $totalSaldo >= 0 ? 'cyan' : 'orange' }}-600 mb-2">Rp {{ number_format(abs($totalSaldo), 0, ',', '.') }}</p>
+                    <p class="text-xs text-gray-500">Keseluruhan</p>
+                </div>
+            </div>
+            
+            <div class="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium mt-8">
+                <i class="fas fa-sync-alt mr-2 animate-spin" style="animation-duration: 3s;"></i>
+                Data terintegrasi dengan sistem keuangan masjid dan terupdate secara otomatis
             </div>
         </div>
     </section>
@@ -319,8 +440,8 @@
                             <h4 class="text-3xl font-bold leading-tight" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(74,222,128,0.5), 0 0 30px rgba(74,222,128,0.3);">Masjid<br>Abal Qosim</h4>
                         </div>
                     </div>
-                    <p class="text-sm text-green-100 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>Jl. Manyar Kartika Barat, Sukolilo, Surabaya</p>
-                    <p class="text-sm text-green-100 mb-2"><i class="fas fa-phone mr-2"></i>08121645348</p>
+                    <p class="text-sm text-green-100 mb-2"><i class="fas fa-map-marker-alt mr-2"></i>Jl. Menur Gg V No. 48 Surabaya</p>
+                    <p class="text-sm text-green-100 mb-2"><i class="fas fa-phone mr-2"></i>085883112301 / 082245559338 / 081216303887</p>
                     <p class="text-sm text-green-100 mb-2"><i class="fas fa-envelope mr-2"></i>pakfa007@gmail.com</p>
                     <p class="text-sm text-green-100"><a href="https://www.instagram.com/masjidabalqosim" target="_blank" class="hover:text-white transition-colors"><i class="fab fa-instagram mr-2"></i>@masjidabalqosim</a></p>
                 </div>

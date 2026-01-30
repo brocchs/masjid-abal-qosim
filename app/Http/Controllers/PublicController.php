@@ -13,10 +13,34 @@ class PublicController extends Controller
 {
     public function index()
     {
-        $totalDonasi = Shodaqoh::sum('jumlah_shodaqoh');
-        $totalWakaf = Wakaf::sum('jumlah_wakaf');
-        $totalPemasukan = CashFlow::where('type', 'credit')->sum('amount');
-        $totalPengeluaran = CashFlow::where('type', 'debit')->sum('amount');
+        $currentMonth = date('Y-m');
+        $monthName = \Carbon\Carbon::parse($currentMonth)->format('F Y');
+        
+        // Data bulan ini
+        $startDate = \Carbon\Carbon::parse($currentMonth . '-01')->startOfMonth();
+        $endDate = \Carbon\Carbon::parse($currentMonth . '-01')->endOfMonth();
+        
+        $totalDonasi = Shodaqoh::whereBetween('tanggal_shodaqoh', [$startDate, $endDate])->sum('jumlah_shodaqoh');
+        $totalWakaf = Wakaf::whereBetween('tanggal_wakaf', [$startDate, $endDate])->sum('jumlah_wakaf');
+        $totalPemasukan = CashFlow::where('type', 'credit')->whereBetween('transaction_date', [$startDate, $endDate])->sum('amount');
+        $totalPengeluaran = CashFlow::where('type', 'debit')->whereBetween('transaction_date', [$startDate, $endDate])->sum('amount');
+        $totalSaldo = CashFlow::where('type', 'credit')->sum('amount') - CashFlow::where('type', 'debit')->sum('amount');
+        
+        // Data bulan lalu untuk perbandingan
+        $lastMonth = \Carbon\Carbon::parse($currentMonth . '-01')->subMonth();
+        $lastStartDate = $lastMonth->copy()->startOfMonth();
+        $lastEndDate = $lastMonth->copy()->endOfMonth();
+        
+        $lastDonasi = Shodaqoh::whereBetween('tanggal_shodaqoh', [$lastStartDate, $lastEndDate])->sum('jumlah_shodaqoh');
+        $lastWakaf = Wakaf::whereBetween('tanggal_wakaf', [$lastStartDate, $lastEndDate])->sum('jumlah_wakaf');
+        $lastPemasukan = CashFlow::where('type', 'credit')->whereBetween('transaction_date', [$lastStartDate, $lastEndDate])->sum('amount');
+        $lastPengeluaran = CashFlow::where('type', 'debit')->whereBetween('transaction_date', [$lastStartDate, $lastEndDate])->sum('amount');
+        
+        // Hitung persentase perubahan
+        $donasiPercent = $lastDonasi > 0 ? round((($totalDonasi - $lastDonasi) / $lastDonasi) * 100) : 0;
+        $wakafPercent = $lastWakaf > 0 ? round((($totalWakaf - $lastWakaf) / $lastWakaf) * 100) : 0;
+        $pemasukanPercent = $lastPemasukan > 0 ? round((($totalPemasukan - $lastPemasukan) / $lastPemasukan) * 100) : 0;
+        $pengeluaranPercent = $lastPengeluaran > 0 ? round((($totalPengeluaran - $lastPengeluaran) / $lastPengeluaran) * 100) : 0;
         
         $donasiTerbaru = Shodaqoh::orderBy('tanggal_shodaqoh', 'desc')->take(5)->get();
         $wakafTerbaru = Wakaf::orderBy('tanggal_wakaf', 'desc')->take(5)->get();
@@ -38,9 +62,15 @@ class PublicController extends Controller
             'totalWakaf', 
             'totalPemasukan', 
             'totalPengeluaran',
+            'totalSaldo',
+            'donasiPercent',
+            'wakafPercent',
+            'pemasukanPercent',
+            'pengeluaranPercent',
             'donasiTerbaru',
             'wakafTerbaru',
-            'eventImages'
+            'eventImages',
+            'monthName'
         ));
     }
 }
