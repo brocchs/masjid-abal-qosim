@@ -73,4 +73,46 @@ class PublicController extends Controller
             'monthName'
         ));
     }
+
+    public function getPemasukanDetail()
+    {
+        $currentMonth = date('Y-m');
+        $startDate = \Carbon\Carbon::parse($currentMonth . '-01')->startOfMonth();
+        $endDate = \Carbon\Carbon::parse($currentMonth . '-01')->endOfMonth();
+        
+        $pemasukan = CashFlow::where('type', 'credit')
+            ->whereBetween('transaction_date', [$startDate, $endDate])
+            ->orderBy('transaction_date', 'desc')
+            ->get()
+            ->map(function($item) {
+                return [
+                    'tanggal' => \Carbon\Carbon::parse($item->transaction_date)->format('d/m/Y'),
+                    'keterangan' => $item->description,
+                    'jumlah' => 'Rp ' . number_format($item->amount, 0, ',', '.')
+                ];
+            });
+        
+        return response()->json($pemasukan);
+    }
+
+    public function getPengeluaranDetail()
+    {
+        $currentMonth = date('Y-m');
+        $startDate = \Carbon\Carbon::parse($currentMonth . '-01')->startOfMonth();
+        $endDate = \Carbon\Carbon::parse($currentMonth . '-01')->endOfMonth();
+        
+        $pengeluaran = CashFlow::where('type', 'debit')
+            ->whereBetween('transaction_date', [$startDate, $endDate])
+            ->orderBy('transaction_date', 'desc')
+            ->get()
+            ->map(function($item) {
+                return [
+                    'tanggal' => \Carbon\Carbon::parse($item->transaction_date)->format('d/m/Y'),
+                    'keterangan' => $item->description,
+                    'jumlah' => 'Rp ' . number_format($item->amount, 0, ',', '.')
+                ];
+            });
+        
+        return response()->json($pengeluaran);
+    }
 }

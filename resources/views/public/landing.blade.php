@@ -254,7 +254,10 @@
                     </div>
                     <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Pemasukan</h3>
                     <p class="text-2xl font-bold text-green-600 mb-2">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</p>
-                    <p class="text-xs text-gray-500">{{ $monthName }}</p>
+                    <p class="text-xs text-gray-500 mb-3">{{ $monthName }}</p>
+                    <button onclick="showPemasukanModal()" class="w-full bg-green-600 hover:bg-green-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition-colors flex items-center justify-center">
+                        <i class="fas fa-list mr-2"></i>Lihat Detail
+                    </button>
                 </div>
                 
                 <div class="group relative bg-gradient-to-br from-red-50 to-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-red-100">
@@ -270,7 +273,10 @@
                     </div>
                     <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Pengeluaran</h3>
                     <p class="text-2xl font-bold text-red-600 mb-2">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</p>
-                    <p class="text-xs text-gray-500">{{ $monthName }}</p>
+                    <p class="text-xs text-gray-500 mb-3">{{ $monthName }}</p>
+                    <button onclick="showPengeluaranModal()" class="w-full bg-red-600 hover:bg-red-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition-colors flex items-center justify-center">
+                        <i class="fas fa-list mr-2"></i>Lihat Detail
+                    </button>
                 </div>
                 
                 <div class="group relative bg-gradient-to-br from-{{ $totalSaldo >= 0 ? 'cyan' : 'orange' }}-50 to-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-{{ $totalSaldo >= 0 ? 'cyan' : 'orange' }}-100">
@@ -473,6 +479,40 @@
             </div>
         </div>
     </div>
+
+    <!-- Pemasukan Detail Modal -->
+    <div id="pemasukanModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300">
+        <div id="pemasukanModalContent" class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 p-6 transform transition-all duration-300 scale-95 opacity-0 max-h-[80vh] overflow-hidden flex flex-col">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Detail Pemasukan</h3>
+                <button onclick="closePemasukanModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div id="pemasukanContent" class="overflow-y-auto flex-1">
+                <div class="flex justify-center items-center py-8">
+                    <i class="fas fa-spinner fa-spin text-3xl text-green-600"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pengeluaran Detail Modal -->
+    <div id="pengeluaranModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300">
+        <div id="pengeluaranModalContent" class="bg-white rounded-xl shadow-2xl max-w-2xl w-full mx-4 p-6 transform transition-all duration-300 scale-95 opacity-0 max-h-[80vh] overflow-hidden flex flex-col">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-2xl font-bold text-gray-800">Detail Pengeluaran</h3>
+                <button onclick="closePengeluaranModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div id="pengeluaranContent" class="overflow-y-auto flex-1">
+                <div class="flex justify-center items-center py-8">
+                    <i class="fas fa-spinner fa-spin text-3xl text-red-600"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script>
 function showLoginModal() {
@@ -492,6 +532,102 @@ function closeLoginModal() {
     content.classList.add('scale-95', 'opacity-0');
     setTimeout(() => {
         modal.classList.add('hidden');
+    }, 300);
+}
+
+function showPemasukanModal() {
+    const modal = document.getElementById('pemasukanModal');
+    const content = document.getElementById('pemasukanModalContent');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+    }, 10);
+    
+    fetch('/pemasukan-detail')
+        .then(response => response.json())
+        .then(data => {
+            const contentDiv = document.getElementById('pemasukanContent');
+            if (data.length === 0) {
+                contentDiv.innerHTML = '<p class="text-center text-gray-500 py-8">Belum ada data pemasukan bulan ini</p>';
+            } else {
+                let html = '<div class="space-y-3">';
+                data.forEach(item => {
+                    html += `
+                        <div class="flex justify-between items-start p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-800">${item.keterangan}</p>
+                                <p class="text-sm text-gray-600 mt-1"><i class="fas fa-calendar mr-1"></i>${item.tanggal}</p>
+                            </div>
+                            <span class="text-green-600 font-bold ml-4">${item.jumlah}</span>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                contentDiv.innerHTML = html;
+            }
+        })
+        .catch(error => {
+            document.getElementById('pemasukanContent').innerHTML = '<p class="text-center text-red-500 py-8">Gagal memuat data</p>';
+        });
+}
+
+function closePemasukanModal() {
+    const modal = document.getElementById('pemasukanModal');
+    const content = document.getElementById('pemasukanModalContent');
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.getElementById('pemasukanContent').innerHTML = '<div class="flex justify-center items-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-green-600"></i></div>';
+    }, 300);
+}
+
+function showPengeluaranModal() {
+    const modal = document.getElementById('pengeluaranModal');
+    const content = document.getElementById('pengeluaranModalContent');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+    }, 10);
+    
+    fetch('/pengeluaran-detail')
+        .then(response => response.json())
+        .then(data => {
+            const contentDiv = document.getElementById('pengeluaranContent');
+            if (data.length === 0) {
+                contentDiv.innerHTML = '<p class="text-center text-gray-500 py-8">Belum ada data pengeluaran bulan ini</p>';
+            } else {
+                let html = '<div class="space-y-3">';
+                data.forEach(item => {
+                    html += `
+                        <div class="flex justify-between items-start p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-800">${item.keterangan}</p>
+                                <p class="text-sm text-gray-600 mt-1"><i class="fas fa-calendar mr-1"></i>${item.tanggal}</p>
+                            </div>
+                            <span class="text-red-600 font-bold ml-4">${item.jumlah}</span>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                contentDiv.innerHTML = html;
+            }
+        })
+        .catch(error => {
+            document.getElementById('pengeluaranContent').innerHTML = '<p class="text-center text-red-500 py-8">Gagal memuat data</p>';
+        });
+}
+
+function closePengeluaranModal() {
+    const modal = document.getElementById('pengeluaranModal');
+    const content = document.getElementById('pengeluaranModalContent');
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.getElementById('pengeluaranContent').innerHTML = '<div class="flex justify-center items-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-red-600"></i></div>';
     }, 300);
 }
 

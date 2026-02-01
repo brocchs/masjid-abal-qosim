@@ -21,6 +21,8 @@ use App\Http\Controllers\PublicController;
 
 // Public Landing Page
 Route::get('/', [PublicController::class, 'index'])->name('landing');
+Route::get('/pemasukan-detail', [PublicController::class, 'getPemasukanDetail'])->name('pemasukan.detail');
+Route::get('/pengeluaran-detail', [PublicController::class, 'getPengeluaranDetail'])->name('pengeluaran.detail');
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
