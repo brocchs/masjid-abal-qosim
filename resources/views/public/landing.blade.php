@@ -315,10 +315,10 @@
                         @forelse($donasiTerbaru as $donasi)
                         <div class="flex justify-between items-center p-3 bg-white/50 rounded-lg">
                             <div>
-                                <p class="font-medium text-gray-800">{{ substr($donasi->nama_pemberi, 0, 2) . str_repeat('*', max(0, strlen($donasi->nama_pemberi) - 2)) }}</p>
-                                <p class="text-sm text-gray-600">{{ $donasi->tanggal_shodaqoh->format('d/m/Y') }}</p>
+                                <p class="font-medium text-gray-800">{{ substr($donasi->nama_pembayar, 0, 2) . str_repeat('*', max(0, strlen($donasi->nama_pembayar) - 2)) }}</p>
+                                <p class="text-sm text-gray-600">{{ $donasi->tanggal_bayar->format('d/m/Y') }}</p>
                             </div>
-                            <span class="text-blue-600 font-bold">Rp {{ number_format($donasi->jumlah_shodaqoh, 0, ',', '.') }}</span>
+                            <span class="text-blue-600 font-bold">Rp {{ number_format($donasi->total_bayar, 0, ',', '.') }}</span>
                         </div>
                         @empty
                         <p class="text-gray-500 text-center py-4">Belum ada donasi</p>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Shodaqoh;
+use App\Models\Zakat;
 use App\Models\Wakaf;
 use App\Models\CashFlow;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ class PublicController extends Controller
         $startDate = \Carbon\Carbon::parse($currentMonth . '-01')->startOfMonth();
         $endDate = \Carbon\Carbon::parse($currentMonth . '-01')->endOfMonth();
         
-        $totalDonasi = Shodaqoh::whereBetween('tanggal_shodaqoh', [$startDate, $endDate])->sum('jumlah_shodaqoh');
+        $totalDonasi = Zakat::where('jenis_zakat', 'shodaqoh')->whereBetween('tanggal_bayar', [$startDate, $endDate])->sum('total_bayar');
         $totalWakaf = Wakaf::whereBetween('tanggal_wakaf', [$startDate, $endDate])->sum('jumlah_wakaf');
         $totalPemasukan = CashFlow::where('type', 'credit')->whereBetween('transaction_date', [$startDate, $endDate])->sum('amount');
         $totalPengeluaran = CashFlow::where('type', 'debit')->whereBetween('transaction_date', [$startDate, $endDate])->sum('amount');
@@ -31,7 +31,7 @@ class PublicController extends Controller
         $lastStartDate = $lastMonth->copy()->startOfMonth();
         $lastEndDate = $lastMonth->copy()->endOfMonth();
         
-        $lastDonasi = Shodaqoh::whereBetween('tanggal_shodaqoh', [$lastStartDate, $lastEndDate])->sum('jumlah_shodaqoh');
+        $lastDonasi = Zakat::where('jenis_zakat', 'shodaqoh')->whereBetween('tanggal_bayar', [$lastStartDate, $lastEndDate])->sum('total_bayar');
         $lastWakaf = Wakaf::whereBetween('tanggal_wakaf', [$lastStartDate, $lastEndDate])->sum('jumlah_wakaf');
         $lastPemasukan = CashFlow::where('type', 'credit')->whereBetween('transaction_date', [$lastStartDate, $lastEndDate])->sum('amount');
         $lastPengeluaran = CashFlow::where('type', 'debit')->whereBetween('transaction_date', [$lastStartDate, $lastEndDate])->sum('amount');
@@ -42,7 +42,7 @@ class PublicController extends Controller
         $pemasukanPercent = $lastPemasukan > 0 ? round((($totalPemasukan - $lastPemasukan) / $lastPemasukan) * 100) : 0;
         $pengeluaranPercent = $lastPengeluaran > 0 ? round((($totalPengeluaran - $lastPengeluaran) / $lastPengeluaran) * 100) : 0;
         
-        $donasiTerbaru = Shodaqoh::orderBy('tanggal_shodaqoh', 'desc')->take(5)->get();
+        $donasiTerbaru = Zakat::where('jenis_zakat', 'shodaqoh')->orderBy('tanggal_bayar', 'desc')->take(5)->get();
         $wakafTerbaru = Wakaf::orderBy('tanggal_wakaf', 'desc')->take(5)->get();
         
         // Get event images

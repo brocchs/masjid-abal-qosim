@@ -177,25 +177,25 @@
                         </div>
                     </li>
                     <li>
-                        <a class="flex items-center justify-between text-white hover:bg-white hover:bg-opacity-10 p-2 rounded {{ request()->routeIs('zakat.*') || request()->routeIs('zakat-maal.*') || request()->routeIs('shodaqoh.*') ? 'bg-green-600 bg-opacity-50 font-bold' : '' }}" href="#" onclick="toggleMenu('zakatMenu')">
+                        <a class="flex items-center justify-between text-white hover:bg-white hover:bg-opacity-10 p-2 rounded {{ request()->routeIs('zakat.*') || request()->routeIs('mustahik.*') || request()->routeIs('reports.zakat*') ? 'bg-green-600 bg-opacity-50 font-bold' : '' }}" href="#" onclick="toggleMenu('zakatMenu')">
                             <span class="flex items-center text-sm">
                                 <i class="fas fa-hand-holding-heart mr-2"></i>
                                 Zakat dll.
                             </span>
                             <i class="fas fa-chevron-down"></i>
                         </a>
-                        <div class="ml-4 mt-2 space-y-1 {{ request()->routeIs('zakat.*') || request()->routeIs('zakat-maal.*') || request()->routeIs('shodaqoh.*') ? '' : 'hidden' }}" id="zakatMenu">
+                        <div class="ml-4 mt-2 space-y-1 {{ request()->routeIs('zakat.*') || request()->routeIs('mustahik.*') || request()->routeIs('reports.zakat*') ? '' : 'hidden' }}" id="zakatMenu">
                             <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('zakat.*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('zakat.index') }}">
                                 <i class="fas fa-moon mr-2"></i>
-                                Zakat Fitrah
+                                Zakat
                             </a>
-                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('zakat-maal.*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('zakat-maal.index') }}">
-                                <i class="fas fa-coins mr-2"></i>
-                                Zakat Maal
+                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('mustahik.*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('mustahik.index') }}">
+                                <i class="fas fa-users mr-2"></i>
+                                Mustahik
                             </a>
-                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('shodaqoh.*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('shodaqoh.index') }}">
-                                <i class="fas fa-heart mr-2"></i>
-                                Shodaqoh
+                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('reports.zakat*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('reports.zakat') }}">
+                                <i class="fas fa-file-invoice mr-2"></i>
+                                Laporan
                             </a>
                         </div>
                     </li>

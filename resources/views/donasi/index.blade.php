@@ -9,7 +9,7 @@
         <div class="flex justify-between items-center">
             <div>
                 <h6 class="text-sm font-medium">Total Donasi</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($donasi->sum('jumlah_shodaqoh'), 0, ',', '.') }}</h4>
+                <h4 class="text-xl font-bold">Rp {{ number_format($donasi->sum('total_bayar'), 0, ',', '.') }}</h4>
             </div>
             <i class="fas fa-hand-holding-usd text-2xl"></i>
         </div>
@@ -50,9 +50,9 @@
                     @foreach($donasi as $index => $item)
                     <tr class="hover:bg-gray-50">
                         <td class="px-4 py-4 text-sm text-gray-900">{{ ($donasi->currentPage() - 1) * $donasi->perPage() + $index + 1 }}</td>
-                        <td class="px-4 py-4 text-sm font-medium text-gray-900">{{ $item->nama_pemberi }}</td>
-                        <td class="px-4 py-4 text-sm font-bold text-masjid-green">Rp {{ number_format($item->jumlah_shodaqoh, 0, ',', '.') }}</td>
-                        <td class="px-4 py-4 text-sm text-gray-900">{{ $item->tanggal_shodaqoh->format('d/m/Y') }}</td>
+                        <td class="px-4 py-4 text-sm font-medium text-gray-900">{{ $item->nama_pembayar }}</td>
+                        <td class="px-4 py-4 text-sm font-bold text-masjid-green">Rp {{ number_format($item->total_bayar, 0, ',', '.') }}</td>
+                        <td class="px-4 py-4 text-sm text-gray-900">{{ $item->tanggal_bayar->format('d/m/Y') }}</td>
                         <td class="px-4 py-4 text-sm text-gray-900">{{ $item->keterangan ?: '-' }}</td>
                         <td class="px-4 py-4 text-sm text-gray-600">{{ $item->user ? $item->user->name : '-' }}</td>
                         <td class="px-4 py-4 text-center">

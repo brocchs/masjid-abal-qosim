@@ -5,21 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shodaqoh extends Model
+class Mustahik extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'nama_pemberi',
-        'jumlah_shodaqoh',
-        'tanggal_shodaqoh',
+        'nama',
+        'alamat',
+        'no_hp',
+        'kategori',
         'keterangan',
         'user_id'
-    ];
-
-    protected $casts = [
-        'tanggal_shodaqoh' => 'date',
-        'jumlah_shodaqoh' => 'decimal:2'
     ];
 
     public function user()

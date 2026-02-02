@@ -11,6 +11,7 @@ class Zakat extends Model
 
     protected $fillable = [
         'nama_pembayar',
+        'jenis_zakat',
         'no_whatsapp',
         'jumlah_jiwa',
         'jenis_bayar',
@@ -18,6 +19,7 @@ class Zakat extends Model
         'harga_per_jiwa',
         'total_bayar',
         'tanggal_bayar',
+        'keterangan',
         'user_id'
     ];
 

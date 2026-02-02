@@ -1,44 +1,68 @@
 @extends('layouts.app')
 
-@section('title', 'Zakat Fitrah - Masjid Abal Qosim')
-@section('page-title', 'Zakat Fitrah')
+@section('title', 'Zakat - Masjid Abal Qosim')
+@section('page-title', 'Zakat')
 
 @section('content')
 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-    <div class="bg-blue-500 text-white rounded-lg shadow p-4">
+    <div class="bg-gradient-to-br from-cyan-500 to-cyan-600 text-white rounded-lg shadow-lg p-4">
         <div class="flex justify-between items-center">
             <div>
-                <h6 class="text-sm font-medium">Total Zakat Tunai</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalZakat, 0, ',', '.') }}</h4>
+                <h6 class="text-sm font-medium opacity-90">Total Semua Zakat</h6>
+                <h4 class="text-2xl font-bold">Rp {{ number_format($totalSemua, 0, ',', '.') }}</h4>
             </div>
-            <i class="fas fa-hand-holding-heart text-2xl"></i>
+            <i class="fas fa-hand-holding-heart text-3xl opacity-80"></i>
         </div>
     </div>
-    <div class="bg-green-500 text-white rounded-lg shadow p-4">
+    <div class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg shadow-lg p-4">
+        <div class="flex justify-between items-start">
+            <div>
+                <h6 class="text-sm font-medium opacity-90">Zakat Fitrah</h6>
+                <h4 class="text-xl font-bold">Rp {{ number_format($totalZakatFitrah, 0, ',', '.') }}</h4>
+                <p class="text-xs opacity-80 mt-1"><i class="fas fa-users mr-1"></i>{{ number_format($totalJiwaFitrah, 0, ',', '.') }} jiwa</p>
+            </div>
+            <i class="fas fa-moon text-2xl opacity-80"></i>
+        </div>
+    </div>
+    <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg shadow-lg p-4">
+        <div class="flex justify-between items-start">
+            <div>
+                <h6 class="text-sm font-medium opacity-90">Zakat Maal</h6>
+                <h4 class="text-xl font-bold">Rp {{ number_format($totalZakatMaal, 0, ',', '.') }}</h4>
+                <p class="text-xs opacity-80 mt-1"><i class="fas fa-users mr-1"></i>{{ number_format($totalJiwaMaal, 0, ',', '.') }} jiwa</p>
+            </div>
+            <i class="fas fa-coins text-2xl opacity-80"></i>
+        </div>
+    </div>
+    <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg shadow-lg p-4">
+        <div class="flex justify-between items-start">
+            <div>
+                <h6 class="text-sm font-medium opacity-90">Shodaqoh</h6>
+                <h4 class="text-xl font-bold">Rp {{ number_format($totalZakatShodaqoh, 0, ',', '.') }}</h4>
+                <p class="text-xs opacity-80 mt-1"><i class="fas fa-users mr-1"></i>{{ number_format($totalJiwaShodaqoh, 0, ',', '.') }} jiwa</p>
+            </div>
+            <i class="fas fa-heart text-2xl opacity-80"></i>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <div class="bg-gradient-to-br from-yellow-500 to-yellow-600 text-white rounded-lg shadow-lg p-4">
         <div class="flex justify-between items-center">
             <div>
-                <h6 class="text-sm font-medium">Total Jiwa</h6>
-                <h4 class="text-xl font-bold">{{ number_format($totalJiwa, 0, ',', '.') }} Jiwa</h4>
+                <h6 class="text-sm font-medium opacity-90">Total Beras (Fitrah)</h6>
+                <h4 class="text-2xl font-bold">{{ number_format($totalBeras, 2, ',', '.') }} kg</h4>
             </div>
-            <i class="fas fa-users text-2xl"></i>
+            <i class="fas fa-seedling text-3xl opacity-80"></i>
         </div>
     </div>
-    <div class="bg-yellow-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Total Beras</h6>
-                <h4 class="text-xl font-bold">{{ number_format($totalBeras, 2, ',', '.') }} kg</h4>
-            </div>
-            <i class="fas fa-seedling text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
-        <div class="text-center space-y-2">
-            <a href="{{ route('zakat.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded w-full inline-block">
+    <div class="bg-white border-2 border-masjid-green rounded-lg shadow p-4">
+        <div class="flex justify-center items-center gap-2">
+            <a href="{{ route('zakat.create') }}" class="flex-1 bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
                 <i class="fas fa-plus-circle mr-2"></i>
                 Tambah Data Zakat
             </a>
-            <button onclick="showDoaModal()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded w-full">
+            <button onclick="showDoaModal()" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
                 <i class="fas fa-book-open mr-2"></i>
                 Doa Zakat Fitrah
             </button>
@@ -50,7 +74,7 @@
     <div class="bg-gray-50 px-6 py-4 border-b-2 border-masjid-green rounded-t-lg">
         <h5 class="text-lg font-semibold text-gray-800 flex items-center">
             <i class="fas fa-list mr-2"></i>
-            Daftar Pembayar Zakat Fitrah
+            Daftar Pembayar Zakat
         </h5>
     </div>
     <div class="p-6">
@@ -61,9 +85,9 @@
                         <tr class="bg-gray-50">
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Tanggal</th>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Nama Pembayar</th>
+                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Jenis Zakat</th>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Jumlah Jiwa</th>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Jenis Bayar</th>
-                            <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Harga/Jiwa</th>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Total</th>
                             <th class="px-4 py-3 text-left text-sm font-medium text-gray-700">Diinput Oleh</th>
                             <th class="px-4 py-3 text-center text-sm font-medium text-gray-700">Aksi</th>
@@ -81,23 +105,31 @@
                                     </button>
                                 </div>
                             </td>
-                            <td class="px-4 py-3 text-sm text-gray-900">{{ $zakat->jumlah_jiwa }} jiwa</td>
                             <td class="px-4 py-3 text-sm">
-                                @if($zakat->jenis_bayar == 'beras')
-                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Beras</span>
+                                @if($zakat->jenis_zakat == 'fitrah')
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Fitrah</span>
+                                @elseif($zakat->jenis_zakat == 'maal')
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Maal</span>
+                                @else
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Shodaqoh</span>
+                                @endif
+                            </td>
+                            <td class="px-4 py-3 text-sm text-gray-900">
+                                {{ $zakat->jumlah_jiwa }} jiwa
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                @if($zakat->jenis_zakat == 'fitrah')
+                                    @if($zakat->jenis_bayar == 'beras')
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Beras</span>
+                                    @else
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Tunai</span>
+                                    @endif
                                 @else
                                     <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Tunai</span>
                                 @endif
                             </td>
-                            <td class="px-4 py-3 text-sm text-gray-900">
-                                @if($zakat->jenis_bayar == 'tunai')
-                                    Rp {{ number_format($zakat->harga_per_jiwa, 0, ',', '.') }}
-                                @else
-                                    -
-                                @endif
-                            </td>
                             <td class="px-4 py-3 text-sm font-bold">
-                                @if($zakat->jenis_bayar == 'beras')
+                                @if($zakat->jenis_zakat == 'fitrah' && $zakat->jenis_bayar == 'beras')
                                     <span class="text-yellow-600">{{ number_format($zakat->jumlah_beras, 2, ',', '.') }} kg</span>
                                 @else
                                     <span class="text-green-600">Rp {{ number_format($zakat->total_bayar, 0, ',', '.') }}</span>
@@ -162,12 +194,14 @@ const zakatData = {!! json_encode($zakats->mapWithKeys(function($z) {
     return [$z->id => [
         'id' => $z->id,
         'nama_pembayar' => $z->nama_pembayar,
+        'jenis_zakat' => $z->jenis_zakat,
         'tanggal_bayar' => $z->tanggal_bayar->format('d/m/Y H:i'),
         'jumlah_jiwa' => $z->jumlah_jiwa,
         'jenis_bayar' => $z->jenis_bayar,
         'jumlah_beras' => $z->jumlah_beras,
         'harga_per_jiwa' => $z->harga_per_jiwa,
         'total_bayar' => $z->total_bayar,
+        'keterangan' => $z->keterangan,
         'muzakkis' => $z->muzakkis,
         'user_name' => $z->user->name ?? 'Unknown'
     ]];
@@ -311,17 +345,25 @@ function printReceipt(id) {
         content += '</div>';
         content += '</div>';
         content += '<hr>';
-        content += '<h3 style="text-align:center;margin:10px 0 15px;font-size:14px">TANDA TERIMA ZAKAT FITRAH</h3>';
+        content += `<h3 style="text-align:center;margin:10px 0 15px;font-size:14px">TANDA TERIMA ${data.jenis_zakat.toUpperCase()}</h3>`;
         content += '<table>';
         content += `<tr><td width="150">Nama Pembayar</td><td>: ${data.nama_pembayar}</td></tr>`;
+        content += `<tr><td>Jenis Zakat</td><td>: ${data.jenis_zakat.charAt(0).toUpperCase() + data.jenis_zakat.slice(1)}</td></tr>`;
         content += `<tr><td>Tanggal</td><td>: ${data.tanggal_bayar}</td></tr>`;
-        content += `<tr><td>Jumlah Jiwa</td><td>: ${data.jumlah_jiwa} jiwa</td></tr>`;
-        content += `<tr><td>Jenis Bayar</td><td>: ${data.jenis_bayar.charAt(0).toUpperCase() + data.jenis_bayar.slice(1)}</td></tr>`;
-        if (data.jenis_bayar === 'beras') {
-            content += `<tr><td>Jumlah Beras</td><td>: ${data.jumlah_beras} kg</td></tr>`;
+        if (data.jenis_zakat === 'fitrah') {
+            content += `<tr><td>Jumlah Jiwa</td><td>: ${data.jumlah_jiwa} jiwa</td></tr>`;
+            content += `<tr><td>Jenis Bayar</td><td>: ${data.jenis_bayar.charAt(0).toUpperCase() + data.jenis_bayar.slice(1)}</td></tr>`;
+            if (data.jenis_bayar === 'beras') {
+                content += `<tr><td>Jumlah Beras</td><td>: ${data.jumlah_beras} kg</td></tr>`;
+            } else {
+                content += `<tr><td>Harga per Jiwa</td><td>: Rp ${new Intl.NumberFormat('id-ID').format(data.harga_per_jiwa)}</td></tr>`;
+                content += `<tr><td>Total Bayar</td><td>: Rp ${new Intl.NumberFormat('id-ID').format(data.total_bayar)}</td></tr>`;
+            }
         } else {
-            content += `<tr><td>Harga per Jiwa</td><td>: Rp ${new Intl.NumberFormat('id-ID').format(data.harga_per_jiwa)}</td></tr>`;
             content += `<tr><td>Total Bayar</td><td>: Rp ${new Intl.NumberFormat('id-ID').format(data.total_bayar)}</td></tr>`;
+            if (data.keterangan) {
+                content += `<tr><td>Keterangan</td><td>: ${data.keterangan}</td></tr>`;
+            }
         }
         content += '</table>';
         content += '<div style="margin-bottom:10px"><strong>Daftar Muzakki:</strong></div>';
