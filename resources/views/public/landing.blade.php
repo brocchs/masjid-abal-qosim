@@ -255,8 +255,8 @@
                     <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Pemasukan</h3>
                     <p class="text-2xl font-bold text-green-600 mb-2">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</p>
                     <p class="text-xs text-gray-500 mb-3">{{ $monthName }}</p>
-                    <button onclick="showPemasukanModal()" class="w-full bg-green-600 hover:bg-green-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition-colors flex items-center justify-center">
-                        <i class="fas fa-list mr-2"></i>Lihat Detail
+                    <button onclick="printReport()" class="w-full bg-green-600 hover:bg-green-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition-colors flex items-center justify-center">
+                        <i class="fas fa-print mr-2"></i>Cetak Laporan
                     </button>
                 </div>
                 
@@ -274,8 +274,8 @@
                     <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Pengeluaran</h3>
                     <p class="text-2xl font-bold text-red-600 mb-2">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</p>
                     <p class="text-xs text-gray-500 mb-3">{{ $monthName }}</p>
-                    <button onclick="showPengeluaranModal()" class="w-full bg-red-600 hover:bg-red-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition-colors flex items-center justify-center">
-                        <i class="fas fa-list mr-2"></i>Lihat Detail
+                    <button onclick="printReport()" class="w-full bg-red-600 hover:bg-red-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition-colors flex items-center justify-center">
+                        <i class="fas fa-print mr-2"></i>Cetak Laporan
                     </button>
                 </div>
                 
@@ -535,100 +535,78 @@ function closeLoginModal() {
     }, 300);
 }
 
-function showPemasukanModal() {
-    const modal = document.getElementById('pemasukanModal');
-    const content = document.getElementById('pemasukanModalContent');
-    modal.classList.remove('hidden');
-    setTimeout(() => {
-        content.classList.remove('scale-95', 'opacity-0');
-        content.classList.add('scale-100', 'opacity-100');
-    }, 10);
-    
-    fetch('/pemasukan-detail')
-        .then(response => response.json())
-        .then(data => {
-            const contentDiv = document.getElementById('pemasukanContent');
-            if (data.length === 0) {
-                contentDiv.innerHTML = '<p class="text-center text-gray-500 py-8">Belum ada data pemasukan bulan ini</p>';
-            } else {
-                let html = '<div class="space-y-3">';
-                data.forEach(item => {
-                    html += `
-                        <div class="flex justify-between items-start p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                            <div class="flex-1">
-                                <p class="font-medium text-gray-800">${item.keterangan}</p>
-                                <p class="text-sm text-gray-600 mt-1"><i class="fas fa-calendar mr-1"></i>${item.tanggal}</p>
-                            </div>
-                            <span class="text-green-600 font-bold ml-4">${item.jumlah}</span>
-                        </div>
-                    `;
-                });
-                html += '</div>';
-                contentDiv.innerHTML = html;
-            }
-        })
-        .catch(error => {
-            document.getElementById('pemasukanContent').innerHTML = '<p class="text-center text-red-500 py-8">Gagal memuat data</p>';
-        });
-}
-
-function closePemasukanModal() {
-    const modal = document.getElementById('pemasukanModal');
-    const content = document.getElementById('pemasukanModalContent');
-    content.classList.remove('scale-100', 'opacity-100');
-    content.classList.add('scale-95', 'opacity-0');
-    setTimeout(() => {
-        modal.classList.add('hidden');
-        document.getElementById('pemasukanContent').innerHTML = '<div class="flex justify-center items-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-green-600"></i></div>';
-    }, 300);
-}
-
-function showPengeluaranModal() {
-    const modal = document.getElementById('pengeluaranModal');
-    const content = document.getElementById('pengeluaranModalContent');
-    modal.classList.remove('hidden');
-    setTimeout(() => {
-        content.classList.remove('scale-95', 'opacity-0');
-        content.classList.add('scale-100', 'opacity-100');
-    }, 10);
-    
-    fetch('/pengeluaran-detail')
-        .then(response => response.json())
-        .then(data => {
-            const contentDiv = document.getElementById('pengeluaranContent');
-            if (data.length === 0) {
-                contentDiv.innerHTML = '<p class="text-center text-gray-500 py-8">Belum ada data pengeluaran bulan ini</p>';
-            } else {
-                let html = '<div class="space-y-3">';
-                data.forEach(item => {
-                    html += `
-                        <div class="flex justify-between items-start p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                            <div class="flex-1">
-                                <p class="font-medium text-gray-800">${item.keterangan}</p>
-                                <p class="text-sm text-gray-600 mt-1"><i class="fas fa-calendar mr-1"></i>${item.tanggal}</p>
-                            </div>
-                            <span class="text-red-600 font-bold ml-4">${item.jumlah}</span>
-                        </div>
-                    `;
-                });
-                html += '</div>';
-                contentDiv.innerHTML = html;
-            }
-        })
-        .catch(error => {
-            document.getElementById('pengeluaranContent').innerHTML = '<p class="text-center text-red-500 py-8">Gagal memuat data</p>';
-        });
-}
-
-function closePengeluaranModal() {
-    const modal = document.getElementById('pengeluaranModal');
-    const content = document.getElementById('pengeluaranModalContent');
-    content.classList.remove('scale-100', 'opacity-100');
-    content.classList.add('scale-95', 'opacity-0');
-    setTimeout(() => {
-        modal.classList.add('hidden');
-        document.getElementById('pengeluaranContent').innerHTML = '<div class="flex justify-center items-center py-8"><i class="fas fa-spinner fa-spin text-3xl text-red-600"></i></div>';
-    }, 300);
+function printReport() {
+    Promise.all([
+        fetch('/pemasukan-detail').then(r => r.json()),
+        fetch('/pengeluaran-detail').then(r => r.json())
+    ]).then(([pemasukan, pengeluaran]) => {
+        const logoUrl = window.location.origin + '/pictures/logo-abal-qosim.png';
+        const month = '{{ $monthName }}';
+        const printDate = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        const totalPemasukan = 'Rp {{ number_format($totalPemasukan, 0, ',', '.') }}';
+        const totalPengeluaran = 'Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}';
+        const saldo = 'Rp {{ number_format(abs($totalPemasukan - $totalPengeluaran), 0, ',', '.') }}';
+        const totalSaldo = 'Rp {{ number_format(abs($totalSaldo), 0, ',', '.') }}';
+        
+        let content = '<html><head><title>Laporan Keuangan</title>';
+        content += '<style>@page{size:A4;margin:10mm}body{font-family:Arial,sans-serif;padding:10px;font-size:12px}.header{display:flex;align-items:center;margin-bottom:5px}.logo{width:60px;height:60px;margin-right:15px}.header-text{flex:1;text-align:center}h2{margin:0;font-size:22px;font-weight:bold}h3{margin:10px 0 5px;font-size:14px;text-align:center;font-weight:bold}hr{margin:2px 0;border:none;border-top:2px solid #000}.summary{display:flex;justify-content:space-between;margin:20px 0;border:2px solid #000;padding:15px;background:#f8f9fa}.summary div{text-align:center;flex:1;border-right:1px solid #ccc}.summary div:last-child{border-right:none}table{width:100%;margin-top:20px;font-size:11px;border-collapse:collapse}th,td{border:1px solid #000;padding:8px 6px;text-align:left}th{background-color:#e9ecef;font-weight:bold;text-align:center}.text-green{color:#059669}.text-red{color:#dc2626}.section-title{margin-top:20px;font-size:13px;font-weight:bold;background:#e9ecef;padding:8px;border:1px solid #000}</style>';
+        content += '</head><body>';
+        content += '<div class="header">';
+        content += `<img src="${logoUrl}" class="logo" alt="Logo Masjid">`;
+        content += '<div class="header-text">';
+        content += '<h2>MASJID ABAL QOSIM</h2>';
+        content += '<p style="margin:0;font-size:9px">JL. Menur Gg V No. 48 Surabaya</p>';
+        content += '<p style="margin:0;font-size:9px">Telp 085883112301 / 082245559338 / 081216303887</p>';
+        content += '</div></div>';
+        content += '<hr>';
+        content += '<h3>LAPORAN KEUANGAN</h3>';
+        content += `<p style="text-align:center;margin:0 0 5px;font-size:12px;font-weight:bold">Periode: ${month}</p>`;
+        content += `<p style="text-align:center;margin:0 0 15px;font-size:10px;color:#666">Tanggal Cetak: ${printDate}</p>`;
+        content += '<div class="summary">';
+        content += `<div><strong>Total Pemasukan:</strong><br>${totalPemasukan}</div>`;
+        content += `<div><strong>Total Pengeluaran:</strong><br>${totalPengeluaran}</div>`;
+        content += `<div><strong>Saldo ${month}:</strong><br>${saldo}</div>`;
+        content += `<div><strong>Saldo Akhir:</strong><br>${totalSaldo}<br><small style="font-size:9px">(Keseluruhan)</small></div>`;
+        content += '</div>';
+        
+        content += '<div class="section-title">DETAIL PEMASUKAN</div>';
+        content += '<table><thead><tr>';
+        content += '<th>No</th><th>Tanggal</th><th>Keterangan</th><th style="text-align:right">Jumlah</th>';
+        content += '</tr></thead><tbody>';
+        if (pemasukan.length === 0) {
+            content += '<tr><td colspan="4" style="text-align:center">Belum ada data pemasukan</td></tr>';
+        } else {
+            pemasukan.forEach((item, index) => {
+                content += `<tr><td style="text-align:center">${index + 1}</td><td>${item.tanggal}</td><td>${item.keterangan}</td><td style="text-align:right" class="text-green">${item.jumlah}</td></tr>`;
+            });
+        }
+        content += '</tbody></table>';
+        
+        content += '<div class="section-title">DETAIL PENGELUARAN</div>';
+        content += '<table><thead><tr>';
+        content += '<th>No</th><th>Tanggal</th><th>Keterangan</th><th style="text-align:right">Jumlah</th>';
+        content += '</tr></thead><tbody>';
+        if (pengeluaran.length === 0) {
+            content += '<tr><td colspan="4" style="text-align:center">Belum ada data pengeluaran</td></tr>';
+        } else {
+            pengeluaran.forEach((item, index) => {
+                content += `<tr><td style="text-align:center">${index + 1}</td><td>${item.tanggal}</td><td>${item.keterangan}</td><td style="text-align:right" class="text-red">${item.jumlah}</td></tr>`;
+            });
+        }
+        content += '</tbody></table>';
+        content += '</body></html>';
+        
+        const printWindow = window.open('', '', 'width=800,height=600');
+        printWindow.document.write(content);
+        printWindow.document.close();
+        setTimeout(() => {
+            printWindow.focus();
+            printWindow.print();
+            printWindow.close();
+        }, 250);
+    }).catch(error => {
+        alert('Gagal memuat data laporan');
+    });
 }
 
 let currentSlide = 0;
