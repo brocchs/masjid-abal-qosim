@@ -271,7 +271,7 @@
                         </span>
                         @endif
                     </div>
-                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Total Pengeluaran</h3>
+                    <h3 class="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1 whitespace-nowrap">Total Pengeluaran</h3>
                     <p class="text-2xl font-bold text-red-600 mb-2">Rp {{ number_format($totalPengeluaran, 0, ',', '.') }}</p>
                     <p class="text-xs text-gray-500 mb-3">{{ $monthName }}</p>
                     <button onclick="printReport()" class="w-full bg-red-600 hover:bg-red-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition-colors flex items-center justify-center">
