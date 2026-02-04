@@ -200,6 +200,25 @@
                         </div>
                     </li>
                     <li>
+                        <a class="flex items-center justify-between text-white hover:bg-white hover:bg-opacity-10 p-2 rounded {{ request()->routeIs('inventaris.*') || request()->routeIs('reports.inventaris*') ? 'bg-green-600 bg-opacity-50 font-bold' : '' }}" href="#" onclick="toggleMenu('inventarisMenu')">
+                            <span class="flex items-center text-sm">
+                                <i class="fas fa-box mr-2"></i>
+                                Inventaris
+                            </span>
+                            <i class="fas fa-chevron-down"></i>
+                        </a>
+                        <div class="ml-4 mt-2 space-y-1 {{ request()->routeIs('inventaris.*') || request()->routeIs('reports.inventaris*') ? '' : 'hidden' }}" id="inventarisMenu">
+                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('inventaris.*') && !request()->routeIs('reports.inventaris*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('inventaris.index') }}">
+                                <i class="fas fa-boxes mr-2"></i>
+                                Data Inventaris
+                            </a>
+                            <a class="block text-white hover:bg-white hover:bg-opacity-10 p-2 rounded text-xs {{ request()->routeIs('reports.inventaris*') ? 'bg-green-600 bg-opacity-75 font-bold' : 'text-green-100' }}" href="{{ route('reports.inventaris') }}">
+                                <i class="fas fa-file-invoice mr-2"></i>
+                                Laporan
+                            </a>
+                        </div>
+                    </li>
+                    <li>
                         <a class="flex items-center justify-between text-white hover:bg-white hover:bg-opacity-10 p-2 rounded {{ request()->routeIs('donasi.*') || request()->routeIs('wakaf.*') || request()->routeIs('penerima-bantuan.*') || request()->routeIs('penyaluran.*') || request()->routeIs('reports.donatur*') || request()->routeIs('reports.penyaluran*') ? 'bg-green-600 bg-opacity-50 font-bold' : '' }}" href="#" onclick="toggleMenu('donasiMenu')">
                             <span class="flex items-center text-sm">
                                 <i class="fas fa-donate mr-2"></i>

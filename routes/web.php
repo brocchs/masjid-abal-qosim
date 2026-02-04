@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('roles', App\Http\Controllers\RoleController::class);
     Route::resource('zakat', App\Http\Controllers\ZakatController::class);
     Route::resource('mustahik', App\Http\Controllers\MustahikController::class);
+    Route::resource('inventaris', App\Http\Controllers\InventarisController::class);
     Route::resource('donasi', App\Http\Controllers\DonasiController::class);
     Route::resource('wakaf', App\Http\Controllers\WakafController::class);
     Route::resource('penerima-bantuan', App\Http\Controllers\PenerimaBantuanController::class);
@@ -54,4 +55,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/reports/donatur/{nama}', [DonaturReportController::class, 'detail'])->name('reports.donatur.detail');
     Route::get('/reports/penyaluran', [App\Http\Controllers\PenyaluranReportController::class, 'index'])->name('reports.penyaluran');
     Route::get('/reports/zakat', [App\Http\Controllers\ZakatReportController::class, 'index'])->name('reports.zakat');
+    Route::get('/reports/inventaris', [App\Http\Controllers\InventarisReportController::class, 'index'])->name('reports.inventaris');
 });
