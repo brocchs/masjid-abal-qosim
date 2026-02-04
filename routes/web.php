@@ -39,6 +39,9 @@ Route::middleware('auth')->group(function () {
     });
     
     Route::resource('cash-flow', CashFlowController::class);
+    Route::get('/cash-flow-import', [CashFlowController::class, 'importForm'])->name('cash-flow.import.form');
+    Route::post('/cash-flow-import', [CashFlowController::class, 'import'])->name('cash-flow.import');
+    Route::get('/cash-flow-template', [CashFlowController::class, 'downloadTemplate'])->name('cash-flow.download-template');
     Route::resource('cashflow-reports', CashFlowReportController::class)->only(['index']);
     Route::resource('users', UserController::class);
     Route::resource('roles', App\Http\Controllers\RoleController::class);

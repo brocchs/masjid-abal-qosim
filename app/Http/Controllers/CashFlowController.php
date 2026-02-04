@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CashFlow;
+use App\Imports\CashFlowImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -107,5 +108,66 @@ class CashFlowController extends Controller
         $cashflow->delete();
 
         return redirect()->route('cash-flow.index')->with('success', 'Cash Flow berhasil dihapus');
+    }
+
+    public function importForm()
+    {
+        return view('cashflows.import');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls|max:2048'
+        ]);
+
+        $file = $request->file('file');
+        $path = $file->getRealPath();
+
+        $import = new CashFlowImport(Auth::id());
+        $import->import($path);
+
+        $errors = $import->getErrors();
+        $successCount = $import->getSuccessCount();
+
+        if (count($errors) > 0) {
+            return redirect()->route('cash-flow.import.form')
+                ->with('errors_detail', $errors)
+                ->with('success_count', $successCount)
+                ->with('error', 'Import selesai dengan ' . count($errors) . ' error dan ' . $successCount . ' data berhasil.');
+        }
+
+        return redirect()->route('cash-flow.index')
+            ->with('success', 'Berhasil import ' . $successCount . ' data cash flow');
+    }
+
+    public function downloadTemplate()
+    {
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        
+        $sheet->setCellValue('A1', 'tanggal');
+        $sheet->setCellValue('B1', 'jenis');
+        $sheet->setCellValue('C1', 'jumlah');
+        $sheet->setCellValue('D1', 'deskripsi');
+        
+        $sheet->setCellValue('A2', '01/01/2024');
+        $sheet->setCellValue('B2', 'Pemasukan');
+        $sheet->setCellValue('C2', '500000');
+        $sheet->setCellValue('D2', 'Donasi Jamaah');
+        
+        $sheet->setCellValue('A3', '02/01/2024');
+        $sheet->setCellValue('B3', 'Pengeluaran');
+        $sheet->setCellValue('C3', '200000');
+        $sheet->setCellValue('D3', 'Listrik Bulan Januari');
+        
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="template_cashflow.xlsx"');
+        header('Cache-Control: max-age=0');
+        
+        $writer->save('php://output');
+        exit;
     }
 }

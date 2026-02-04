@@ -34,10 +34,14 @@
         </div>
     </div>
     <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
-        <div class="text-center">
-            <a href="{{ route('cash-flow.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded w-full inline-block">
+        <div class="flex flex-col space-y-2">
+            <a href="{{ route('cash-flow.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded text-center">
                 <i class="fas fa-plus-circle mr-2"></i>
                 Tambah Cash Flow
+            </a>
+            <a href="{{ route('cash-flow.import.form') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-center">
+                <i class="fas fa-file-import mr-2"></i>
+                Import Excel
             </a>
         </div>
     </div>
