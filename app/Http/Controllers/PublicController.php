@@ -13,6 +13,16 @@ class PublicController extends Controller
 {
     public function index()
     {
+        return view('public.landing', $this->getLandingData());
+    }
+
+    public function indexV2()
+    {
+        return view('public.landing-v2', $this->getLandingData());
+    }
+
+    private function getLandingData()
+    {
         $currentMonth = date('Y-m');
         $monthName = \Carbon\Carbon::parse($currentMonth)->format('F Y');
         
@@ -57,7 +67,7 @@ class PublicController extends Controller
             }
         }
 
-        return view('public.landing', compact(
+        return compact(
             'totalDonasi', 
             'totalWakaf', 
             'totalPemasukan', 
@@ -71,7 +81,7 @@ class PublicController extends Controller
             'wakafTerbaru',
             'eventImages',
             'monthName'
-        ));
+        );
     }
 
     public function getPemasukanDetail()

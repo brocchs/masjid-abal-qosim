@@ -20,7 +20,9 @@ use App\Http\Controllers\PublicController;
 */
 
 // Public Landing Page
-Route::get('/', [PublicController::class, 'index'])->name('landing');
+Route::get('/', [PublicController::class, 'indexV2'])->name('landing');
+Route::get('/landing-old', [PublicController::class, 'index'])->name('landing.old');
+Route::get('/landing-v2', [PublicController::class, 'indexV2'])->name('landing.v2');
 Route::get('/pemasukan-detail', [PublicController::class, 'getPemasukanDetail'])->name('pemasukan.detail');
 Route::get('/pengeluaran-detail', [PublicController::class, 'getPengeluaranDetail'])->name('pengeluaran.detail');
 
