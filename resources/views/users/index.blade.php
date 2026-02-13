@@ -6,9 +6,9 @@
 @section('content')
 <div class="mb-6">
     @if(Auth::user()->role_id && Auth::user()->userRole && Auth::user()->userRole->name === 'Admin IT')
-    <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
         <div class="text-right">
-            <a href="{{ route('users.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded inline-flex items-center">
+            <a href="{{ route('users.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg inline-flex items-center">
                 <i class="fas fa-plus-circle mr-2"></i>
                 Tambah User
             </a>
@@ -17,14 +17,7 @@
     @endif
 </div>
 
-<div class="bg-white rounded-lg shadow">
-    <div class="bg-gray-50 px-4 md:px-6 py-4 border-b-2 border-masjid-green rounded-t-lg">
-        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
-            <i class="fas fa-users mr-2"></i>
-            Daftar User Admin
-        </h5>
-    </div>
-    <div class="p-4 md:p-6">
+<x-admin.section-card title="Daftar User Admin" icon="fa-users">
         @if($users->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
@@ -54,13 +47,13 @@
                             <td class="px-2 md:px-4 py-3 text-center">
                                 @if(Auth::user()->role_id && Auth::user()->userRole && Auth::user()->userRole->name === 'Admin IT')
                                 <div class="flex justify-center space-x-1 md:space-x-2">
-                                    <a href="{{ route('users.edit', $user) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 md:px-3 py-1 rounded text-xs md:text-sm">
+                                    <a href="{{ route('users.edit', $user) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 md:px-3 py-1 rounded-md text-xs md:text-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form action="{{ route('users.destroy', $user) }}" method="POST" class="inline" onsubmit="event.preventDefault(); showDeleteModal(this);">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 md:px-3 py-1 rounded text-xs md:text-sm">
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 md:px-3 py-1 rounded-md text-xs md:text-sm">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
@@ -84,6 +77,5 @@
                 <p class="text-gray-500">Belum ada user</p>
             </div>
         @endif
-    </div>
-</div>
+</x-admin.section-card>
 @endsection

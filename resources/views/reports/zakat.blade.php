@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="mb-6">
-    <div class="bg-white rounded-lg shadow p-6">
+    <x-admin.section-card>
         <form method="GET" action="{{ route('reports.zakat') }}">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                 <div>
@@ -26,58 +26,46 @@
                     </select>
                 </div>
                 <div>
-                    <button type="submit" class="w-full bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
+                    <button type="submit" class="w-full bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg">
                         <i class="fas fa-search mr-2"></i>Filter
                     </button>
                 </div>
             </div>
         </form>
-    </div>
+    </x-admin.section-card>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-    <div class="bg-blue-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Zakat</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalZakat, 0, ',', '.') }}</h4>
-            </div>
-            <i class="fas fa-moon text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-green-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Zakat Maal</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalZakatMaal, 0, ',', '.') }}</h4>
-            </div>
-            <i class="fas fa-coins text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-purple-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Shodaqoh</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalShodaqoh, 0, ',', '.') }}</h4>
-            </div>
-            <i class="fas fa-heart text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-orange-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Total</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($grandTotal, 0, ',', '.') }}</h4>
-            </div>
-            <i class="fas fa-chart-line text-2xl"></i>
-        </div>
-    </div>
+    <x-admin.stat-card
+        label="Zakat"
+        :value="'Rp ' . number_format($totalZakat, 0, ',', '.')"
+        icon="fa-moon"
+        tone="blue"
+    />
+    <x-admin.stat-card
+        label="Zakat Maal"
+        :value="'Rp ' . number_format($totalZakatMaal, 0, ',', '.')"
+        icon="fa-coins"
+        tone="emerald"
+    />
+    <x-admin.stat-card
+        label="Shodaqoh"
+        :value="'Rp ' . number_format($totalShodaqoh, 0, ',', '.')"
+        icon="fa-heart"
+        tone="purple"
+    />
+    <x-admin.stat-card
+        label="Total"
+        :value="'Rp ' . number_format($grandTotal, 0, ',', '.')"
+        icon="fa-chart-line"
+        tone="amber"
+    />
 </div>
 
 <div class="grid grid-cols-1 gap-4 mb-6">
-    <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
         <div class="flex items-center justify-center h-full">
-            <button onclick="printReport()" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded w-full">
+            <button onclick="printReport()" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg w-full">
                 <i class="fas fa-print mr-2"></i>
                 Cetak Laporan
             </button>
@@ -86,14 +74,7 @@
 </div>
 
 @if($type == 'all' || $type == 'fitrah')
-<div class="bg-white rounded-lg shadow mb-6">
-    <div class="bg-gray-50 px-6 py-4 border-b-2 border-blue-500 rounded-t-lg">
-        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
-            <i class="fas fa-moon mr-2"></i>
-            Data Zakat
-        </h5>
-    </div>
-    <div class="p-6">
+<x-admin.section-card title="Data Zakat" icon="fa-moon" class="mb-6">
         @if($zakat->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
@@ -146,19 +127,11 @@
                 <p class="text-gray-500">Tidak ada data zakat</p>
             </div>
         @endif
-    </div>
-</div>
+</x-admin.section-card>
 @endif
 
 @if($type == 'all' || $type == 'maal')
-<div class="bg-white rounded-lg shadow mb-6">
-    <div class="bg-gray-50 px-6 py-4 border-b-2 border-green-500 rounded-t-lg">
-        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
-            <i class="fas fa-coins mr-2"></i>
-            Data Zakat Maal
-        </h5>
-    </div>
-    <div class="p-6">
+<x-admin.section-card title="Data Zakat Maal" icon="fa-coins" class="mb-6">
         @if($zakatMaal->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
@@ -197,19 +170,11 @@
                 <p class="text-gray-500">Tidak ada data zakat maal</p>
             </div>
         @endif
-    </div>
-</div>
+</x-admin.section-card>
 @endif
 
 @if($type == 'all' || $type == 'shodaqoh')
-<div class="bg-white rounded-lg shadow mb-6">
-    <div class="bg-gray-50 px-6 py-4 border-b-2 border-purple-500 rounded-t-lg">
-        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
-            <i class="fas fa-heart mr-2"></i>
-            Data Shodaqoh
-        </h5>
-    </div>
-    <div class="p-6">
+<x-admin.section-card title="Data Shodaqoh" icon="fa-heart" class="mb-6">
         @if($shodaqoh->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
@@ -248,8 +213,7 @@
                 <p class="text-gray-500">Tidak ada data shodaqoh</p>
             </div>
         @endif
-    </div>
-</div>
+</x-admin.section-card>
 @endif
 @endsection
 

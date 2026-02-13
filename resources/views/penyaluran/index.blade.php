@@ -4,18 +4,22 @@
 @section('page-title', 'Data Penyaluran')
 
 @section('content')
-<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 space-y-4 md:space-y-0">
-        <div>
-            <h2 class="text-xl font-semibold text-gray-800">Daftar Penyaluran Dana</h2>
-            <p class="text-sm text-gray-600">Kelola distribusi dana kepada penerima bantuan</p>
-        </div>
-        <a href="{{ route('penyaluran.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg transition-colors inline-flex items-center">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <x-admin.stat-card
+        label="Total Penyaluran"
+        :value="number_format($penyaluran->total(), 0, ',', '.')"
+        icon="fa-hand-holding"
+        tone="emerald"
+    />
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
+        <a href="{{ route('penyaluran.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg transition-colors inline-flex items-center justify-center w-full">
             <i class="fas fa-plus mr-2"></i>
             Tambah Penyaluran
         </a>
     </div>
+</div>
 
+<x-admin.section-card title="Daftar Penyaluran Dana" icon="fa-list">
     <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
@@ -48,16 +52,16 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                        <a href="{{ route('penyaluran.show', $item->id) }}" class="text-blue-600 hover:text-blue-900">
+                        <a href="{{ route('penyaluran.show', $item->id) }}" class="inline-flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-md text-sm">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href="{{ route('penyaluran.edit', $item->id) }}" class="text-indigo-600 hover:text-indigo-900">
+                        <a href="{{ route('penyaluran.edit', $item->id) }}" class="inline-flex items-center justify-center bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md text-sm">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <form method="POST" action="{{ route('penyaluran.destroy', $item->id) }}" class="inline" onsubmit="return showDeleteModal(this)">
+                        <form method="POST" action="{{ route('penyaluran.destroy', $item->id) }}" class="inline" onsubmit="event.preventDefault(); showDeleteModal(this);">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-900">
+                            <button type="submit" class="inline-flex items-center justify-center bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md text-sm">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -75,5 +79,5 @@
     <div class="mt-6 pagination-wrapper">
         {{ $penyaluran->links() }}
     </div>
-</div>
+</x-admin.section-card>
 @endsection

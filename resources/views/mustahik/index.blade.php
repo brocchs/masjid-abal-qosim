@@ -5,18 +5,15 @@
 
 @section('content')
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-    <div class="bg-blue-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Total Mustahik</h6>
-                <h4 class="text-xl font-bold">{{ $mustahiks->total() }}</h4>
-            </div>
-            <i class="fas fa-users text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
+    <x-admin.stat-card
+        label="Total Mustahik"
+        :value="number_format($mustahiks->total(), 0, ',', '.')"
+        icon="fa-users"
+        tone="blue"
+    />
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
         <div class="text-center">
-            <a href="{{ route('mustahik.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded w-full inline-block">
+            <a href="{{ route('mustahik.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg w-full inline-block">
                 <i class="fas fa-plus-circle mr-2"></i>
                 Tambah Mustahik
             </a>
@@ -24,14 +21,7 @@
     </div>
 </div>
 
-<div class="bg-white rounded-lg shadow">
-    <div class="bg-gray-50 px-6 py-4 border-b-2 border-masjid-green rounded-t-lg">
-        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
-            <i class="fas fa-list mr-2"></i>
-            Daftar Mustahik
-        </h5>
-    </div>
-    <div class="p-6">
+<x-admin.section-card title="Daftar Mustahik" icon="fa-list">
         @if($mustahiks->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
@@ -59,13 +49,13 @@
                             <td class="px-4 py-3 text-sm text-gray-500">{{ $mustahik->user->name ?? 'Unknown' }}</td>
                             <td class="px-4 py-3 text-center">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('mustahik.edit', $mustahik) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-sm">
+                                    <a href="{{ route('mustahik.edit', $mustahik) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md text-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form action="{{ route('mustahik.destroy', $mustahik) }}" method="POST" class="inline" onsubmit="event.preventDefault(); showDeleteModal(this);">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm">
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md text-sm">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
@@ -85,12 +75,11 @@
             <div class="text-center py-8">
                 <i class="fas fa-users text-4xl text-gray-400 mb-4"></i>
                 <p class="text-gray-500 mb-4">Belum ada data mustahik</p>
-                <a href="{{ route('mustahik.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
+                <a href="{{ route('mustahik.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg">
                     <i class="fas fa-plus mr-2"></i>
                     Tambah Data Pertama
                 </a>
             </div>
         @endif
-    </div>
-</div>
+</x-admin.section-card>
 @endsection

@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="mb-6">
-    <div class="bg-white rounded-lg shadow p-6">
+    <x-admin.section-card>
         <form method="GET" action="{{ route('reports.donatur') }}">
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                 <div>
@@ -29,53 +29,37 @@
                     <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-masjid-green" id="search" name="search" value="{{ $search }}" placeholder="Nama donatur...">
                 </div>
                 <div>
-                    <button type="submit" class="w-full bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
+                    <button type="submit" class="w-full bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg">
                         <i class="fas fa-search mr-2"></i>Filter
                     </button>
                 </div>
             </div>
         </form>
-    </div>
+    </x-admin.section-card>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-    <div class="bg-blue-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Total Donatur</h6>
-                <h4 class="text-xl font-bold">{{ $totalDonatur }}</h4>
-            </div>
-            <i class="fas fa-users text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-green-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Total Donasi</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalAmount, 0, ',', '.') }}</h4>
-            </div>
-            <i class="fas fa-hand-holding-heart text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-purple-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Total Transaksi</h6>
-                <h4 class="text-xl font-bold">{{ number_format($totalTransactions, 0, ',', '.') }} Transaksi</h4>
-            </div>
-            <i class="fas fa-exchange-alt text-2xl"></i>
-        </div>
-    </div>
+    <x-admin.stat-card
+        label="Total Donatur"
+        :value="number_format($totalDonatur, 0, ',', '.')"
+        icon="fa-users"
+        tone="blue"
+    />
+    <x-admin.stat-card
+        label="Total Donasi"
+        :value="'Rp ' . number_format($totalAmount, 0, ',', '.')"
+        icon="fa-hand-holding-heart"
+        tone="emerald"
+    />
+    <x-admin.stat-card
+        label="Total Transaksi"
+        :value="number_format($totalTransactions, 0, ',', '.') . ' Transaksi'"
+        icon="fa-exchange-alt"
+        tone="purple"
+    />
 </div>
 
-<div class="bg-white rounded-lg shadow">
-    <div class="bg-gray-50 px-6 py-4 border-b-2 border-masjid-green rounded-t-lg">
-        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
-            <i class="fas fa-list mr-2"></i>
-            Daftar Donatur
-        </h5>
-    </div>
-    <div class="p-6">
+<x-admin.section-card title="Daftar Donatur" icon="fa-list">
         @if($donatur->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
@@ -144,7 +128,7 @@
                                 </span>
                             </td>
                             <td class="px-4 py-3 text-center">
-                                <a href="{{ route('reports.donatur.detail', $item->nama_pemberi) }}?start_date={{ $startDate }}&end_date={{ $endDate }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                                <a href="{{ route('reports.donatur.detail', $item->nama_pemberi) }}?start_date={{ $startDate }}&end_date={{ $endDate }}" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm">
                                     <i class="fas fa-eye mr-1"></i>Detail
                                 </a>
                             </td>
@@ -159,6 +143,5 @@
                 <p class="text-gray-500">Tidak ada data donatur</p>
             </div>
         @endif
-    </div>
-</div>
+</x-admin.section-card>
 @endsection

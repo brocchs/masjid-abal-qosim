@@ -6,7 +6,7 @@
 @section('content')
 <div class="no-print">
 <div class="mb-6">
-    <div class="bg-white rounded-lg shadow p-6">
+    <x-admin.section-card>
         <form method="GET" action="{{ route('cashflow-reports.index') }}">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                 <div class="md:col-span-2">
@@ -20,54 +20,42 @@
                 </div>
             </div>
         </form>
-    </div>
+    </x-admin.section-card>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-    <div class="bg-green-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Pemasukan</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalCredit, 0, ',', '.') }}</h4>
-            </div>
-            <i class="fas fa-arrow-up text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-red-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Pengeluaran</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalDebit, 0, ',', '.') }}</h4>
-            </div>
-            <i class="fas fa-arrow-down text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-{{ $balance >= 0 ? 'blue' : 'yellow' }}-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Saldo {{ \Carbon\Carbon::parse($month)->format('F Y') }}</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format(abs($balance), 0, ',', '.') }}</h4>
-                <small class="text-xs">{{ $balance >= 0 ? 'Surplus' : 'Defisit' }}</small>
-            </div>
-            <i class="fas fa-wallet text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-{{ $totalBalance >= 0 ? 'purple' : 'orange' }}-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Saldo Akhir</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format(abs($totalBalance), 0, ',', '.') }}</h4>
-                <small class="text-xs">Keseluruhan</small>
-            </div>
-            <i class="fas fa-coins text-2xl"></i>
-        </div>
-    </div>
+    <x-admin.stat-card
+        label="Pemasukan"
+        :value="'Rp ' . number_format($totalCredit, 0, ',', '.')"
+        icon="fa-arrow-trend-up"
+        tone="emerald"
+    />
+    <x-admin.stat-card
+        label="Pengeluaran"
+        :value="'Rp ' . number_format($totalDebit, 0, ',', '.')"
+        icon="fa-arrow-trend-down"
+        tone="red"
+    />
+    <x-admin.stat-card
+        :label="'Saldo ' . \Carbon\Carbon::parse($month)->format('F Y')"
+        :value="'Rp ' . number_format(abs($balance), 0, ',', '.')"
+        icon="fa-wallet"
+        :tone="$balance >= 0 ? 'blue' : 'amber'"
+        :hint="$balance >= 0 ? 'Surplus' : 'Defisit'"
+    />
+    <x-admin.stat-card
+        label="Saldo Akhir"
+        :value="'Rp ' . number_format(abs($totalBalance), 0, ',', '.')"
+        icon="fa-coins"
+        :tone="$totalBalance >= 0 ? 'purple' : 'amber'"
+        hint="Keseluruhan"
+    />
 </div>
 
 <div class="grid grid-cols-1 gap-4 mb-6">
-    <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
         <div class="flex items-center justify-center h-full">
-            <button onclick="printReport()" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded w-full">
+            <button onclick="printReport()" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg w-full">
                 <i class="fas fa-print mr-2"></i>
                 Cetak Laporan
             </button>
@@ -76,14 +64,7 @@
 </div>
 </div>
 
-<div class="bg-white rounded-lg shadow">
-    <div class="bg-gray-50 px-6 py-4 border-b-2 border-masjid-green rounded-t-lg no-print">
-        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
-            <i class="fas fa-list mr-2"></i>
-            Detail Transaksi - {{ \Carbon\Carbon::parse($month)->format('F Y') }}
-        </h5>
-    </div>
-    <div class="p-6">
+<x-admin.section-card :title="'Detail Transaksi - ' . \Carbon\Carbon::parse($month)->format('F Y')" icon="fa-list" headerClass="no-print">
         @if($cashflows->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
@@ -134,8 +115,7 @@
                 <p class="text-gray-500">Tidak ada transaksi pada bulan ini</p>
             </div>
         @endif
-    </div>
-</div>
+</x-admin.section-card>
 @endsection
 
 @section('scripts')

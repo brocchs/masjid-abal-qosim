@@ -5,64 +5,49 @@
 
 @section('content')
 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-    <div class="bg-gradient-to-br from-cyan-500 to-cyan-600 text-white rounded-lg shadow-lg p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium opacity-90">Total Semua Zakat</h6>
-                <h4 class="text-2xl font-bold">Rp {{ number_format($totalSemua, 0, ',', '.') }}</h4>
-            </div>
-            <i class="fas fa-hand-holding-heart text-3xl opacity-80"></i>
-        </div>
-    </div>
-    <div class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg shadow-lg p-4">
-        <div class="flex justify-between items-start">
-            <div>
-                <h6 class="text-sm font-medium opacity-90">Zakat Fitrah</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalZakatFitrah, 0, ',', '.') }}</h4>
-                <p class="text-xs opacity-80 mt-1"><i class="fas fa-users mr-1"></i>{{ number_format($totalJiwaFitrah, 0, ',', '.') }} jiwa</p>
-            </div>
-            <i class="fas fa-moon text-2xl opacity-80"></i>
-        </div>
-    </div>
-    <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg shadow-lg p-4">
-        <div class="flex justify-between items-start">
-            <div>
-                <h6 class="text-sm font-medium opacity-90">Zakat Maal</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalZakatMaal, 0, ',', '.') }}</h4>
-                <p class="text-xs opacity-80 mt-1"><i class="fas fa-users mr-1"></i>{{ number_format($totalJiwaMaal, 0, ',', '.') }} jiwa</p>
-            </div>
-            <i class="fas fa-coins text-2xl opacity-80"></i>
-        </div>
-    </div>
-    <div class="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg shadow-lg p-4">
-        <div class="flex justify-between items-start">
-            <div>
-                <h6 class="text-sm font-medium opacity-90">Shodaqoh</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalZakatShodaqoh, 0, ',', '.') }}</h4>
-                <p class="text-xs opacity-80 mt-1"><i class="fas fa-users mr-1"></i>{{ number_format($totalJiwaShodaqoh, 0, ',', '.') }} jiwa</p>
-            </div>
-            <i class="fas fa-heart text-2xl opacity-80"></i>
-        </div>
-    </div>
+    <x-admin.stat-card
+        label="Total Semua Zakat"
+        :value="'Rp ' . number_format($totalSemua, 0, ',', '.')"
+        icon="fa-hand-holding-heart"
+        tone="blue"
+    />
+    <x-admin.stat-card
+        label="Zakat Fitrah"
+        :value="'Rp ' . number_format($totalZakatFitrah, 0, ',', '.')"
+        icon="fa-moon"
+        tone="emerald"
+        :hint="number_format($totalJiwaFitrah, 0, ',', '.') . ' jiwa'"
+    />
+    <x-admin.stat-card
+        label="Zakat Maal"
+        :value="'Rp ' . number_format($totalZakatMaal, 0, ',', '.')"
+        icon="fa-coins"
+        tone="purple"
+        :hint="number_format($totalJiwaMaal, 0, ',', '.') . ' jiwa'"
+    />
+    <x-admin.stat-card
+        label="Shodaqoh"
+        :value="'Rp ' . number_format($totalZakatShodaqoh, 0, ',', '.')"
+        icon="fa-heart"
+        tone="blue"
+        :hint="number_format($totalJiwaShodaqoh, 0, ',', '.') . ' jiwa'"
+    />
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-    <div class="bg-gradient-to-br from-yellow-500 to-yellow-600 text-white rounded-lg shadow-lg p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium opacity-90">Total Beras (Fitrah)</h6>
-                <h4 class="text-2xl font-bold">{{ number_format($totalBeras, 2, ',', '.') }} kg</h4>
-            </div>
-            <i class="fas fa-seedling text-3xl opacity-80"></i>
-        </div>
-    </div>
-    <div class="bg-white border-2 border-masjid-green rounded-lg shadow p-4">
+    <x-admin.stat-card
+        label="Total Beras (Fitrah)"
+        :value="number_format($totalBeras, 2, ',', '.') . ' kg'"
+        icon="fa-seedling"
+        tone="amber"
+    />
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
         <div class="flex justify-center items-center gap-2">
-            <a href="{{ route('zakat.create') }}" class="flex-1 bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
+            <a href="{{ route('zakat.create') }}" class="flex-1 bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg">
                 <i class="fas fa-plus-circle mr-2"></i>
                 Tambah Data Zakat
             </a>
-            <button onclick="showDoaModal()" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+            <button onclick="showDoaModal()" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
                 <i class="fas fa-book-open mr-2"></i>
                 Doa Zakat Fitrah
             </button>
@@ -70,14 +55,7 @@
     </div>
 </div>
 
-<div class="bg-white rounded-lg shadow">
-    <div class="bg-gray-50 px-6 py-4 border-b-2 border-masjid-green rounded-t-lg">
-        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
-            <i class="fas fa-list mr-2"></i>
-            Daftar Pembayar Zakat
-        </h5>
-    </div>
-    <div class="p-6">
+<x-admin.section-card title="Daftar Pembayar Zakat" icon="fa-list">
         @if($zakats->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
@@ -138,16 +116,16 @@
                             <td class="px-4 py-3 text-sm text-gray-500">{{ $zakat->user->name ?? 'Unknown' }}</td>
                             <td class="px-4 py-3 text-center">
                                 <div class="flex justify-center space-x-2">
-                                    <button onclick="printReceipt({{ $zakat->id }})" class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-sm">
+                                    <button onclick="printReceipt({{ $zakat->id }})" class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-md text-sm">
                                         <i class="fas fa-print"></i>
                                     </button>
-                                    <a href="{{ route('zakat.edit', $zakat) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-sm">
+                                    <a href="{{ route('zakat.edit', $zakat) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md text-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form action="{{ route('zakat.destroy', $zakat) }}" method="POST" class="inline" onsubmit="event.preventDefault(); showDeleteModal(this);">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm">
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md text-sm">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
@@ -168,14 +146,13 @@
             <div class="text-center py-8">
                 <i class="fas fa-hand-holding-heart text-4xl text-gray-400 mb-4"></i>
                 <p class="text-gray-500 mb-4">Belum ada data zakat fitrah</p>
-                <a href="{{ route('zakat.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
+                <a href="{{ route('zakat.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg">
                     <i class="fas fa-plus mr-2"></i>
                     Tambah Data Pertama
                 </a>
             </div>
         @endif
-    </div>
-</div>
+</x-admin.section-card>
 @endsection
 
 @section('scripts')

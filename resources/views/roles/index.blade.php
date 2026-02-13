@@ -5,9 +5,9 @@
 
 @section('content')
 <div class="mb-6">
-    <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
         <div class="text-right">
-            <a href="{{ route('roles.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded inline-flex items-center">
+            <a href="{{ route('roles.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg inline-flex items-center">
                 <i class="fas fa-plus-circle mr-2"></i>
                 Tambah Role
             </a>
@@ -15,14 +15,7 @@
     </div>
 </div>
 
-<div class="bg-white rounded-lg shadow">
-    <div class="bg-gray-50 px-6 py-4 border-b-2 border-masjid-green rounded-t-lg">
-        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
-            <i class="fas fa-shield-alt mr-2"></i>
-            Daftar Role
-        </h5>
-    </div>
-    <div class="p-6">
+<x-admin.section-card title="Daftar Role" icon="fa-shield-alt">
         @if($roles->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
@@ -45,13 +38,13 @@
                             <td class="px-4 py-3 text-center">
                                 @if($role->name !== 'Admin IT')
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('roles.edit', $role) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">
+                                    <a href="{{ route('roles.edit', $role) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md text-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form action="{{ route('roles.destroy', $role) }}" method="POST" class="inline" onsubmit="event.preventDefault(); showDeleteModal(this);">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
@@ -73,12 +66,11 @@
             <div class="text-center py-8">
                 <i class="fas fa-shield-alt text-4xl text-gray-400 mb-4"></i>
                 <p class="text-gray-500 mb-4">Belum ada role</p>
-                <a href="{{ route('roles.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
+                <a href="{{ route('roles.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg">
                     <i class="fas fa-plus mr-2"></i>
                     Tambah Role Pertama
                 </a>
             </div>
         @endif
-    </div>
-</div>
+</x-admin.section-card>
 @endsection

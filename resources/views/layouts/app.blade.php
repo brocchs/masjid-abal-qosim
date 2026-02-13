@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="{{ asset('pictures/logo-abal-qosim.png') }}">
     <title>@yield('title', 'Admin Masjid Abal Qosim - Keuangan')</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -25,28 +28,235 @@
         }
     </script>
     <style>
-        html {
-            scroll-behavior: smooth;
+        :root {
+            --app-ink: #0f1a12;
+            --app-forest: #12331a;
+            --app-forest-soft: #1e4b2a;
+            --app-mint: #47c163;
+            --app-gold: #f6d045;
+            --app-cream: #f4f6ef;
+            --app-border: #d9e3d6;
+            --app-shadow: 0 18px 42px rgba(8, 23, 12, 0.08);
         }
-        
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+            color: var(--app-ink);
+            background:
+                radial-gradient(900px 420px at -12% -5%, rgba(71,193,99,.13), transparent 60%),
+                radial-gradient(680px 320px at 115% -8%, rgba(246,208,69,.13), transparent 55%),
+                var(--app-cream);
+        }
+        .app-shell {
+            min-height: 100vh;
+        }
         .loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(44, 85, 48, 0.9);
+            background:
+                radial-gradient(520px 240px at 20% 14%, rgba(246, 208, 69, 0.16), transparent 60%),
+                radial-gradient(640px 280px at 85% 88%, rgba(71, 193, 99, 0.15), transparent 62%),
+                linear-gradient(145deg, #102714 0%, #15361c 56%, #1c4825 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.28s ease, visibility 0.28s ease;
         }
         .loader.hidden {
             opacity: 0;
             pointer-events: none;
+            visibility: hidden;
+        }
+        .loader-content {
+            min-width: 250px;
+            text-align: center;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,.2);
+            background: linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+            box-shadow: 0 20px 48px rgba(0,0,0,.24);
+            padding: 1.2rem 1.35rem;
+            backdrop-filter: blur(6px);
         }
         
+        .app-sidebar {
+            background:
+                radial-gradient(460px 180px at 12% 6%, rgba(246,208,69,.2), transparent 60%),
+                linear-gradient(170deg, #102714 0%, #163a1d 58%, #1e4b2a 100%) !important;
+            border-right: 1px solid rgba(255,255,255,.08);
+            box-shadow: 20px 0 38px rgba(8, 20, 10, 0.28);
+        }
+        .app-sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .app-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,.24);
+            border-radius: 999px;
+        }
+        #sidebarMenu ul > li > a {
+            border-radius: 10px;
+            transition: all 160ms ease;
+        }
+        #sidebarMenu ul.sidebar-menu-root > li > a {
+            border: 1px solid rgba(255,255,255,.08);
+            background: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+        }
+        #sidebarMenu ul > li > a:hover {
+            transform: translateX(2px);
+        }
+        #sidebarMenu .ml-4 a {
+            border-radius: 8px;
+            transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+        }
+        #sidebarMenu .ml-4 a:hover {
+            transform: translateX(2px);
+        }
+        #sidebarMenu .bg-green-600 {
+            background: rgba(71, 193, 99, 0.34) !important;
+        }
+        #sidebarMenu ul.sidebar-menu-root > li > a.bg-green-600 {
+            border-color: rgba(246,208,69,.52);
+            box-shadow: 0 0 0 1px rgba(246,208,69,.2), 0 10px 24px rgba(0,0,0,.18);
+        }
+        .sidebar-now {
+            border-radius: 14px;
+            border: 1px solid rgba(246,208,69,.3);
+            background: linear-gradient(145deg, rgba(246,208,69,.2), rgba(255,255,255,.08));
+            padding: .75rem .8rem;
+            margin-top: .7rem;
+        }
+        .sidebar-now .label {
+            font-size: .64rem;
+            letter-spacing: .09em;
+            text-transform: uppercase;
+            color: #fceaa8;
+            font-weight: 700;
+        }
+        .sidebar-now .value {
+            margin-top: .26rem;
+            color: #f7fbf8;
+            font-size: .9rem;
+            font-weight: 700;
+            font-family: "Space Grotesk", "Plus Jakarta Sans", sans-serif;
+        }
+        .sidebar-now .meta {
+            margin-top: .15rem;
+            font-size: .7rem;
+            color: rgba(235, 248, 238, .82);
+        }
+        .sidebar-dock {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: .4rem;
+            margin-top: .7rem;
+            margin-bottom: .72rem;
+        }
+        .sidebar-dock-item {
+            height: 2.25rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.08);
+            color: #dcf2df;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 150ms ease, background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+        }
+        .sidebar-dock-item:hover {
+            transform: translateY(-1px);
+            background: rgba(255,255,255,.16);
+            color: #fff;
+        }
+        .sidebar-dock-item.active {
+            border-color: rgba(246,208,69,.45);
+            background: rgba(246,208,69,.18);
+            color: #ffefb2;
+            box-shadow: 0 8px 20px rgba(0,0,0,.18);
+        }
+        .sidebar-profile {
+            margin-top: .65rem;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,.14);
+            background: rgba(255,255,255,.07);
+            padding: .58rem .65rem;
+        }
+        .sidebar-profile-name {
+            color: #ffffff;
+            font-size: .82rem;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: 0;
+        }
+        .sidebar-profile-role {
+            margin-top: .16rem;
+            color: rgba(225, 241, 229, .86);
+            font-size: .72rem;
+            font-weight: 500;
+        }
+        .sidebar-logout {
+            border: 1px solid rgba(246,208,69,.42) !important;
+            background: linear-gradient(120deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
+        }
+        .sidebar-logout:hover {
+            color: #102714 !important;
+            background: linear-gradient(120deg, #f6d045, #fbe8a2) !important;
+            border-color: rgba(255,255,255,.45) !important;
+        }
+        .app-topbar {
+            background: rgba(255, 255, 255, 0.84);
+            border: 1px solid var(--app-border);
+            box-shadow: var(--app-shadow);
+            backdrop-filter: blur(8px);
+        }
+        .app-content {
+            padding-bottom: 3rem;
+        }
+        .app-footer {
+            margin-top: 1.25rem;
+            border-top: 1px solid var(--app-border);
+            color: #5f6e60;
+            font-size: .75rem;
+            text-align: right;
+            padding-top: .85rem;
+        }
+        .app-alert {
+            border-radius: 12px;
+            border-width: 1px;
+            padding: .78rem 1rem;
+            box-shadow: 0 10px 24px rgba(8, 23, 12, 0.06);
+        }
+        .app-alert-success {
+            border-color: #97d7aa;
+            color: #155a2d;
+            background: #effaf2;
+        }
+        .app-alert-error {
+            border-color: #f3b9c0;
+            color: #8a1f3a;
+            background: #fff1f3;
+        }
+        .app-delete-modal {
+            backdrop-filter: blur(5px);
+        }
+        .app-delete-card {
+            border: 1px solid rgba(255,255,255,.36);
+            box-shadow: 0 32px 64px rgba(0,0,0,.26);
+        }
+        @media (max-width: 767px) {
+            .app-content {
+                padding-bottom: 1.25rem;
+            }
+            .app-footer {
+                text-align: center;
+            }
+            .sidebar-dock {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
         /* Global Pagination Styles */
         .pagination-wrapper .pagination {
             display: flex;
@@ -91,10 +301,10 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body>
     <!-- Loading Screen -->
     <div id="loader" class="loader">
-        <div class="text-center">
+        <div class="loader-content">
             <div class="relative">
                 <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-24 h-24 mx-auto animate-pulse-slow">
                 <div class="absolute -top-2 -right-2">
@@ -112,9 +322,17 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col md:flex-row">
+    <div class="app-shell flex flex-col md:flex-row">
         <!-- Sidebar -->
-        <nav class="w-full md:w-64 bg-gradient-to-br from-masjid-green to-masjid-green-light shadow-lg fixed md:relative z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 top-0 bottom-0 overflow-y-auto" id="sidebarMenu">
+        <nav class="app-sidebar w-full md:w-64 fixed md:relative z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 top-0 bottom-0 overflow-y-auto" id="sidebarMenu">
+            @php
+                $moduleLabel = 'Overview';
+                if (request()->routeIs('users.*') || request()->routeIs('roles.*')) $moduleLabel = 'Admin';
+                elseif (request()->routeIs('cash-flow.*') || request()->routeIs('cashflow-reports.*')) $moduleLabel = 'Keuangan';
+                elseif (request()->routeIs('zakat.*') || request()->routeIs('mustahik.*') || request()->routeIs('reports.zakat*')) $moduleLabel = 'Zakat';
+                elseif (request()->routeIs('inventaris.*') || request()->routeIs('reports.inventaris*')) $moduleLabel = 'Inventaris';
+                elseif (request()->routeIs('donasi.*') || request()->routeIs('wakaf.*') || request()->routeIs('penerima-bantuan.*') || request()->routeIs('penyaluran.*') || request()->routeIs('reports.donatur*') || request()->routeIs('reports.penyaluran*')) $moduleLabel = 'Donasi & Wakaf';
+            @endphp
             <div class="p-4">
                 <div class="flex justify-between items-center mb-4 md:hidden">
                     <h5 class="text-white text-lg font-semibold">Menu</h5>
@@ -125,17 +343,35 @@
                 <div class="text-center mb-6">
                     <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-16 h-16 mx-auto mb-2">
                     <h5 class="text-white text-lg font-semibold">Masjid Abal Qosim</h5>
-                    <small class="text-green-100">✨ Sistem Admin Masjid ✨</small>
-                    <div class="mt-3 p-3 bg-white bg-opacity-10 rounded-lg border border-white border-opacity-25">
-                        <div class="text-center">
-                            <strong class="text-white text-sm block">{{ Auth::user()->name }}</strong>
-                            <small class="inline-block px-2 py-1 bg-green-600 bg-opacity-75 text-white rounded text-xs mt-1">
-                                <i class="fas fa-crown mr-1"></i>{{ Auth::user()->userRole ? ucfirst(Auth::user()->userRole->name) : 'Unknown' }}
-                            </small>
-                        </div>
+                    <small class="text-green-100">Sistem Admin Masjid</small>
+                    <div class="sidebar-profile">
+                        <div class="sidebar-profile-name">{{ Auth::user()->name }}</div>
+                        <div class="sidebar-profile-role">{{ Auth::user()->userRole ? ucfirst(Auth::user()->userRole->name) : 'Unknown' }}</div>
+                    </div>
+                    <div class="sidebar-now text-left">
+                        <p class="label">Now Managing</p>
+                        <p class="value">{{ $moduleLabel }}</p>
+                        <p class="meta">{{ date('D, d M Y') }} · Session Active</p>
+                    </div>
+                    <div class="sidebar-dock">
+                        <a href="{{ route('cash-flow.index') }}" class="sidebar-dock-item {{ request()->routeIs('cash-flow.*') || request()->routeIs('cashflow-reports.*') ? 'active' : '' }}" title="Keuangan">
+                            <i class="fas fa-money-bill-wave text-xs"></i>
+                        </a>
+                        <a href="{{ route('zakat.index') }}" class="sidebar-dock-item {{ request()->routeIs('zakat.*') || request()->routeIs('mustahik.*') || request()->routeIs('reports.zakat*') ? 'active' : '' }}" title="Zakat">
+                            <i class="fas fa-hand-holding-heart text-xs"></i>
+                        </a>
+                        <a href="{{ route('donasi.index') }}" class="sidebar-dock-item {{ request()->routeIs('donasi.*') || request()->routeIs('wakaf.*') ? 'active' : '' }}" title="Donasi & Wakaf">
+                            <i class="fas fa-donate text-xs"></i>
+                        </a>
+                        <a href="{{ route('inventaris.index') }}" class="sidebar-dock-item {{ request()->routeIs('inventaris.*') || request()->routeIs('reports.inventaris*') ? 'active' : '' }}" title="Inventaris">
+                            <i class="fas fa-boxes text-xs"></i>
+                        </a>
+                        <a href="{{ route('users.index') }}" class="sidebar-dock-item {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'active' : '' }}" title="Admin">
+                            <i class="fas fa-user-cog text-xs"></i>
+                        </a>
                     </div>
                 </div>
-                <ul class="space-y-2">
+                <ul class="space-y-2 sidebar-menu-root">
                     <li>
                         <a class="flex items-center justify-between text-white hover:bg-white hover:bg-opacity-10 p-2 rounded {{ request()->routeIs('users.*') || request()->routeIs('roles.*') ? 'bg-green-600 bg-opacity-50 font-bold' : '' }}" href="#" onclick="toggleMenu('adminMenu')">
                             <span class="flex items-center text-sm">
@@ -256,7 +492,7 @@
                     <li class="mt-6">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="w-full bg-transparent border border-white text-white hover:bg-white hover:text-masjid-green px-4 py-2 rounded text-sm transition-colors">
+                            <button type="submit" class="sidebar-logout w-full bg-transparent border border-white text-white hover:bg-white hover:text-masjid-green px-4 py-2 rounded-lg text-sm transition-colors">
                                 <i class="fas fa-sign-out-alt mr-2"></i>
                                 Logout
                             </button>
@@ -267,8 +503,8 @@
         </nav>
 
         <!-- Main content -->
-        <main class="flex-1 p-4 md:p-6 min-h-screen md:ml-0">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6 mb-6">
+        <main class="app-content flex-1 p-4 md:p-6 min-h-screen md:ml-0">
+            <div class="app-topbar rounded-2xl p-4 md:p-6 mb-6">
                 <div class="flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-gradient-to-r from-masjid-green to-masjid-green-light rounded-lg flex items-center justify-center">
@@ -292,7 +528,7 @@
             </div>
 
             @if(session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 relative" role="alert">
+                <div class="app-alert app-alert-success mb-4 relative" role="alert">
                     {{ session('success') }}
                     <button class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none'">
                         <i class="fas fa-times"></i>
@@ -301,7 +537,7 @@
             @endif
 
             @if(session('error'))
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 relative" role="alert">
+                <div class="app-alert app-alert-error mb-4 relative" role="alert">
                     {{ session('error') }}
                     <button class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none'">
                         <i class="fas fa-times"></i>
@@ -311,10 +547,8 @@
 
             @yield('content')
             
-            <footer class="fixed bottom-0 left-0 md:left-64 right-0 bg-white border-t border-gray-200 px-4 md:px-6 py-2">
-                <div class="text-center md:text-right text-gray-500 text-xs">
-                    © {{ date('Y') }} Moch.Alfarisyi. All rights reserved.
-                </div>
+            <footer class="app-footer">
+                <div>&copy; {{ date('Y') }} Moch.Alfarisyi. All rights reserved.</div>
             </footer>
         </main>
     </div>
@@ -386,8 +620,8 @@
     @yield('scripts')
 
     <!-- Custom Delete Confirmation Modal -->
-    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 transform transition-all scale-95 hover:scale-100">
+    <div id="deleteModal" class="app-delete-modal fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="app-delete-card bg-white rounded-2xl max-w-md w-full mx-4 transform transition-all scale-95 hover:scale-100">
             <!-- Header dengan gradient hijau -->
             <div class="bg-gradient-to-r from-masjid-green to-masjid-green-light rounded-t-2xl p-4">
                 <div class="flex items-center justify-center w-16 h-16 mx-auto bg-white bg-opacity-20 backdrop-blur-sm rounded-full border-2 border-white border-opacity-30">

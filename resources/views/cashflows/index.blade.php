@@ -5,41 +5,32 @@
 
 @section('content')
 <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-    <div class="bg-green-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Total Pemasukan</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalCredit, 0, ',', '.') }}</h4>
-            </div>
-            <i class="fas fa-arrow-up text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-red-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Total Pengeluaran</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format($totalDebit, 0, ',', '.') }}</h4>
-            </div>
-            <i class="fas fa-arrow-down text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-{{ $balance >= 0 ? 'blue' : 'yellow' }}-500 text-white rounded-lg shadow p-4">
-        <div class="flex justify-between items-center">
-            <div>
-                <h6 class="text-sm font-medium">Saldo</h6>
-                <h4 class="text-xl font-bold">Rp {{ number_format(abs($balance), 0, ',', '.') }}</h4>
-                <small class="text-xs">{{ $balance >= 0 ? 'Surplus' : 'Defisit' }}</small>
-            </div>
-            <i class="fas fa-wallet text-2xl"></i>
-        </div>
-    </div>
-    <div class="bg-white border-2 border-green-500 rounded-lg shadow p-4">
+    <x-admin.stat-card
+        label="Total Pemasukan"
+        :value="'Rp ' . number_format($totalCredit, 0, ',', '.')"
+        icon="fa-arrow-trend-up"
+        tone="emerald"
+    />
+    <x-admin.stat-card
+        label="Total Pengeluaran"
+        :value="'Rp ' . number_format($totalDebit, 0, ',', '.')"
+        icon="fa-arrow-trend-down"
+        tone="red"
+    />
+    <x-admin.stat-card
+        label="Saldo"
+        :value="'Rp ' . number_format(abs($balance), 0, ',', '.')"
+        icon="fa-wallet"
+        :tone="$balance >= 0 ? 'blue' : 'amber'"
+        :hint="$balance >= 0 ? 'Surplus' : 'Defisit'"
+    />
+    <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-4">
         <div class="flex flex-col space-y-2">
-            <a href="{{ route('cash-flow.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded text-center">
+            <a href="{{ route('cash-flow.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg text-center">
                 <i class="fas fa-plus-circle mr-2"></i>
                 Tambah Cash Flow
             </a>
-            <a href="{{ route('cash-flow.import.form') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-center">
+            <a href="{{ route('cash-flow.import.form') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-center">
                 <i class="fas fa-file-import mr-2"></i>
                 Import Excel
             </a>
@@ -47,14 +38,7 @@
     </div>
 </div>
 
-<div class="bg-white rounded-lg shadow">
-    <div class="bg-gray-50 px-6 py-4 border-b-2 border-masjid-green rounded-t-lg">
-        <h5 class="text-lg font-semibold text-gray-800 flex items-center">
-            <i class="fas fa-list mr-2"></i>
-            Daftar Cash Flow
-        </h5>
-    </div>
-    <div class="p-6">
+<x-admin.section-card title="Daftar Cash Flow" icon="fa-list">
         @if($cashflows->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full table-auto">
@@ -94,16 +78,16 @@
                             </td>
                             <td class="px-4 py-3 text-center">
                                 <div class="flex justify-center space-x-2">
-                                    <a href="{{ route('cash-flow.show', encrypt($cashflow->id)) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-sm">
+                                    <a href="{{ route('cash-flow.show', encrypt($cashflow->id)) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-md text-sm">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('cash-flow.edit', encrypt($cashflow->id)) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-sm">
+                                    <a href="{{ route('cash-flow.edit', encrypt($cashflow->id)) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded-md text-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form action="{{ route('cash-flow.destroy', encrypt($cashflow->id)) }}" method="POST" class="inline" onsubmit="event.preventDefault(); showDeleteModal(this);">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-sm">
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md text-sm">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
@@ -124,12 +108,11 @@
             <div class="text-center py-8">
                 <i class="fas fa-inbox text-4xl text-gray-400 mb-4"></i>
                 <p class="text-gray-500 mb-4">Belum ada cash flow</p>
-                <a href="{{ route('cash-flow.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded">
+                <a href="{{ route('cash-flow.create') }}" class="bg-masjid-green hover:bg-masjid-green-dark text-white px-4 py-2 rounded-lg">
                     <i class="fas fa-plus mr-2"></i>
                     Tambah Cash Flow Pertama
                 </a>
             </div>
         @endif
-    </div>
-</div>
+</x-admin.section-card>
 @endsection
