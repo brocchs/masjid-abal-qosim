@@ -116,6 +116,68 @@
             letter-spacing: 0.02em;
             font-weight: 600;
         }
+        .admin-hub {
+            position: relative;
+        }
+        .admin-trigger {
+            min-height: 40px;
+            padding: 0.48rem 0.9rem;
+            border-radius: 999px;
+            border: 1px solid rgba(246, 208, 69, 0.54);
+            background: rgba(6, 16, 8, 0.34);
+            color: #f5e7aa;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            transition: all 180ms ease;
+        }
+        .admin-trigger:hover {
+            color: #132d17;
+            background: linear-gradient(120deg, #f6d045, #fce9aa);
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
+        }
+        .admin-panel {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 0.55rem);
+            width: 220px;
+            padding: 0.55rem;
+            border-radius: 14px;
+            border: 1px solid rgba(246, 208, 69, 0.35);
+            background: linear-gradient(160deg, rgba(8, 24, 10, 0.98), rgba(13, 34, 17, 0.98));
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.28);
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+            transition: opacity 180ms ease, transform 180ms ease;
+            z-index: 80;
+        }
+        .admin-panel.open {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .admin-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0.62rem 0.72rem;
+            border-radius: 10px;
+            color: #e8f6ea;
+            font-size: 0.86rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 160ms ease, color 160ms ease;
+        }
+        .admin-link:hover {
+            background: rgba(246, 208, 69, 0.14);
+            color: #fff7d3;
+        }
+        .admin-link + .admin-link {
+            margin-top: 0.26rem;
+        }
         .menu-link { position: relative; }
         .menu-link.active::after {
             content: "";
@@ -434,6 +496,47 @@
             pointer-events: none;
             background: #0f1f12;
         }
+        .v2-login-modal {
+            background: radial-gradient(circle at 30% 20%, rgba(246, 208, 69, 0.18), rgba(0, 0, 0, 0.7) 48%), rgba(0, 0, 0, 0.68);
+            backdrop-filter: blur(6px);
+        }
+        .v2-login-card {
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: linear-gradient(160deg, #ffffff 0%, #f4f8f4 60%, #fff9e8 100%);
+            box-shadow: 0 32px 64px rgba(0, 0, 0, 0.32);
+        }
+        .v2-login-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            border-radius: 999px;
+            border: 1px solid rgba(15, 40, 19, 0.2);
+            background: rgba(255, 255, 255, 0.92);
+            color: #18401f;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 0.36rem 0.62rem;
+        }
+        .v2-login-btn-secondary {
+            border: 1px solid #d4ddd2;
+            background: #f6f7f6;
+            color: #334155;
+        }
+        .v2-login-btn-secondary:hover {
+            background: #ecefee;
+        }
+        .v2-login-btn-primary {
+            border: 1px solid rgba(15, 40, 19, 0.2);
+            color: #fff;
+            background: linear-gradient(130deg, #12321a, #215326);
+            box-shadow: 0 12px 24px rgba(18, 50, 26, 0.24);
+        }
+        .v2-login-btn-primary:hover {
+            background: linear-gradient(130deg, #194522, #2b6a31);
+        }
         .fade-up {
             opacity: 0;
             transform: translateY(22px);
@@ -589,7 +692,21 @@
                     <a href="#lokasi" class="menu-link text-white px-3 text-sm h-full flex items-center" data-section="lokasi" onclick="smoothScrollToSection(event, 'lokasi')">Lokasi</a>
                 </nav>
                 <div class="flex items-center gap-2">
-                    <button onclick="showLoginModal()" class="sr-btn sr-btn-primary text-sm">Login Admin</button>
+                    <div class="admin-hub hidden xs:block">
+                        <button id="adminHubTrigger" class="admin-trigger" type="button" onclick="toggleAdminHub(event)">
+                            <i class="fas fa-shield-alt mr-1"></i> Admin Login
+                        </button>
+                        <div id="adminHubPanel" class="admin-panel">
+                            <button type="button" class="admin-link" onclick="openLoginFromHub()">
+                                <span><i class="fas fa-right-to-bracket mr-2"></i>Login Admin</span>
+                                <i class="fas fa-angle-right text-xs"></i>
+                            </button>
+                            <a href="#laporan" class="admin-link" onclick="smoothScrollToSection(event, 'laporan'); closeAdminHub();">
+                                <span><i class="fas fa-chart-line mr-2"></i>Lihat Laporan</span>
+                                <i class="fas fa-angle-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
                     <button class="xs:hidden text-white w-10 h-10 rounded-full border border-white/25" onclick="toggleMenu()">
                         <i class="fas fa-bars"></i>
                     </button>
@@ -605,6 +722,9 @@
                 <a href="#recent-section" class="mobile-menu-link text-gray-200 px-3 py-2 rounded-md" data-section="recent-section" onclick="smoothScrollToSection(event, 'recent-section'); toggleMenu();">Aktivitas</a>
                 <a href="#donasi" class="mobile-menu-link text-gray-200 px-3 py-2 rounded-md" data-section="donasi" onclick="smoothScrollToSection(event, 'donasi'); toggleMenu();">Donasi</a>
                 <a href="#lokasi" class="mobile-menu-link text-gray-200 px-3 py-2 rounded-md" data-section="lokasi" onclick="smoothScrollToSection(event, 'lokasi'); toggleMenu();">Lokasi</a>
+                <button type="button" class="mobile-menu-link text-left text-yellow-100 px-3 py-2 rounded-md border border-yellow-200/30 bg-yellow-200/10" onclick="showLoginModal(); toggleMenu();">
+                    <i class="fas fa-shield-alt mr-2"></i>Area Pengurus
+                </button>
             </div>
         </div>
 
@@ -959,21 +1079,23 @@
     </div>
 
     <!-- Login Modal -->
-    <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center transition-opacity duration-300">
-        <div id="loginModalContent" class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6 transform transition-all duration-300 scale-95 opacity-0">
+    <div id="loginModal" class="hidden fixed inset-0 v2-login-modal z-50 flex items-center justify-center transition-opacity duration-300" onclick="closeLoginModal()">
+        <div id="loginModalContent" class="v2-login-card max-w-md w-full mx-4 p-6 md:p-7 transform transition-all duration-300 scale-95 opacity-0" onclick="event.stopPropagation()">
             <div class="text-center mb-6">
-                <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-16 h-16 mx-auto mb-4" style="filter: drop-shadow(3px 3px 8px rgba(0,0,0,1)) drop-shadow(-3px -3px 8px rgba(0,0,0,1));">
-                <h3 class="text-2xl font-bold text-gray-800 mb-2">Konfirmasi Login</h3>
-                <p class="text-gray-600">Apakah Anda pengurus masjid?</p>
+                <span class="v2-login-badge mb-4"><i class="fas fa-shield-alt"></i> Secure Access</span>
+                <img src="{{ asset('pictures/logo-abal-qosim.png') }}" alt="Logo Masjid" class="w-16 h-16 mx-auto mb-4" style="filter: drop-shadow(1px 4px 6px rgba(0,0,0,0.35));">
+                <h3 class="text-2xl font-bold text-slate-900 mb-2">Area Pengurus</h3>
+                <p class="text-slate-600">Lanjutkan hanya jika Anda pengurus resmi masjid.</p>
             </div>
-            <div class="flex space-x-3">
-                <button onclick="closeLoginModal()" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-lg transition-colors">
-                    Bukan
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <button onclick="closeLoginModal()" class="v2-login-btn-secondary font-semibold py-3 px-4 rounded-xl transition-colors">
+                    Kembali
                 </button>
-                <a href="{{ route('login') }}" class="flex-1 bg-masjid-green hover:bg-masjid-green-dark text-white font-medium py-3 px-4 rounded-lg transition-colors text-center">
-                    Ya
+                <a href="{{ route('login') }}" class="v2-login-btn-primary font-semibold py-3 px-4 rounded-xl transition-colors text-center">
+                    Masuk Admin
                 </a>
             </div>
+            <p class="text-center text-xs text-slate-500 mt-4">Akses ini ditujukan untuk pengelola sistem dan data keuangan.</p>
         </div>
     </div>
 
@@ -1011,9 +1133,28 @@
         </div>
     </div>
 <script>
+function toggleAdminHub(e) {
+    if (e) e.stopPropagation();
+    const panel = document.getElementById('adminHubPanel');
+    if (!panel) return;
+    panel.classList.toggle('open');
+}
+
+function closeAdminHub() {
+    const panel = document.getElementById('adminHubPanel');
+    if (!panel) return;
+    panel.classList.remove('open');
+}
+
+function openLoginFromHub() {
+    closeAdminHub();
+    showLoginModal();
+}
+
 function showLoginModal() {
     const modal = document.getElementById('loginModal');
     const content = document.getElementById('loginModalContent');
+    closeAdminHub();
     modal.classList.remove('hidden');
     setTimeout(() => {
         content.classList.remove('scale-95', 'opacity-0');
@@ -1339,6 +1480,21 @@ window.addEventListener('resize', function() {
     const menu = document.getElementById('mobile-menu');
     if (window.innerWidth >= 700) {
         menu.classList.add('hidden');
+    }
+    closeAdminHub();
+});
+
+document.addEventListener('click', function(e) {
+    const hub = document.querySelector('.admin-hub');
+    if (!hub) return;
+    if (!hub.contains(e.target)) {
+        closeAdminHub();
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeAdminHub();
     }
 });
 </script>
